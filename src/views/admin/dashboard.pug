@@ -1,0 +1,146 @@
+extends ../layouts/index
+block contenido
+    .px-4.pt-5(class='2xl:px-0')
+        .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm(class='dark:border-gray-700 sm:p-6 dark:bg-gray-800')
+            // Card header
+            .items-center.justify-between(class='lg:flex')
+              .mb-4(class='lg:mb-0')
+                h3.mb-2.text-xl.font-bold.text-gray-900(class='dark:text-white') Dashboard
+                span.text-base.font-normal.text-gray-500(class='dark:text-gray-400') Lista de equipos
+              .items-center(class='sm:flex')
+                .flex.items-center
+                  button#dropdownDefault.mb-4.mr-4.inline-flex.items-center.text-gray-900.bg-white.border.border-gray-300.font-medium.rounded-lg.text-sm.px-4(data-dropdown-toggle='dropdown' class='sm:mb-0 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700' type='button')
+                    | Filtrar por estado
+                    svg.w-4.h-4.ml-2(aria-hidden='true' fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
+                      path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7')
+                  // Dropdown menu
+                  #dropdown.z-10.hidden.w-56.p-3.bg-white.rounded-lg.shadow(class='dark:bg-gray-700')
+                    h6.mb-3.text-sm.font-medium.text-gray-900(class='dark:text-white')
+                      | Estado
+                    ul.space-y-2.text-sm(aria-labelledby='dropdownDefault')
+                      li.flex.items-center
+                        input#apple.w-4.h-4.bg-gray-100.border-gray-300.rounded.text-primary-600(type='checkbox' value='' class='focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500')
+                        label.ml-2.text-sm.font-medium.text-gray-900(for='apple' class='dark:text-gray-100')
+                          | Completo (56)
+                      li.flex.items-center
+                        input#fitbit.w-4.h-4.bg-gray-100.border-gray-300.rounded.text-primary-600(type='checkbox' value='' checked='' class='focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500')
+                        label.ml-2.text-sm.font-medium.text-gray-900(for='fitbit' class='dark:text-gray-100')
+                          | Cancelado (56)
+                      li.flex.items-center
+                        input#dell.w-4.h-4.bg-gray-100.border-gray-300.rounded.text-primary-600(type='checkbox' value='' class='focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500')
+                        label.ml-2.text-sm.font-medium.text-gray-900(for='dell' class='dark:text-gray-100')
+                          | En progreso (56)
+                      li.flex.items-center
+                        input#asus.w-4.h-4.bg-gray-100.border-gray-300.rounded.text-primary-600(type='checkbox' value='' checked='' class='focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500')
+                        label.ml-2.text-sm.font-medium.text-gray-900(for='asus' class='dark:text-gray-100')
+                          | En revision (97)
+                .flex.items-center.space-x-4(date-rangepicker='')
+                  .relative
+                    .absolute.inset-y-0.left-0.flex.items-center.pl-3.pointer-events-none
+                      svg.w-5.h-5.text-gray-500(class='dark:text-gray-400' fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' aria-hidden='true')
+                        path(d='M5.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H6a.75.75 0 01-.75-.75V12zM6 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H6zM7.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H8a.75.75 0 01-.75-.75V12zM8 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H8zM9.25 10a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H10a.75.75 0 01-.75-.75V10zM10 11.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V12a.75.75 0 00-.75-.75H10zM9.25 14a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H10a.75.75 0 01-.75-.75V14zM12 9.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V10a.75.75 0 00-.75-.75H12zM11.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H12a.75.75 0 01-.75-.75V12zM12 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H12zM13.25 10a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H14a.75.75 0 01-.75-.75V10zM14 11.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V12a.75.75 0 00-.75-.75H14z')
+                        path(clip-rule='evenodd' fill-rule='evenodd' d='M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z')
+                    input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full.pl-10(name='start' type='text' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='De')
+                  .relative
+                    .absolute.inset-y-0.left-0.flex.items-center.pl-3.pointer-events-none
+                      svg.w-5.h-5.text-gray-500(class='dark:text-gray-400' fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' aria-hidden='true')
+                        path(d='M5.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H6a.75.75 0 01-.75-.75V12zM6 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H6zM7.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H8a.75.75 0 01-.75-.75V12zM8 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H8zM9.25 10a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H10a.75.75 0 01-.75-.75V10zM10 11.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V12a.75.75 0 00-.75-.75H10zM9.25 14a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H10a.75.75 0 01-.75-.75V14zM12 9.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V10a.75.75 0 00-.75-.75H12zM11.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H12a.75.75 0 01-.75-.75V12zM12 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H12zM13.25 10a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H14a.75.75 0 01-.75-.75V10zM14 11.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V12a.75.75 0 00-.75-.75H14z')
+                        path(clip-rule='evenodd' fill-rule='evenodd' d='M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z')
+                    input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full.pl-10(name='end' type='text' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='A')
+                  .relative  
+                    a.inline-flex.items-center.p-2.text-xs.font-medium.uppercase.rounded-lg.text-primary-700(href='#' class='sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700')
+                       | Generar reporte
+                       svg.w-4.h-4.ml-1(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
+                         path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7')
+        .grid.gap-4(class='xl:grid-cols-1 2xl:grid-cols-1 pt-2')
+          // Main widget
+          .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm(class='2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800')
+            .flex.items-center.justify-between.mb-4
+              .flex-shrink-0
+                span.text-xl.font-bold.leading-none.text-gray-900(class='sm:text-2xl dark:text-white') 50
+                h3.text-base.font-light.text-gray-500(class='dark:text-gray-400') Estadisticas del ultimo mes
+              .flex.items-center.justify-end.flex-1.text-base.font-medium.text-green-500(class='dark:text-green-400')
+                | 12.5%
+                svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                  path(fill-rule='evenodd' d='M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z' clip-rule='evenodd')
+            #main-chart           
+        // Table
+        .flex.flex-col.mt-6
+          .overflow-x-auto.rounded-lg
+            .inline-block.min-w-full.align-middle
+              .overflow-hidden.shadow(class='sm:rounded-lg')
+                table.min-w-full.divide-y.divide-gray-200(class='dark:divide-gray-600')
+                  thead.bg-gray-50(class='dark:bg-gray-700')
+                    tr
+                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
+                        | Equipo
+                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
+                        | Departamento
+                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
+                        | Numero de referencia
+                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
+                        | Fecha y hora
+                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
+                        | Estado
+                  tbody.bg-white(class='dark:bg-gray-800')
+                    tr(class = 'hover:bg-gray-100')
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Equipo 
+                        span.font-semibold #1
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Departamento #1 
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | 0047568936
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | Apr 23 ,2024
+                      td.p-4.whitespace-nowrap
+                        span.bg-green-100.text-green-800.text-xs.font-medium.mr-2.rounded-md.border.border-green-100(class='px-2.5 py-0.5 dark:bg-gray-700 dark:text-green-400 dark:border-green-500') Completado
+                    tr.bg-gray-50(class='dark:bg-gray-700')
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Equipo 
+                        span.font-semibold #2
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Departamento #2
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | 0088568934
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | Apr 18 ,2024   
+                      td.p-4.whitespace-nowrap
+                        span.bg-red-100.text-red-800.text-xs.font-medium.mr-2.rounded-md.border.border-red-100(class='px-2.5 py-0.5 dark:border-red-400 dark:bg-gray-700 dark:text-red-400') Cancelado
+                    tr
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Equipo 
+                        span.font-semibold #3
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Departamento #3
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | 0018568911
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | Apr 15 ,2024                      
+                      td.p-4.whitespace-nowrap
+                        span.bg-purple-100.text-purple-800.text-xs.font-medium.mr-2.rounded-md.border.border-purple-100(class='px-2.5 py-0.5 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400') En progreso            
+                    tr.bg-gray-50(class='dark:bg-gray-700')
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Equipo 
+                        span.font-semibold #4
+                      td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        | Departamento #4
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | 0031568935
+                      td.p-4.text-sm.font-normal.text-gray-500.whitespace-nowrap(class='dark:text-gray-400')
+                        | Apr 11 ,2024
+                      td.p-4.whitespace-nowrap
+                        span.bg-orange-100.text-orange-800.text-xs.font-medium.mr-2.rounded-md.border.border-orange-100(class='px-2.5 py-0.5 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300') En revision
+        .sticky.bottom-0.right-0.items-center.w-full.p-4.bg-white.border-t.border-gray-200(class='sm:flex sm:justify-end dark:bg-gray-800 dark:border-gray-700')
+          .flex.items-center.mb-4(class='sm:mb-0')
+            span.text-sm.font-normal.text-gray-500(class='dark:text-gray-400')
+                | Mostrando  
+                span.font-semibold.text-gray-900(class='dark:text-white') 1-20
+                |  de 
+                span.font-semibold.text-gray-900(class='dark:text-white') 2290    
+            a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#' class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+              svg.w-7.h-7(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z' clip-rule='evenodd')
+            a.inline-flex.justify-center.p-1.mr-2.text-gray-500.rounded.cursor-pointer(href='#' class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+              svg.w-7.h-7(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd')
