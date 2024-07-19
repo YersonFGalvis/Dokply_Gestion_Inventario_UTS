@@ -54,7 +54,6 @@ export async function createPDFDocument(data: any, writeData: (chunk: Buffer) =>
         headers: ["Item", "Valor"],
         rows: [
             ["ID", `${data.id}`],
-            ["Código QR", `${data.codigo_qr}`],
             ["Estado", `${data.estado}`],
             ["Marca", `${data.marca}`],
             ["Aula", `${data.aula_id.nombre}`],
