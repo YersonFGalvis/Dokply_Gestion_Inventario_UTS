@@ -16,7 +16,7 @@ import { AulaRouter } from '../routes/aula.routes';
 
 export class expressConfiguration {
     public app: express.Application = express();
-    private port: number = Number('3001');
+    private port: number = Number('3000');
 
     constructor() {
       this.app.use(express.json());
