@@ -42,7 +42,8 @@ html
         } 
       } = equipo;
 
-        const url = `http://localhost:3000/generar-pdf/pdf/${equipo.id}`;
+        const baseURL = window.location.origin;
+        const url = `${baseURL}/generar-pdf/pdf/${equipo.id}`;
         const qrImage = document.getElementById('qrImage');
         const downloadLink = document.getElementById('downloadLink');
         
