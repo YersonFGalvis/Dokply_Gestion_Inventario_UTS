@@ -14,9 +14,6 @@ export class Equipo {
   @ManyToOne(() => Aula, (aula) => aula.id)
   @JoinColumn({ name: 'aula_id' })
   aula_id: Aula
-
-  @Column({ length: 100, unique: true })
-  codigo_qr: string;
   
   @Column({ length: 50 })
   estado: string;
