@@ -1,1 +1,0 @@
-{"version":3,"file":"registroEquipo.dto.js","sourceRoot":"","sources":["../../src/dto/registroEquipo.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAiE;AAEjE,MAAa,iBAAiB;CAc7B;AAZG;IADC,IAAA,4BAAU,GAAE;;oDACK;AAGlB;IADC,IAAA,4BAAU,GAAE;;yDACU;AAIvB;IAFC,IAAA,4BAAU,GAAE;IACZ,IAAA,wBAAM,GAAE;8BACS,IAAI;2DAAC;AAIvB;IAFC,IAAA,4BAAU,GAAE;IACZ,IAAA,wBAAM,GAAE;;2DACsB;AAbnC,8CAcC"}
