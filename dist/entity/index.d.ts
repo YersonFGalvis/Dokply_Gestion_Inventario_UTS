@@ -1,0 +1,15 @@
+import "reflect-metadata";
+export * from './Usuario';
+export * from './Alerta';
+export * from './Area';
+export * from './Aula';
+export * from './Equipo';
+export * from './Edificio';
+export * from './Hardware';
+export * from './TipoMantenimiento';
+export * from './Rol';
+export * from './Software';
+export * from './RegistroMantenimiento';
+export * from './Responsable';
+export * from './Cargo';
+export * from './RegistroEquipo';
