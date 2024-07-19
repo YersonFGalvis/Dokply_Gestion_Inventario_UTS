@@ -1,0 +1,188 @@
+extends ../layouts/index
+block contenido
+    .p-4.bg-white.block.items-center.justify-between.border-b.border-gray-200.text-center(class='sm:flex lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700')
+      .w-full.mb-1
+        .mb-4
+          h1.text-xl.font-semibold.text-gray-900(class='sm:text-2xl dark:text-white') Usuarios
+        div(class='sm:flex')
+          .items-center.hidden.mb-3(class='sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700')
+            form(class='lg:pr-3' action='#' method='GET')
+              label.sr-only(for='users-search') Buscar
+              .relative.mt-1(class='lg:w-64 xl:w-96')
+                input#users-search.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='email' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='Buscar usuarios')
+            .flex.pl-0.mt-3.space-x-1(class='sm:pl-2 sm:mt-0')   
+          .flex.items-center.ml-auto.space-x-2(class='sm:space-x-3')
+            button#modal_add.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-blue-600(type='button' data-modal-target='add-user-modal' data-modal-toggle='add-user-modal' class='w-1/2 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
+              svg.w-5.h-5.mr-2.-ml-1(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z' clip-rule='evenodd')
+              |                     Agregar usuario
+            a.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-gray-900.bg-white.border.border-gray-300.rounded-lg(href='#' class='w-1/2 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700')
+              svg.w-5.h-5.mr-2.-ml-1(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z' clip-rule='evenodd')
+              |                     Exportar
+    include ../modals/usuarios
+    .flex.flex-col
+      .overflow-x-auto
+        .inline-block.min-w-full.align-middle
+          .overflow-hidden.shadow
+            table.min-w-full.divide-y.divide-gray-200.table-fixed(class='dark:divide-gray-600')
+              thead.bg-gray-100(class='dark:bg-gray-700')
+                tr
+                  //- th.p-4(scope='col')
+                  //-   .flex.items-center
+                  //-     input#checkbox-all.w-4.h-4.border-gray-300.rounded.bg-gray-50(aria-describedby='checkbox-1' type='checkbox' class='focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600')
+                  //-     label.sr-only(for='checkbox-all') checkbox
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col' class='dark:text-gray-400')
+                    | Nombre
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col' class='dark:text-gray-400')
+                    | Departamento
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col' class='dark:text-gray-400')
+                    | Rol
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col' class='dark:text-gray-400')
+                    | Ciudad
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col' class='dark:text-gray-400')
+                    | Estatus
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col' class='dark:text-gray-400')
+                    | Acciones
+              tbody.bg-white.divide-y.divide-gray-200(class='dark:bg-gray-800 dark:divide-gray-700')
+                if users.data 
+                  each user in users.data
+                    tr(class='hover:bg-gray-100 dark:hover:bg-gray-700')
+                      //- td.w-4.p-4
+                      //-   .flex.items-center
+                          //- input.w-4.h-4.border-gray-300.rounded.bg-gray-50(id='checkbox-{{ .id }}' aria-describedby='checkbox-1' type='checkbox' class='focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600')
+                          //- label.sr-only(for='checkbox-{{ .id }}') checkbox
+                      td.flex.items-center.p-4.mr-12.space-x-6.whitespace-nowrap
+                        .text-sm.font-normal.text-gray-500(class='dark:text-gray-400')
+                          .text-base.font-semibold.text-gray-900(class='dark:text-white') 
+                            = user.nombre
+                          .text-sm.font-normal.text-gray-500(class='dark:text-gray-400')
+                            = user.email
+                      td.max-w-sm.p-4.overflow-hidden.text-base.font-normal.text-gray-500.truncate(class='xl:max-w-xs dark:text-gray-400') Aula Informatica
+                      td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        = user.rol_id ? user.rol_id.nombre : 'No hay rol'
+                      td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap(class='dark:text-white') Bucaramanga
+                      td.p-4.text-base.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
+                        .flex.items-center
+                          | Activo
+                          .rounded-full.bg-green-400.mr-2(class='h-2.5 w-2.5 m-2')
+                        //-   | Inactivo 
+                        //-   .rounded-full.bg-red-500.mr-2(class='h-2.5 w-2.5')
+                      td.p-4.space-x-2.whitespace-nowrap
+                        button.inline-flex.items-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-blue-600(type='button' data-modal-target='edit-user-modal' data-modal-toggle='edit-user-modal' class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
+                          svg.w-4.h-4.mr-2(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                            path(d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z')
+                            path(fill-rule='evenodd' d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z' clip-rule='evenodd')
+                          |  Editar                                   
+                        button.inline-flex.items-center.px-3.py-2.text-sm.font-medium.text-center.text-white.bg-red-600.rounded-lg(type='button' data-modal-target='delete-user-modal' data-modal-toggle='delete-user-modal' class='hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900')
+                          svg.w-4.h-4.mr-2(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                            path(fill-rule='evenodd' d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd')
+                          |  Eliminar                                   
+    .sticky.bottom-0.right-0.items-center.w-full.p-4.bg-white.border-t.border-gray-200(class='sm:flex sm:justify-end dark:bg-gray-800 dark:border-gray-700')
+          .flex.items-center.mb-4(class='sm:mb-0')
+            span.text-sm.font-normal.text-gray-500(class='dark:text-gray-400')
+                | Mostrando  
+                span.font-semibold.text-gray-900(class='dark:text-white') 1-20
+                |  de 
+                span.font-semibold.text-gray-900(class='dark:text-white') 2290    
+            a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#' class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+              svg.w-7.h-7(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z' clip-rule='evenodd')
+            a.inline-flex.justify-center.p-1.mr-2.text-gray-500.rounded.cursor-pointer(href='#' class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+              svg.w-7.h-7(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd')
+    // Edit User Modal
+    #edit-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
+      .relative.w-full.h-full.max-w-2xl.px-4(class='md:h-auto')
+        // Modal content
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-800')
+          // Modal header
+          .flex.items-start.justify-between.p-5.border-b.rounded-t(class='dark:border-gray-700')
+            h3.text-xl.font-semibold(class='dark:text-white')
+              | Editar usuario
+            button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-700 dark:hover:text-white' data-modal-toggle='edit-user-modal')
+              svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
+          // Modal body
+          .p-6.space-y-6
+            form(action='#')
+              .grid.grid-cols-6.gap-6
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='first-name' class='dark:text-white') Nombres
+                  input#first-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='first-name' value='Bonnie' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='Bonnie' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='last-name' class='dark:text-white') Apellidos
+                  input#last-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='last-name' value='Green' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='Green' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='email' class='dark:text-white') Email
+                  input#email.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email' name='email' value='bonnie@flowbite.com' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='example@company.com' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='position' class='dark:text-white') Rol
+                  input#position.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='position' value='React Developer' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='e.g. React developer' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='current-password' class='dark:text-white') Contraseña actual
+                  input#current-password.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='password' name='current-password' value='••••••••' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='••••••••' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='new-password' class='dark:text-white') Nueva contraseña
+                  input#new-password.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='password' name='new-password' value='••••••••' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='••••••••' required='')
+                .col-span-6
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='biography' class='dark:text-white') Departamento
+                  textarea#biography.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4' class='p-2.5 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='👨‍💻Full-stack web developer. Open-source contributor.') &#x1F468;&zwj;&#x1F4BB;Full-stack web developer. Open-source contributor.
+          // Modal footer
+          .items-center.p-6.border-t.border-gray-200.rounded-b(class='dark:border-gray-700')
+            button.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' type='submit') Save all
+    // Add User Modal
+    #add-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
+      .relative.w-full.h-full.max-w-2xl.px-4(class='md:h-auto')
+        // Modal content
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-800')
+          // Modal header
+          .flex.items-start.justify-between.p-5.border-b.rounded-t(class='dark:border-gray-700')
+            h3.text-xl.font-semibold(class='dark:text-white')
+              | Agregar usuario
+            button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-700 dark:hover:text-white' data-modal-toggle='add-user-modal')
+              svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
+          // Modal body
+          .p-6.space-y-6
+            form(action='#')
+              .grid.grid-cols-6.gap-6
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='first-name' class='dark:text-white') Nombres
+                  input#first-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='first-name' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='Bonnie' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='last-name' class='dark:text-white') Apellidos
+                  input#last-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='last-name' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='Green' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='email' class='dark:text-white') Email
+                  input#email.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email' name='email' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='example@company.com' required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='position' class='dark:text-white') Rol
+                  input#position.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text' name='position' class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='e.g. React developer' required='')
+                .col-span-6
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='biography' class='dark:text-white') Departamento
+                  textarea#biography.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4' class='p-2.5 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' placeholder='👨‍💻Full-stack web developer. Open-source contributor.')
+          // Modal footer
+          .items-center.p-6.border-t.border-gray-200.rounded-b(class='dark:border-gray-700')
+            button.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' type='submit') Add user
+    // Delete User Modal
+    #delete-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
+      .relative.w-full.h-full.max-w-md.px-4(class='md:h-auto')
+        // Modal content
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-800')
+          // Modal header
+          .flex.justify-end.p-2
+            button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-700 dark:hover:text-white' data-modal-hide='delete-user-modal')
+              svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
+          // Modal body
+          .p-6.pt-0.text-center
+            svg.w-16.h-16.mx-auto.text-red-600(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
+              path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+            h3.mt-5.mb-6.text-lg.text-gray-500(class='dark:text-gray-400') Estas seguro de querer eliminar a este usuario?
+            a.text-white.bg-red-600.font-medium.rounded-lg.text-base.inline-flex.items-center.px-3.text-center.mr-2(href='#' class='hover:bg-red-800 focus:ring-4 focus:ring-red-300 py-2.5 dark:focus:ring-red-800')
+              | Si, estoy seguro
+            a.text-gray-900.bg-white.border.border-gray-200.font-medium.inline-flex.items-center.rounded-lg.text-base.px-3.text-center(href='#' class='hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700' data-modal-hide='delete-user-modal')
+              | No, cancelar
+
+    script(src="/js/modal.js")       

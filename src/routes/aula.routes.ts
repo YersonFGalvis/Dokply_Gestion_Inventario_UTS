@@ -1,0 +1,54 @@
+import { Router, Request, Response, NextFunction } from 'express';
+import { BaseRouter } from '../config/routerConfiguration';
+import { AulaController, EdificioController } from '../controllers/index.controller';
+import { AulaMiddleware } from '../middlewares/aula.middleware';
+
+const edificioController = new EdificioController();
+
+export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
+
+    constructor() {
+        super(AulaController, AulaMiddleware);       
+    }
+
+    routes(): void {
+        this.router.get(
+            '/aulas', 
+            async (req: Request, res: Response) => {
+                const aulas = await this.controller.getAulas(req, res);
+                const edificios = await edificioController.getEdificios(req, res);
+
+                res.render('admin/aulas', { aulas, statusCode: aulas.status, edificios, datos: {}, error: req.query.error }); 
+            }
+        );
+
+        this.router.post(
+            '/crear/aula',
+            (req: Request, res: Response, next: NextFunction) => {
+                this.middleware.aulaValidator(req, res, next);
+            },
+            (req: Request, res: Response, next: NextFunction) => {
+                this.middleware.aulaDuplicateValidator(req, res, next);
+            },
+            async (req: Request, res: Response) => {
+                await this.controller.createAula(req, res);
+                res.redirect('/aulas');
+            }
+        );
+
+        this.router.get(
+            '/aula/:id', 
+            (req: Request, res: Response) => this.controller.getAulaById(req, res)
+        );
+
+        this.router.put(
+            '/aula/:id',
+            (req: Request, res: Response) => this.controller.updateAula(req, res)
+        );
+    
+        this.router.delete(
+            '/aula/:id',
+            (req: Request, res: Response) => this.controller.deleteAula(req, res)
+        );
+    }
+}
