@@ -15,7 +15,7 @@ export class ResponsableService extends BaseService<Responsable> {
     }
 
     async createResponsable(responsableDTO: ResponsableDTO): Promise<Responsable> {
-        const { cargo_id, nombre } = responsableDTO;
+        const { cargo_id, nombres, apellidos, telefono, email, numeroidentificacion, genero } = responsableDTO;
         
         const cargo: Cargo | null = await this._cargoService.findCargoById(cargo_id);
 
@@ -25,7 +25,13 @@ export class ResponsableService extends BaseService<Responsable> {
 
         const newResponsable = new Responsable();
         newResponsable.cargo_id = cargo;
-        newResponsable.nombre = nombre;
+        newResponsable.nombres = nombres;
+        newResponsable.apellidos = apellidos;
+        newResponsable.telefono = telefono;
+        newResponsable.email = email;
+        newResponsable.numeroidentificacion = numeroidentificacion;
+        newResponsable.genero = genero;
+
 
         try {
             const repository = await this.getRepository();
@@ -49,7 +55,7 @@ export class ResponsableService extends BaseService<Responsable> {
             throw new Error(`Responsable con id ${id} no encontrado`);
         }
 
-        const { cargo_id, nombre } = responsableDTO;
+        const { cargo_id, nombres, apellidos, telefono, email, numeroidentificacion, genero } = responsableDTO;
         const cargo: Cargo | null = await this._cargoService.findCargoById(cargo_id);
 
         if (!cargo) {
@@ -58,7 +64,13 @@ export class ResponsableService extends BaseService<Responsable> {
 
         repository.merge(responsableToUpdate, {
             cargo_id: cargo,
-            nombre: nombre
+            nombres: nombres,
+            apellidos: apellidos,
+            telefono: telefono,
+            email: email,
+            numeroidentificacion: numeroidentificacion,
+            genero: genero
+
         });
 
         try {

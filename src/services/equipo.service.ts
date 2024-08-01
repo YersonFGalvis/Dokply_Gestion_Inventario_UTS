@@ -1,10 +1,14 @@
-import { Repository } from "typeorm";
+
 import { BaseService } from "../config/serviceConfiguration";
 import { Equipo, Aula } from "../entity";
 import { EquipoDTO } from "../dto/equipo.dto";
 import { AulaService } from "./aula.service";
+import { EntityManager } from 'typeorm';
 
 export class EquipoService extends BaseService<Equipo> {
+
+    private entityManager: EntityManager;
+
     constructor(private readonly _aulaService: AulaService = new AulaService()) {
         super(Equipo);
     }
@@ -89,5 +93,12 @@ export class EquipoService extends BaseService<Equipo> {
             console.error('Error al eliminar el equipo:', error);
             throw error;
         }
+    }
+
+    async verificarProximasRevisiones(fecha: string):Promise<Equipo[]>{
+        return this.entityManager.query(
+            'SELECT * FROM verificar_proximas_revisiones($1)',
+            [fecha]
+        );
     }
 }

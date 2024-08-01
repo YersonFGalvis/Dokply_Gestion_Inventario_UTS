@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Equipo } from './Equipo';
 
-@Entity('softwareinstalado')
+@Entity()
 export class Software {
   @PrimaryGeneratedColumn()
   id: number;

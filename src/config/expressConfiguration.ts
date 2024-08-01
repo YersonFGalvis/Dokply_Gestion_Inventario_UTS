@@ -2,7 +2,6 @@ import express from 'express';
 import { UsuarioRouter } from '../routes/usuario.routes';import { RolRouter } from '../routes/rol.routes';
 import { RegistroMantenimientoRouter } from '../routes/registroMantenimiento.routes';
 import { AuthRouter } from '../routes/auth.routes';
-import { AlertaRouter } from '../routes/alerta.routes';
 import { AreaRouter } from '../routes/area.routes';
 import { CargoRouter } from '../routes/cargo.routes';
 import { EdificioRouter } from '../routes/edificio.routes';
@@ -29,7 +28,6 @@ export class expressConfiguration {
 
     routers(): Array<express.Router> {
         return [new UsuarioRouter().router, 
-            new AlertaRouter().router,
             new AreaRouter().router,
             new AulaRouter().router,
             new AuthRouter().router,

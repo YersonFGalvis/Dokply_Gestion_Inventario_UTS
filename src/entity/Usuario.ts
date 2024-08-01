@@ -20,7 +20,7 @@ export class Usuario extends BaseEntity{
   pass: string;
   
   @ManyToOne(() => Rol, (rol) => rol.id)
-  @Column({ type:"enum", enum: RoleType, default: RoleType.USER})
+  @Column({ type:"enum", enum: RoleType, default: RoleType.USUARIO})
   @JoinColumn({ name: 'rol_id' })
   rol_id: RoleType
 

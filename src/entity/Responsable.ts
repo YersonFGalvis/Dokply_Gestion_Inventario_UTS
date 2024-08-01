@@ -13,7 +13,22 @@ export class Responsable {
   cargo_id: Cargo
 
   @Column()
-  nombre: string;
+  nombres: string;
+
+  @Column()
+  apellidos: string;
+
+  @Column()
+  telefono: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  numeroidentificacion: string;
+
+  @Column()
+  genero: string;
 
   @OneToMany(() => RegistroEquipo, (responsableEquipo) => responsableEquipo.responsable_id)
   responsableEquipos: RegistroEquipo[]

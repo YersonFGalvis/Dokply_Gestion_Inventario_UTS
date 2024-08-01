@@ -1,6 +1,6 @@
 export enum RoleType {
-    USER = 1,
-    ADMIN = 2,
+    USUARIO = 1,
+    COORDINADOR = 2,
 }
 
 export enum ErrorsType {

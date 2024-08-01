@@ -4,7 +4,6 @@ import { RegistroMantenimiento } from './RegistroMantenimiento';
 import { Software } from './Software';
 import { Hardware } from './Hardware';
 import { RegistroEquipo } from './RegistroEquipo';
-import { Alertas } from './Alerta';
 
 @Entity()
 export class Equipo {
@@ -33,8 +32,6 @@ export class Equipo {
   @OneToMany(() => Hardware, (hardware) => hardware.equipo_id)  
   hardwares: Hardware[]
 
-  @OneToMany(() => Alertas, (alertas) => alertas.equipo_id)  
-  alertas: Alertas[]
 
 }
 

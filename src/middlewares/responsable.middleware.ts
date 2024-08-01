@@ -7,9 +7,7 @@ import { ErrorsType } from "../helpers/enums";
 
 export class ResponsableMiddleware {
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
-        private readonly _responsableService: ResponsableService = new ResponsableService()
-    ) {}
+        private readonly _httpResponse: HttpResponse = new HttpResponse(),    ) {}
 
     responsableValidator(req: Request, res: Response, next: NextFunction) {
 

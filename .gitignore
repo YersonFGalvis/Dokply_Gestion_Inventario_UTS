@@ -4,3 +4,4 @@ node_modules/
 tmp/
 temp/
 dist/
+.env/

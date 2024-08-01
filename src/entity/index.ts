@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Usuario } from "./Usuario";
-import { Alertas } from "./Alerta";
 import { Area } from "./Area";
 import { Aula } from "./Aula";
 import { Equipo } from "./Equipo";
@@ -17,7 +16,6 @@ import { Cargo } from "./Cargo";
 
 // Exportar todas las entidades
 export * from './Usuario';
-export * from './Alerta';
 export * from './Area';
 export * from './Aula';
 export * from './Equipo';

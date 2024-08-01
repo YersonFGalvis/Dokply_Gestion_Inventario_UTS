@@ -29,8 +29,8 @@ export class HelperMiddleware {
   checkAdminRole(req: Request, res: Response, next: NextFunction) {
     const payload = req.user as { usuario_id: number, rol: RoleType };
     
-    if (payload.rol !== RoleType.ADMIN) {
-      return this._httpResponse.Unauthorized( "No tienes permiso de ADMINISTRADOR");
+    if (payload.rol !== RoleType.COORDINADOR) {
+      return this._httpResponse.Unauthorized( "No tienes permiso de COORDINADOR");
     }
     return next();
   }

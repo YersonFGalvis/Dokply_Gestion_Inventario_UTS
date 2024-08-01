@@ -1,4 +1,3 @@
-import { AlertaController } from '../controllers/alerta.controller';
 import { AreaController } from '../controllers/area.controller';
 import { AulaController } from '../controllers/aula.controller';
 import { AuthController } from '../controllers/auth.controller';
@@ -15,7 +14,6 @@ import { TipoMantenimientoController } from '../controllers/tipoMantenimiento.co
 import { UsuarioController } from '../controllers/usuario.controller';
 
 export {
-    AlertaController,
     AreaController,
     AulaController,
     AuthController,
