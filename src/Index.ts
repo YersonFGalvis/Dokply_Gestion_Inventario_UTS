@@ -16,7 +16,7 @@ class Server extends DatabaseConfiguration {
         this.passportUse();
         this.dbConnect();
         this.app.listen();
-        CronMandarEmail();
+        //CronMandarEmail();
     }
 
     passportUse() {

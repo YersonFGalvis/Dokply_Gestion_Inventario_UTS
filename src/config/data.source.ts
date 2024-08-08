@@ -11,8 +11,11 @@ import {Usuario,
   Edificio, 
   Responsable,
   Cargo,
-  RegistroEquipo
+  RegistroEquipo,
+  EquipoHardware,
+  EquipoSoftware
 } from '../entity';  
+
 
 const Config: DataSourceOptions = {
   type: "postgres",
@@ -21,7 +24,7 @@ const Config: DataSourceOptions = {
   username: process.env.DB_USERNAME!,
   password: process.env.DB_PASSWORD!,
   database: process.env.DB_NAME!,
-  entities: [Area,Aula,Cargo,Edificio,Equipo,Hardware,RegistroMantenimiento,Responsable,RegistroEquipo,Rol,Software,TipoMantenimiento,Usuario],
+  entities: [Area,Aula,Cargo,Edificio,Equipo,Hardware,RegistroMantenimiento,Responsable,RegistroEquipo,Rol,Software,TipoMantenimiento,Usuario,EquipoHardware,EquipoSoftware],
   migrations: [__dirname + "/../migrations/*{.ts,.js}"],
   synchronize: false,
   migrationsRun: true,

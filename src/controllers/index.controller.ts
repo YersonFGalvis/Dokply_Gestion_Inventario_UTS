@@ -11,7 +11,10 @@ import { ResponsableController } from '../controllers/responsable.controller';
 import { RolController } from '../controllers/rol.controller';
 import { SoftwareController } from '../controllers/software.controller';
 import { TipoMantenimientoController } from '../controllers/tipoMantenimiento.controller';
+import { EquipoHardwareController } from '../controllers/equipoHardware.controller';
+import { EquipoSoftwareController } from '../controllers/equipoSoftware.controller';
 import { UsuarioController } from '../controllers/usuario.controller';
+
 
 export {
     AreaController,
@@ -27,5 +30,7 @@ export {
     RolController,
     SoftwareController,
     TipoMantenimientoController,
-    UsuarioController
+    UsuarioController,
+    EquipoSoftwareController,
+    EquipoHardwareController
 }

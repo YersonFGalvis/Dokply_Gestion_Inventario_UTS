@@ -12,6 +12,8 @@ import { ResponsableRouter } from '../routes/responsable.routes';
 import { SoftwareRouter } from '../routes/software.routes';
 import { TipoMantenimientoRouter } from '../routes/tipoMantenimiento.routes';
 import { AulaRouter } from '../routes/aula.routes';
+import { EquipoHardwareRouter } from 'src/routes/equipoHardware.routes';
+import { EquipoSoftwareRouter } from 'src/routes/equipoSoftware.routes';
 
 export class expressConfiguration {
     public app: express.Application = express();
@@ -41,6 +43,8 @@ export class expressConfiguration {
             new RolRouter().router, 
             new SoftwareRouter().router, 
             new TipoMantenimientoRouter().router, 
+            new EquipoHardwareRouter().router, 
+            new EquipoSoftwareRouter().router
         ];
     }
 

@@ -103,7 +103,7 @@ document.addEventListener('click', async (event) => {
                     modal.querySelector('#add').onclick = async () => {
                         try {
                             const nombre = modal.querySelector('input[name="nombre"]').value;
-                            await fetch(`/${entity}`, {
+                            await fetch(`/crear/${entity}`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'

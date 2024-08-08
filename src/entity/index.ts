@@ -13,7 +13,8 @@ import { RegistroMantenimiento } from "./RegistroMantenimiento";
 import { RegistroEquipo } from "./RegistroEquipo";
 import { Responsable } from "./Responsable";
 import { Cargo } from "./Cargo";
-
+import { EquipoHardware } from "./EquipoHardware";
+import { EquipoSoftware } from "./EquipoSoftware";
 // Exportar todas las entidades
 export * from './Usuario';
 export * from './Area';
@@ -28,3 +29,5 @@ export * from './RegistroMantenimiento';
 export * from './Responsable';
 export * from './Cargo';
 export * from './RegistroEquipo';
+export * from './EquipoSoftware';
+export * from './EquipoHardware';
