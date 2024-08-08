@@ -5,11 +5,12 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
         link(rel="stylesheet", href="/css/app.css")
-    body
-      header
-        //- include navbar                                
-        include sideBar                            
-      main.mx-8
-        block contenido
-    footer.bg-gray-50
-      include footer                                    
+        link(href='https://unpkg.com/gridjs/dist/theme/mermaid.min.css' rel='stylesheet')
+    body(class="flex flex-col min-h-screen")
+        header
+            //- include navbar                                
+            include sideBar                            
+        main(class="flex-grow mx-8")
+            block contenido
+        footer(class="bg-gray-50")
+            include footer 

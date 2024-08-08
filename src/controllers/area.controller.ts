@@ -41,7 +41,6 @@ export class AreaController {
     async createArea(req: Request, res: Response) {
         try {
             const data = await this.areaService.createArea(req.body);
-            // res.redirect('/areas1');
             return this.httpResponse.OK(data);
         } catch (error) {
             return this.httpResponse.ServerError( "Internal server error");

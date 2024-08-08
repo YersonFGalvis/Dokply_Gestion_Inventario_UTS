@@ -12,7 +12,11 @@ export class SoftwareRouter extends BaseRouter<SoftwareController, SoftwareMiddl
     routes(): void {
         this.router.get(
             '/software', 
-            (req: Request, res: Response) => this.controller.getSoftware(req, res)
+            async (req: Request, res: Response) => {
+                const software = this.controller.getSoftware(req, res);
+                
+                res.render('admin/software', { software, datos: {}, error: req.query.error }); 
+            }
         );
 
         this.router.post(

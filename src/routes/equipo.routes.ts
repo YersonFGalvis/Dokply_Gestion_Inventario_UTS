@@ -30,11 +30,9 @@ export class EquipoRouter extends BaseRouter<EquipoController, EquipoMiddleware>
         this.router.post(
             '/crear/equipo',
             (req: Request, res: Response, next: NextFunction) => {
-                console.log('Entra1');
                 this.middleware.equipoValidator(req, res, next);
             },
             async (req: Request, res: Response) => {
-                console.log('Entra2');
                 await this.controller.createEquipo(req, res);
                 res.redirect('/equipos')
             }

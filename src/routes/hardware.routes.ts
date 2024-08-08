@@ -6,13 +6,17 @@ import { HardwareMiddleware } from '../middlewares/hardware.middleware';
 export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddleware> {
 
     constructor() {
-        super(HardwareController, HardwareMiddleware);       
+        super(HardwareController, HardwareMiddleware);
     }
 
     routes(): void {
         this.router.get(
-            '/hardware', 
-            (req: Request, res: Response) => this.controller.getHardware(req, res)
+            '/hardware',
+            async (req: Request, res: Response) => {
+                const hardware = this.controller.getHardware(req, res);
+                
+                res.render('admin/hardware', { hardware, datos: {}, error: req.query.error }); 
+            }
         );
 
         this.router.post(
@@ -29,7 +33,7 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
         );
 
         this.router.get(
-            '/hardware/:id', 
+            '/hardware/:id',
             (req: Request, res: Response) => this.controller.getHardwareById(req, res)
         );
 
@@ -37,7 +41,7 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
             '/edificio/:id',
             (req: Request, res: Response) => this.controller.updateHardware(req, res)
         );
-    
+
         this.router.delete(
             '/edificio/:id',
             (req: Request, res: Response) => this.controller.deleteHardware(req, res)
