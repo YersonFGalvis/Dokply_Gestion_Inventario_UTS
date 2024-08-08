@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Aula } from './Aula';
 import { RegistroMantenimiento } from './RegistroMantenimiento';
-import { Software } from './Software';
-import { Hardware } from './Hardware';
 import { RegistroEquipo } from './RegistroEquipo';
+import { EquipoSoftware } from './EquipoSoftware';
+import { EquipoHardware } from './EquipoHardware';
 
 @Entity()
 export class Equipo {
@@ -26,11 +26,11 @@ export class Equipo {
   @OneToMany(() => RegistroEquipo, (responsableEquipo) => responsableEquipo.equipo_id)  
   responsableEquipos: RegistroEquipo[]
 
-  @OneToMany(() => Software, (software) => software.equipo_id)  
-  software: Software[]
+  @OneToMany(() => EquipoSoftware, (equipoSoftware) => equipoSoftware.equipo_id)
+  equipoSoftware: EquipoSoftware[];
 
-  @OneToMany(() => Hardware, (hardware) => hardware.equipo_id)  
-  hardwares: Hardware[]
+  @OneToMany(() => EquipoHardware, (equipoHardware) => equipoHardware.equipo_id)
+  equipoHardware: EquipoHardware[];
 
 
 }

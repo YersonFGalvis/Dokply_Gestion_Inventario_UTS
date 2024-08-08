@@ -19,9 +19,21 @@ export class EquipoService extends BaseService<Equipo> {
             .createQueryBuilder('equipo')
             .leftJoinAndSelect('equipo.aula_id', 'aula')
             .leftJoinAndSelect('aula.edificio_id', 'edificio')
+            .leftJoinAndSelect('equipo.equipoSoftware', 'equipoSoftware')
+            .leftJoinAndSelect('equipoSoftware.software_id', 'software')
+            .leftJoinAndSelect('equipo.equipoHardware', 'equipoHardware')
+            .leftJoinAndSelect('equipoHardware.hardware_id', 'hardware')
+            .leftJoinAndSelect('equipo.registroMantenimientos', 'registroMantenimiento')
+            .leftJoinAndSelect('registroMantenimiento.tipo_mantenimiento_id', 'tipoMantenimiento')
+            .leftJoinAndSelect('equipo.responsableEquipos', 'registroEquipo')
+            .leftJoinAndSelect('registroEquipo.responsable_id', 'responsable')
+            .leftJoinAndSelect('responsable.cargo_id', 'cargo')
+            .leftJoinAndSelect('cargo.area_id', 'area')
             .where('equipo.id = :id', { id })
             .getOne();
     }
+    
+    
 
     async createEquipo(equipoDTO: EquipoDTO): Promise<Equipo> {
         const { aula_id, estado, marca } = equipoDTO;

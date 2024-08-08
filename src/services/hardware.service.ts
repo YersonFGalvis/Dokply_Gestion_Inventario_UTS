@@ -15,19 +15,12 @@ export class HardwareService extends BaseService<Hardware> {
     }
 
     async createHardware(hardwareDTO: HardwareDTO): Promise<Hardware> {
-        const { nombre, descripcion, estado, equipo_id } = hardwareDTO;
-        
-        const equipo: Equipo | null = await this._equipoService.findEquipoById(equipo_id);
-
-        if (!equipo) {
-            throw new Error(`Equipo con id ${equipo_id} no encontrado`);
-        }
+        const { nombre, descripcion, estado } = hardwareDTO;
 
         const newHardware = new Hardware();
         newHardware.nombre = nombre;
         newHardware.descripcion = descripcion ?? '';
         newHardware.estado = estado;
-        newHardware.equipo_id = equipo;
 
         try {
             const repository = await this.getRepository();
@@ -56,17 +49,10 @@ export class HardwareService extends BaseService<Hardware> {
             throw new Error(`Hardware con id ${id} no encontrado`);
         }
 
-        const equipo: Equipo | null = await this._equipoService.findEquipoById(hardwareDTO.equipo_id);
-
-        if (!equipo) {
-            throw new Error(`Equipo con id ${hardwareDTO.equipo_id} no encontrado`);
-        }
-
         repository.merge(hardwareToUpdate, {
             nombre: hardwareDTO.nombre,
             descripcion: hardwareDTO.descripcion ?? '',
             estado: hardwareDTO.estado,
-            equipo_id: equipo
         });
 
         try {

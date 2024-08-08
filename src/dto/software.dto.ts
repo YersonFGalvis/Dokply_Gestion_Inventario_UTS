@@ -12,9 +12,6 @@ export class SoftwareDTO {
     version: string;
   
     @IsNotEmpty()
-    equipo_id: number;
-  
-    @IsNotEmpty()
     @IsString()
     @Length(1, 50)
     licencia: string;

@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Equipo } from './Equipo';
+import { EquipoHardware } from './EquipoHardware';
 
 @Entity()
 export class Hardware {
@@ -15,7 +16,6 @@ export class Hardware {
   @Column({ length: 50 })
   estado: string;
 
-  @ManyToOne(() => Equipo, (equipo) => equipo.id)
-  @JoinColumn({ name: 'equipo_id' })
-  equipo_id: Equipo
+  @OneToMany(() => EquipoHardware, (equipoHardware) => equipoHardware.hardware_id)
+  equipoHardware: EquipoHardware[];
 }

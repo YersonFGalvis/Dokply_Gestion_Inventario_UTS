@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Equipo } from './Equipo';
+import { EquipoSoftware } from './EquipoSoftware';
 
 @Entity()
 export class Software {
@@ -11,12 +12,10 @@ export class Software {
 
   @Column({ length: 50 })
   version: string;
-
-  @ManyToOne(() => Equipo, (equipo) => equipo.software)
-  @JoinColumn({ name: 'equipo_id' })
-  equipo_id: Equipo
   
   @Column({ length: 50 })
   licencia: string;
 
+  @OneToMany(() => EquipoSoftware, (equipoSoftware) => equipoSoftware.software_id)
+  equipoSoftware: EquipoSoftware[];
 }

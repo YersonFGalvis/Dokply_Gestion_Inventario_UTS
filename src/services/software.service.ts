@@ -15,19 +15,14 @@ export class SoftwareService extends BaseService<Software> {
     }
 
     async createSoftware(softwareDTO: SoftwareDTO): Promise<Software> {
-        const { nombre, version, licencia, equipo_id } = softwareDTO;
+        const { nombre, version, licencia } = softwareDTO;
 
-        const equipo: Equipo | null = await this._equipoService.findEquipoById(equipo_id);
-
-        if (!equipo) {
-            throw new Error(`Equipo con id ${equipo_id} no encontrado`);
-        }
+      
 
         const newSoftware = new Software();
         newSoftware.nombre = nombre;
         newSoftware.version = version;
         newSoftware.licencia = licencia;
-        newSoftware.equipo_id = equipo;
 
         try {
             const repository = await this.getRepository();
@@ -56,19 +51,12 @@ export class SoftwareService extends BaseService<Software> {
             throw new Error(`Responsable con id ${id} no encontrado`);
         }
 
-        const { nombre, version, licencia, equipo_id } = softwareDTO;
-
-        const equipo: Equipo | null = await this._equipoService.findEquipoById(equipo_id);
-
-        if (!equipo) {
-            throw new Error(`Equipo con id ${equipo_id} no encontrado`);
-        }
-
+        const { nombre, version, licencia} = softwareDTO;
+        
         repository.merge(softwareToUpdate,{
             nombre: nombre,
             version: version,
             licencia:licencia,
-            equipo_id:equipo
         })
 
         try {

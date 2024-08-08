@@ -14,7 +14,4 @@ export class HardwareDTO {
     @IsString()
     @Length(1, 50)
     estado: string;
-  
-    @IsNotEmpty()
-    equipo_id: number;
 }

@@ -9,9 +9,9 @@ export class EquipoHardware {
 
   @ManyToOne(() => Equipo, (equipo) => equipo.id)
   @JoinColumn({ name: 'equipo_id' })
-  equipo: Equipo;
+  equipo_id: Equipo;
 
   @ManyToOne(() => Hardware, (hardware) => hardware.id)
   @JoinColumn({ name: 'hardware_id' })
-  hardware: Hardware;
+  hardware_id: Hardware;
 }

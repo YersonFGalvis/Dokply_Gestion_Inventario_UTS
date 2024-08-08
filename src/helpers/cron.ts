@@ -20,11 +20,7 @@ async function obtenerMantenimientos(): Promise<IMantenimientos[]> {
 // Función cron para mandar email
 export async function CronMandarEmail(): Promise<void> {
 
-    // cron.schedule('0 0 1 1,6 *', () => {
-    //     console.log('Ejecutando');
-    // });
-
-    cron.schedule('*/1 * * * *', async () => {
+    cron.schedule('0 0 1 1,6 *', async () => {
         try {
 
             let Mantenimientos:IMantenimientos[] = await obtenerMantenimientos();

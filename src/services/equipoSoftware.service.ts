@@ -39,8 +39,8 @@ export class EquipoSoftwareService extends BaseService<EquipoSoftware> {
         }
 
         const newEquipoSoftware = new EquipoSoftware();
-        newEquipoSoftware.equipo = equipo;
-        newEquipoSoftware.software = software;
+        newEquipoSoftware.equipo_id = equipo;
+        newEquipoSoftware.software_id = software;
 
         const repository = await this.getRepository();
 
@@ -71,8 +71,8 @@ export class EquipoSoftwareService extends BaseService<EquipoSoftware> {
         }
 
         repository.merge(equipoSoftwareToUpdate, {
-            equipo: equipo,
-            software: software
+            equipo_id: equipo,
+            software_id: software
         });
 
         try {

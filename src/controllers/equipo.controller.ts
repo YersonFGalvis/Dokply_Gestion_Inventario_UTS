@@ -24,6 +24,7 @@ export class EquipoController {
         const { id, pdf } = req.params;
         try {
             const data = await this.equipoService.findEquipoById(Number(id));
+
             if (!data) {
                 return this.httpResponse.NotFound("No existe el Equipo");
             }

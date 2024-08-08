@@ -39,8 +39,8 @@ export class EquipoHardwareService extends BaseService<EquipoHardware> {
         }
 
         const newEquipoHardware = new EquipoHardware();
-        newEquipoHardware.equipo = equipo;
-        newEquipoHardware.hardware = hardware;
+        newEquipoHardware.equipo_id = equipo;
+        newEquipoHardware.hardware_id = hardware;
 
         const repository = await this.getRepository();
 
@@ -71,8 +71,8 @@ export class EquipoHardwareService extends BaseService<EquipoHardware> {
         }
 
         repository.merge(equipoHardwareToUpdate, {
-            equipo: equipo,
-            hardware: hardware
+            equipo_id: equipo,
+            hardware_id: hardware
         });
 
         try {

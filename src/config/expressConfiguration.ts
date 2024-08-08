@@ -12,8 +12,8 @@ import { ResponsableRouter } from '../routes/responsable.routes';
 import { SoftwareRouter } from '../routes/software.routes';
 import { TipoMantenimientoRouter } from '../routes/tipoMantenimiento.routes';
 import { AulaRouter } from '../routes/aula.routes';
-import { EquipoHardwareRouter } from 'src/routes/equipoHardware.routes';
-import { EquipoSoftwareRouter } from 'src/routes/equipoSoftware.routes';
+import { EquipoHardwareRouter } from '../routes/equipoHardware.routes';
+import { EquipoSoftwareRouter } from '../routes/equipoSoftware.routes';
 
 export class expressConfiguration {
     public app: express.Application = express();
