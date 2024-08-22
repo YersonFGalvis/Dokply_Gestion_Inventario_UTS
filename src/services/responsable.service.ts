@@ -11,7 +11,10 @@ export class ResponsableService extends BaseService<Responsable> {
 
     async findResponsableById(id: number): Promise<Responsable | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        return repository.findOne({
+            where: { id },
+            relations: ['cargo_id']
+        });
     }
 
     async createResponsable(responsableDTO: ResponsableDTO): Promise<Responsable> {

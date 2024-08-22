@@ -11,7 +11,10 @@ export class CargoService extends BaseService<Cargo> {
 
     async findCargoById(id: number): Promise<Cargo | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        return repository.findOne({
+            where: { id },
+            relations: ['area_id']
+        });
     }
 
     async createCargo(cargoDTO: CargoDTO): Promise<Cargo> {

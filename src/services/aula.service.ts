@@ -11,7 +11,10 @@ export class AulaService extends BaseService<Aula> {
 
     async findAulaById(id: number): Promise<Aula | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        return repository.findOne({
+            where: { id },
+            relations: ['edificio_id']
+        });
     }
 
     async createAula(aulaDTO: AulaDTO): Promise<Aula> {
@@ -43,7 +46,7 @@ export class AulaService extends BaseService<Aula> {
 
     async findAllAulas(): Promise<Aula[]> {
         const repository = await this.getRepository();
-        return repository.find();
+        return repository.find({ relations: ['edificio_id'] });
     }
 
     async updateAula(id: number, aulaDTO: AulaDTO): Promise<Aula | null> {

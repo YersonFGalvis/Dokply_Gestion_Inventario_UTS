@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const columnsData = tableElement.getAttribute('data-columnas');
   const entity = tableElement.getAttribute('data-entity');
   const rowData = tableElement.getAttribute('data-filas');
+  const rowDataArray = JSON.parse(rowData);
 
   const crearBotones = (id, entity) => `
     <button 
@@ -28,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
   `;
 
-  window.Data = Array.isArray(datos) ? datos : [];
-
+  
   const renderTable = () => {
+    window.Data = Array.isArray(datos) ? datos : [];
     const tableContainer = document.getElementById('table');
 
     // Limpiar el contenedor antes de renderizar la nueva tabla
@@ -60,7 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
       columns: eval(columnsData),
-      data: window.Data.map(data => [eval(rowData), gridjs.html(crearBotones(data.id, entity))]),
+      data: window.Data.map(data => {
+        const rowValues = rowDataArray.map(expr => eval(expr));
+        return [...rowValues, gridjs.html(crearBotones(data.id, entity))];
+      }),
       style: {
         table: {
           'font-size': '15px'
@@ -85,7 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Exponer función para actualizar la tabla desde el script del modal
   window.updateTable = () => {
-    fetch(`/${entity}s?format=json`)
+    let response = '';
+    if (entity === 'software' || entity === 'hardware') {
+      response = fetch(`/${entity}?format=json`)
+    } else {
+      response = fetch(`/${entity}s?format=json`)
+    }
+    response
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor');
@@ -97,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTable(); // Renderiza la tabla con los datos actualizados
       })
       .catch(error => {
-        console.error('Error al obtener datos actualizados:', error);
+        console.error('Error al obtener datos actualizados1:', error);
       });
   };
 });

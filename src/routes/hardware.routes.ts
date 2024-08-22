@@ -13,9 +13,13 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
         this.router.get(
             '/hardware',
             async (req: Request, res: Response) => {
-                const hardware = this.controller.getHardware(req, res);
-                
-                res.render('admin/hardware', { hardware, datos: {}, error: req.query.error }); 
+                const hardware = await this.controller.getHardware(req, res);
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json(hardware);
+                } else {
+                    res.render('admin/hardware', { hardware, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -27,24 +31,28 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
             (req: Request, res: Response, next: NextFunction) => {
                 this.middleware.hardwareDuplicateValidator(req, res, next);
             },
-            (req: Request, res: Response) => {
-                this.controller.createHardware(req, res);
+            async (req: Request, res: Response) => {
+                await this.controller.createHardware(req, res)
+                res.redirect('/hardware')
             }
         );
 
         this.router.get(
             '/hardware/:id',
             (req: Request, res: Response) => this.controller.getHardwareById(req, res)
+                .then(hardware => res.json(hardware))
         );
 
         this.router.put(
-            '/edificio/:id',
+            '/hardware/:id',
             (req: Request, res: Response) => this.controller.updateHardware(req, res)
+                .then(hardware => res.json(hardware))
         );
 
         this.router.delete(
-            '/edificio/:id',
+            '/hardware/:id',
             (req: Request, res: Response) => this.controller.deleteHardware(req, res)
+                .then(hardware => res.json(hardware))
         );
     }
 }

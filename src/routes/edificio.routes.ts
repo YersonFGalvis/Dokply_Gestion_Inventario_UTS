@@ -14,7 +14,12 @@ export class EdificioRouter extends BaseRouter<EdificioController, EdificioMiddl
             '/edificios',
             async (req: Request, res: Response) => {
                 const edificios = await this.controller.getEdificios(req, res);
-                res.render('admin/edificios', { edificios, statusCode: edificios.status, datos: {}, error: req.query.error }); 
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json({ edificios });
+                } else {
+                    res.render('admin/edificios', { edificios, statusCode: edificios.status, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -35,16 +40,19 @@ export class EdificioRouter extends BaseRouter<EdificioController, EdificioMiddl
         this.router.get(
             '/edificio/:id',
             (req: Request, res: Response) => this.controller.getEdificioById(req, res)
+                .then(edificios => res.json(edificios))
         );
 
         this.router.put(
             '/edificio/:id',
             (req: Request, res: Response) => this.controller.updateEdificio(req, res)
+                .then(edificios => res.json(edificios))
         );
-    
+
         this.router.delete(
             '/edificio/:id',
             (req: Request, res: Response) => this.controller.deleteEdificio(req, res)
+                .then(edificios => res.json(edificios))
         );
     }
 }

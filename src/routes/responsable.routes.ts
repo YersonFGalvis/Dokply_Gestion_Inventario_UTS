@@ -17,8 +17,12 @@ export class ResponsableRouter extends BaseRouter<ResponsableController, Respons
             async (req: Request, res: Response) => {
                 const responsables = await this.controller.getResponsables(req, res);
                 const cargos = await cargoController.getCargos(req, res);
-
-                res.render('admin/responsables', {responsables, statusCode: responsables.status, cargos, datos: {}, error: req.query.error});
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json(responsables);
+                } else {
+                    res.render('admin/responsables', { responsables, statusCode: responsables.status, cargos, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -36,18 +40,21 @@ export class ResponsableRouter extends BaseRouter<ResponsableController, Respons
         this.router.get(
             '/responsable/:id',
             (req: Request, res: Response) => this.controller.getResponsableById(req, res)
+                .then(responsables => res.json(responsables))
         );
 
         this.router.put(
             '/responsable/:id',
             (req: Request, res: Response) => this.controller.updateResponsable(req, res)
+                .then(responsables => res.json(responsables))
         );
-    
+
         this.router.delete(
             '/responsable/:id',
             (req: Request, res: Response) => this.controller.deleteResponsable(req, res)
+                .then(responsables => res.json(responsables))
         );
 
-        
+
     }
 }

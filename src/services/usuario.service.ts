@@ -17,7 +17,10 @@ export class UsuarioService extends BaseService<Usuario> {
 
     async findById(id: number): Promise<Usuario | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        return repository.findOne({
+            where: { id },
+            relations: ['rol_id']
+        });
     }
 
     async findByEmail(email: string): Promise<Usuario | null> {

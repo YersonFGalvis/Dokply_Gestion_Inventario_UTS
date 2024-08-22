@@ -1,67 +1,14 @@
 extends ../layouts/index
-block contenido 
-    h1.text-xl.font-semibold.text-gray-900.text-center(class='sm:text-2xl dark:text-white') Hardware
-    .flex.items-center.ml-auto.space-x-2.p-4(class='sm:space-x-3 justify-end')
-      button#modal_add.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-blue-600(type='button'  class='w-1/2 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
-        svg.w-5.h-5.mr-2.-ml-1(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
-          path(fill-rule='evenodd' d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z' clip-rule='evenodd')
-        |                     Agregar hardware
-      a.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-gray-900.bg-white.border.border-gray-300.rounded-lg(href='#' class='w-1/2 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700')
-        svg.w-5.h-5.mr-2.-ml-1(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
-          path(fill-rule='evenodd' d='M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z' clip-rule='evenodd')
-        |                     Exportar
-    include ../modals/hardware
-    .flex.flex-col
-          .overflow-x-auto.rounded-lg
-            .inline-block.min-w-full.align-middle
-              .overflow-hidden.shadow(class='sm:rounded-lg')
-                table.min-w-full.divide-y.divide-gray-200(class='dark:divide-gray-600')
-                  thead.bg-gray-50(class='dark:bg-gray-700')
-                    tr
-                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
-                        | Id
-                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
-                        | Nombre
-                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
-                        | Descripcion
-                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
-                        | Estado
-                      th.p-4.text-xs.font-medium.tracking-wider.text-left.text-gray-500.uppercase(scope='col' class='dark:text-white')
-                        | Equipo
-                  tbody.bg-white(class='dark:bg-gray-800')
-                    if hardwares.error 
-                      tr
-                        td.p-4.text-sm.text-center.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white' colspan = '4')
-                           = hardwares.error
-                    else
-                      each hardware in hardwares.data
-                        tr(class = 'hover:bg-gray-100')
-                          td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
-                            = hardware.id 
-                          td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
-                            = hardware.aula_id ? hardware.aula_id.nombre : 'No hay aula'
-                          td.p-4.text-sm.font-normal.text-gray-900.whitespace-nowrap(class='dark:text-white')
-                            = hardware.marca
-                          td.p-4.whitespace-nowrap
-                            if hardware.estado == 'Completado'
-                              span.bg-green-100.text-green-800.text-xs.font-medium.mr-2.rounded-md.border.border-green-100(class='px-2.5 py-0.5 dark:bg-gray-700 dark:text-green-400 dark:border-green-500') Completado              
-                            if hardware.estado == 'Cancelado'
-                              span.bg-red-100.text-red-800.text-xs.font-medium.mr-2.rounded-md.border.border-red-100(class='px-2.5 py-0.5 dark:border-red-400 dark:bg-gray-700 dark:text-red-400') Cancelado                    
-                            if hardware.estado == 'En progreso'                     
-                              span.bg-purple-100.text-purple-800.text-xs.font-medium.mr-2.rounded-md.border.border-purple-100(class='px-2.5 py-0.5 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400') En progreso                    
-                            if hardware.estado == 'En revision'                           
-                              span.bg-orange-100.text-orange-800.text-xs.font-medium.mr-2.rounded-md.border.border-orange-100(class='px-2.5 py-0.5 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300') En revision
-    .sticky.bottom-0.right-0.items-center.w-full.p-4.bg-white.border-t.border-gray-200(class='sm:flex sm:justify-end dark:bg-gray-800 dark:border-gray-700')
-          .flex.items-center.mb-4(class='sm:mb-0')
-            span.text-sm.font-normal.text-gray-500(class='dark:text-gray-400')
-                | Mostrando  
-                span.font-semibold.text-gray-900(class='dark:text-white') 1-20
-                |  de 
-                span.font-semibold.text-gray-900(class='dark:text-white') 2290    
-            a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#' class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
-              svg.w-7.h-7(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
-                path(fill-rule='evenodd' d='M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z' clip-rule='evenodd')
-            a.inline-flex.justify-center.p-1.mr-2.text-gray-500.rounded.cursor-pointer(href='#' class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
-              svg.w-7.h-7(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
-                path(fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd')                 
-    script(src="/js/modal.js")        
+block contenido
+  h1.text-xl.font-semibold.text-gray-900.text-center(class='sm:text-2xl dark:text-white') Hardware
+  .flex.items-center.ml-auto.space-x-2.p-4(class='sm:space-x-3 justify-end')
+    button#modal_add.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-blue-600(data-entity="hardware" data-action="add" type='button'  class='w-1/2 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
+      svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+        path(fill-rule='evenodd' d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z' clip-rule='evenodd')
+  .flex.flex-col
+    .overflow-x-auto.rounded-lg
+      .inline-block.min-w-full.align-middle
+        .overflow-hidden.shadow(class='sm:rounded-lg')
+          .flex.items-center.justify-between.mb-4
+            div#table(data-columnas=['Nombre', 'Descripcion', 'Estado', 'Acciones'] data-filas=['data.nombre', 'data.descripcion', 'data.estado'] data-entity="hardware" data-datos=hardware.data)
+  include ../modals/hardware   

@@ -6,16 +6,21 @@ import { SoftwareMiddleware } from '../middlewares/software.middleware';
 export class SoftwareRouter extends BaseRouter<SoftwareController, SoftwareMiddleware> {
 
     constructor() {
-        super(SoftwareController, SoftwareMiddleware);       
+        super(SoftwareController, SoftwareMiddleware);
     }
 
     routes(): void {
         this.router.get(
-            '/software', 
+            '/software',
             async (req: Request, res: Response) => {
-                const software = this.controller.getSoftware(req, res);
-                
-                res.render('admin/software', { software, datos: {}, error: req.query.error }); 
+                const software = await this.controller.getSoftware(req, res);
+
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json(software);
+                } else {
+                    res.render('admin/software', { software, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -27,24 +32,28 @@ export class SoftwareRouter extends BaseRouter<SoftwareController, SoftwareMiddl
             (req: Request, res: Response, next: NextFunction) => {
                 this.middleware.softwareDuplicateValidator(req, res, next);
             },
-            (req: Request, res: Response) => {
-                this.controller.createSoftware(req, res);
+            async (req: Request, res: Response) => {
+                await this.controller.createSoftware(req, res);
+                res.redirect('/software')
             }
         );
 
         this.router.get(
-            '/software/:id', 
+            '/software/:id',
             (req: Request, res: Response) => this.controller.getSoftwareById(req, res)
+                .then(software => res.json(software))
         );
 
         this.router.put(
             '/software/:id',
             (req: Request, res: Response) => this.controller.updateSoftware(req, res)
+                .then(software => res.json(software))
         );
-    
+
         this.router.delete(
             '/software/:id',
             (req: Request, res: Response) => this.controller.deleteSoftware(req, res)
+                .then(software => res.json(software))
         );
     }
 }

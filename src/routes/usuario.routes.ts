@@ -21,8 +21,12 @@ export class UsuarioRouter extends BaseRouter<UsuarioController, UsuarioMiddlewa
             async (req: Request, res: Response) => {
                 const users = await this.controller.getUsers(req, res);
                 const roles = await rolController.getRols(req, res);
-
-                res.render('admin/user', {users, roles, datos: {}, error: req.query.error});
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json({users, roles});
+                } else {
+                    res.render('admin/user', { users, roles, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -41,18 +45,27 @@ export class UsuarioRouter extends BaseRouter<UsuarioController, UsuarioMiddlewa
         );
 
         this.router.get(
-            "/usuarios/usuario-rol/:id",
+            "/usuario/usuario-rol/:id",
             (req, res) => this.controller.getUserWithRolById(req, res)
+                .then(users => res.json(users))
+        );
+
+        this.router.get(
+            "/usuario/:id",
+            (req, res) => this.controller.getUserById(req, res)
+                .then(users => res.json(users))
         );
 
         this.router.put(
-            '/usuarios/:id',
+            '/usuario/:id',
             (req: Request, res: Response) => this.controller.updateUser(req, res)
+                .then(users => res.json(users))
         );
-    
+
         this.router.delete(
-            '/usuarios/:id',
+            '/usuario/:id',
             (req: Request, res: Response) => this.controller.deleteUser(req, res)
+                .then(users => res.json(users))
         );
 
     }

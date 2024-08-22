@@ -8,17 +8,21 @@ const edificioController = new EdificioController();
 export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
 
     constructor() {
-        super(AulaController, AulaMiddleware);       
+        super(AulaController, AulaMiddleware);
     }
 
     routes(): void {
         this.router.get(
-            '/aulas', 
+            '/aulas',
             async (req: Request, res: Response) => {
                 const aulas = await this.controller.getAulas(req, res);
                 const edificios = await edificioController.getEdificios(req, res);
-
-                res.render('admin/aulas', { aulas, statusCode: aulas.status, edificios, datos: {}, error: req.query.error }); 
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json({ aulas, edificios });
+                } else {
+                    res.render('admin/aulas', { aulas, statusCode: aulas.status, edificios, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -37,18 +41,21 @@ export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
         );
 
         this.router.get(
-            '/aula/:id', 
+            '/aula/:id',
             (req: Request, res: Response) => this.controller.getAulaById(req, res)
+                .then(aulas => res.json(aulas))
         );
 
         this.router.put(
             '/aula/:id',
             (req: Request, res: Response) => this.controller.updateAula(req, res)
+                .then(aulas => res.json(aulas))
         );
-    
+
         this.router.delete(
             '/aula/:id',
             (req: Request, res: Response) => this.controller.deleteAula(req, res)
+                .then(aulas => res.json(aulas))
         );
     }
 }

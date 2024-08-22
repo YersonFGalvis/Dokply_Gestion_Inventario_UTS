@@ -1,29 +1,138 @@
-const openModal = (modal, modalBackground) => {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    modalBackground.classList.remove('hidden');
+const toggleModal = (modal, modalBackground, action) => {
+    const isOpen = action === 'open';
+    modal.classList.toggle('hidden', !isOpen);
+    modal.classList.toggle('flex', isOpen);
+    modalBackground.classList.toggle('hidden', !isOpen);
 };
 
-const closeModal = (modal, modalBackground) => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    modalBackground.classList.add('hidden');
+const fetchData = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Error en la respuesta del servidor');
+    return response.json();
 };
 
 const updateData = async (entity) => {
     try {
-        const response = await fetch(`/${entity}s?format=json`);
-        if (!response.ok) throw new Error('Error en la respuesta del servidor');
-        const data = await response.json();
-        window.Data = Array.isArray(data.data) ? data.data : []; // Actualiza los datos globales
-        window.updateTable(); // Renderiza la tabla con los datos actualizados
+        const response = await fetchData(`/${entity === 'software' || entity === 'hardware' ? entity : entity + 's'}?format=json`);
+        window.Data = Array.isArray(response.data) ? response.data : [];
         window.location.reload();
     } catch (error) {
         console.error('Error al obtener datos actualizados:', error);
     }
 };
 
-// Manejar clic en botones
+const populateSelect = (selectElement, value) => {
+    if (!selectElement) return;
+    const options = Array.from(selectElement.options);
+    options.forEach(option => {
+        if (option.value === String(value)) {
+            option.selected = true;
+        } else {
+            option.selected = false;
+        }
+    });
+};
+
+const handleModalActions = async (action, entity, id) => {
+    const modalSelector = `#${action}-${entity}-modal`;
+    const modal = document.querySelector(modalSelector);
+    const modalBackground = document.querySelector(`#modal-background-${action}`);
+
+    if (!modal || !modalBackground) return;
+
+    toggleModal(modal, modalBackground, 'open');
+
+    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol', 'pass', 'password_confirm'];
+
+    if (action === 'edit') {
+        if (!id) {
+            console.error('ID is missing for edit action');
+            return;
+        }
+
+        try {
+            const data = await fetchData(`/${entity}/${id}`);
+            fields.forEach(field => {
+                const input = modal.querySelector(`input[name="${field}"], select[name="${field}"]`);
+                if (input) {
+                    const value = data?.data[field];
+                    if (input.tagName === 'SELECT') {
+                        populateSelect(input, value?.id || value);
+                    } else {
+                        input.value = value !== undefined && value !== null ? value : '';
+                    }
+                }
+            });
+
+            modal.querySelector('#edit').onclick = async (e) => {
+                e.preventDefault();
+                try {
+                    const body = fields.reduce((obj, field) => {
+                        const input = modal.querySelector(`input[name="${field}"], select[name="${field}"]`);
+                        if (input) obj[field] = input.value;
+                        return obj;
+                    }, {});
+
+                    if (body.pass === body.password_confirm) {
+                        await fetch(`/${entity}/${id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(body)
+                        });
+                        await updateData(entity);
+                        toggleModal(modal, modalBackground, 'close');
+                    } else {
+                        alert('Las contraseñas deben ser iguales');
+                    }
+                } catch (error) {
+                    console.error('Error updating data:', error);
+                }
+            };
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else if (action === 'delete') {
+        modal.querySelector('#delete').onclick = async () => {
+            if (!id) {
+                console.error('ID is missing for delete action');
+                return;
+            }
+            try {
+                await fetch(`/${entity}/${id}`, { method: 'DELETE' });
+                await updateData(entity);
+                toggleModal(modal, modalBackground, 'close');
+            } catch (error) {
+                console.error('Error deleting data:', error);
+            }
+        };
+    } else if (action === 'add') {
+        modal.querySelector('#add').onclick = async () => {
+            try {
+                const body = fields.reduce((obj, field) => {
+                    const input = modal.querySelector(`input[name="${field}"], select[name="${field}"]`);
+                    if (input) obj[field] = input.value;
+                    return obj;
+                }, {});
+
+                if (body.pass === body.password_confirm) {
+                    await fetch(`/crear/${entity}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
+                    });
+                    await updateData(entity);
+                    toggleModal(modal, modalBackground, 'close');
+                } else {
+                    alert('Las contraseñas deben ser iguales');
+                }
+            } catch (error) {
+                console.error('Error adding data:', error);
+            }
+        };
+    }
+};
+
+// Event listeners for modal actions
 document.addEventListener('click', async (event) => {
     const target = event.target.closest('[data-action]');
     if (!target) return;
@@ -33,117 +142,27 @@ document.addEventListener('click', async (event) => {
     const id = target.getAttribute('data-id');
 
     if (entity && action) {
-        const modalSelector = action === 'add'
-            ? `#add-${entity}-modal`
-            : action === 'edit'
-                ? `#edit-${entity}-modal`
-                : action === 'delete'
-                    ? `#delete-${entity}-modal`
-                    : null;
+        await handleModalActions(action, entity, id);
+    }
+});
 
-        const modal = document.querySelector(modalSelector);
-        const modalBackground = document.querySelector(`#modal-background-${action}`);
+// Close modal when clicking outside the modal
+document.addEventListener('click', (event) => {
+    const target = event.target.closest('[id^="modal-background"]');
+    if (target) {
+        const visibleModal = document.querySelector('.modal.flex');
+        if (visibleModal) toggleModal(visibleModal, target, 'close');
+    }
+});
 
-        if (modalBackground) {
-            if (action === 'edit') {
-                if (modal) {
-                    openModal(modal, modalBackground);
-
-                    try {
-                        const response = await fetch(`/${entity}/${id}`);
-                        if (!response.ok) throw new Error('Error fetching data');
-                        const data = await response.json();
-
-                        // Llenar el modal con datos
-                        modal.querySelector('input[name="nombre"]').value = data?.data?.nombre || '';
-
-                        // Configura el botón de guardar para PUT
-                        modal.querySelector('#edit').onclick = async (event) => {
-                            event.preventDefault();
-                            try {
-                                const nombre = modal.querySelector('input[name="nombre"]').value;
-                                const updateResponse = await fetch(`/${entity}/${id}`, {
-                                    method: 'PUT',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({ nombre })
-                                });
-                                if (!updateResponse.ok) throw new Error('Error updating data');
-                                await updateData(entity); // Actualiza los datos globales
-                                closeModal(modal, modalBackground);
-                            } catch (error) {
-                                console.error('Error updating data:', error);
-                            }
-                        };
-                        
-
-                    } catch (error) {
-                        console.error('Error fetching data:', error);
-                    }
-                }
-            } else if (action === 'delete') {
-                if (modal) {
-                    openModal(modal, modalBackground);
-                    modal.querySelector('#delete').onclick = async () => {
-                        try {
-                            await fetch(`/${entity}/${id}`, {
-                                method: 'DELETE',
-                            });
-                            await updateData(entity); // Actualiza los datos globales
-                            closeModal(modal, modalBackground);
-                        } catch (error) {
-                            console.error('Error deleting data:', error);
-                        }
-                    };
-                }
-            } else if (action === 'add') {
-                if (modal) {
-                    openModal(modal, modalBackground);
-                    modal.querySelector('#add').onclick = async () => {
-                        try {
-                            const nombre = modal.querySelector('input[name="nombre"]').value;
-                            await fetch(`/crear/${entity}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ nombre })
-                            });
-                            await updateData(entity); // Actualiza los datos globales
-                            closeModal(modal, modalBackground);
-                        } catch (error) {
-                            console.error('Error adding data:', error);
-                        }
-                    };
-                }
-            }
+// Close modal when clicking on close button
+document.addEventListener('click', (event) => {
+    const target = event.target.closest('.close-modal-btn');
+    if (target) {
+        const modal = target.closest('.modal');
+        const modalBackground = document.querySelector(`#modal-background-${modal?.getAttribute('data-action')}`);
+        if (modal && modalBackground) {
+            toggleModal(modal, modalBackground, 'close');
         }
     }
-    // Cerrar modal al hacer clic en el fondo
-    document.querySelectorAll('[id^="modal-background"]').forEach(background => {
-        background.addEventListener('click', (event) => {
-            const modal = document.querySelector('.modal.flex'); // Selecciona el modal que está visible
-            if (modal) {
-                closeModal(modal, background);
-            }
-        });
-    });
-
-    // Cerrar modal al hacer clic en el botón de cerrar
-    document.querySelectorAll('.close-modal-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const modal = e.target.closest('.modal');
-            if (modal) {
-                const modalBackground = document.querySelector(`#modal-background-${action}`);
-                if (modalBackground) {
-                    closeModal(modal, modalBackground);
-                } else {
-                    console.error(`Fondo del modal no encontrado para la acción: ${action}`);
-                }
-            } else {
-                console.error('Modal no encontrado.');
-            }
-        });
-    });
 });

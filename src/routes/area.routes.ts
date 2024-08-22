@@ -49,19 +49,19 @@ export class AreaRouter extends BaseRouter<AreaController, AreaMiddleware> {
         this.router.get(
             '/area/:id',
             (req: Request, res: Response) => this.controller.getAreaById(req, res)
-                .then(area => res.json(area))
+                .then(areas => res.json(areas))
         );
 
         this.router.put(
             '/area/:id',
             (req: Request, res: Response) => this.controller.updateArea(req, res)
-                .then(area => res.json(area))
+                .then(areas => res.json(areas))
         );
 
         this.router.delete(
             '/area/:id',
             (req: Request, res: Response) =>  this.controller.deleteArea(req, res)
-                .then(area => res.json(area))
+                .then(areas => res.json(areas))
         );
     }
 }

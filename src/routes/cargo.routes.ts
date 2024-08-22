@@ -18,7 +18,12 @@ export class CargoRouter extends BaseRouter<CargoController, CargoMiddleware> {
                 const cargos = await this.controller.getCargos(req, res);
                 const areas = await areaController.getAreas(req, res);
 
-                res.render('admin/cargos', { cargos, statusCode: cargos.status, areas, datos: {}, error: req.query.error });
+                if (req.query.format === 'json') {
+                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
+                    res.json({ cargos, areas });
+                } else {
+                    res.render('admin/cargos', { cargos, statusCode: cargos.status, areas, datos: {}, error: req.query.error });
+                }
             }
         );
 
@@ -39,17 +44,20 @@ export class CargoRouter extends BaseRouter<CargoController, CargoMiddleware> {
         this.router.get(
             '/cargo/:id',
             (req: Request, res: Response) => this.controller.getCargoById(req, res)
+                .then(cargos => res.json(cargos))
         );
 
         this.router.put(
             '/cargo/:id',
             (req: Request, res: Response) => this.controller.updateCargo(req, res)
+                .then(cargos => res.json(cargos))
         );
-    
+
         this.router.delete(
             '/cargo/:id',
             (req: Request, res: Response) => this.controller.deleteCargo(req, res)
+                .then(cargos => res.json(cargos))
         );
-        
+
     }
 }
