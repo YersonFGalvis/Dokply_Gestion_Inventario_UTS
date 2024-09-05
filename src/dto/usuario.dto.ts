@@ -16,7 +16,5 @@ export class UsuarioDTO {
 
   @IsNotEmpty()
   @IsEnum(RoleType)
-  rol: RoleType;
+  rol_id: RoleType;
 }
-
-

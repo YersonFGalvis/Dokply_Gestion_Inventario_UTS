@@ -17,6 +17,7 @@ export class AuthController extends AuthService {
       const encode = await this.generateJWT(usuario,password);
 
       res.header("Content-Type", "application/json");
+      res.cookie('user', encode.usuarioDB?.id);
       res.cookie("accessToken", encode.accessToken, { maxAge: 60000 * 60 }).redirect('/dashboard');
       // res.write(JSON.stringify(encode));
       res.end();

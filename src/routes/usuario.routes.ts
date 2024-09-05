@@ -23,7 +23,7 @@ export class UsuarioRouter extends BaseRouter<UsuarioController, UsuarioMiddlewa
                 const roles = await rolController.getRols(req, res);
                 if (req.query.format === 'json') {
                     // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
-                    res.json({users, roles});
+                    res.json({ users, roles });
                 } else {
                     res.render('admin/user', { users, roles, datos: {}, error: req.query.error });
                 }
@@ -32,11 +32,11 @@ export class UsuarioRouter extends BaseRouter<UsuarioController, UsuarioMiddlewa
 
         this.router.post(
             '/crear/usuario',
-            (req: Request, res: Response, next: NextFunction) => {
-                this.middleware.usuarioValidator(req, res, next);
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.middleware.usuarioValidator(req, res, next);
             },
-            (req: Request, res: Response, next: NextFunction) => {
-                this.middleware.usuarioEmailDuplicateValidator(req, res, next);
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.middleware.usuarioEmailDuplicateValidator(req, res, next);
             },
             async (req: Request, res: Response) => {
                 await this.controller.createUser(req, res);

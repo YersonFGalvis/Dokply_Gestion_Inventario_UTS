@@ -22,7 +22,11 @@
               input#descripcion.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='descripcion' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Descripcion' required='')      
             div
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
-              input#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='estado' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Estado' required='')      
+              select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+                option(value="") - Seleccione el estado -   
+                option(value="Activo") Activo   
+                option(value="Inactivo") Inactivo  
+                option(value="En reparación") En reparación 
           .flex.justify-end.mt-4
             button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="hardware" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
               |  Agregar
@@ -51,7 +55,11 @@
               input#descripcion.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='descripcion' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Descripcion' required='')      
             div
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
-              input#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='estado' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Estado' required='')      
+              select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+                option(value="") - Seleccione el estado -   
+                option(value="Activo") Activo   
+                option(value="Inactivo") Inactivo  
+                option(value="En reparación") En reparación  
           .flex.justify-end.mt-4
             button#edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="hardware" data-action="edit" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
               |  Editar

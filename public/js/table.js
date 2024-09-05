@@ -74,8 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
           'font-size': '0.875rem',
           'font-weight': '400',
           'color': '#1f2937',
-          'white-space': 'nowrap',
-          'width': '50%'
+          'white-space': 'normal',
+          'overflow': 'hidden',
+          'text-overflow': 'ellipsis',
+          'word-wrap': 'break-word',
+          'max-width': '200px' 
         },
         tr: {
           'hover': 'gray-100'

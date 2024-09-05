@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { UsuarioRouter } from '../routes/usuario.routes';import { RolRouter } from '../routes/rol.routes';
 import { RegistroMantenimientoRouter } from '../routes/registroMantenimiento.routes';
 import { AuthRouter } from '../routes/auth.routes';
@@ -23,6 +24,7 @@ export class expressConfiguration {
       this.app.use(express.json());
       this.app.use(express.urlencoded({ extended: true }));
       this.app.use(express.static('public'));
+      this.app.use(cookieParser());
       this.app.use("/", this.routers());
       this.app.set('view engine', 'pug');
       this.app.set('views', './src/views');

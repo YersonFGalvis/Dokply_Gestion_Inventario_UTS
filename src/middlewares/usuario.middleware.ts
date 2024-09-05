@@ -11,14 +11,14 @@ export class UsuarioMiddleware extends HelperMiddleware{
     { super();}
     usuarioValidator(req: Request, res: Response, next: NextFunction){
 
-        const { nombre, email, pass, rol } = req.body;
+        const { nombre, email, pass, rol_id } = req.body;
 
         const valid = new UsuarioDTO()
 
         valid.nombre = nombre
         valid.email = email
         valid.pass = pass
-        valid.rol = Number(rol)
+        valid.rol_id = Number(rol_id)
 
         validate(valid).then((err) => {
             if(err.length > 0){

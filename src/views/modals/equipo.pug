@@ -12,41 +12,41 @@
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal
         // Modal body
-        form(onsubmit="return false;")
-          .grid.gap-4.mb-4(class='sm:grid-cols-2')
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
-              select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
-                option(value="") - Seleccione el aula -
-                  if aulas.data
-                    each aula in aulas.data
-                      option(value=aula.id selected= datos.aula ? datos.aula == aula.id ? true : false : null)= aula.nombre 
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
-              select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
-                  option(value="") - Seleccione el estado -   
-                  option(value="1") Actualizado   
-                  option(value="2") Repotenciar   
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca' class='dark:text-white') Marca
-              input#marca.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='marca' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre la marca' required='')  
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
-              select#hardware.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'hardware_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
-                option(value="") - Seleccione el hardware -
-                  if hardware.data
-                    each hardw in hardware.data
-                      option(value=hardw.id selected= datos.hardw ? datos.hardw == hardw.id ? true : false : null)= hardw.nombre 
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software
-              select#software.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'software_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
-                option(value="") - Seleccione el software -
-                  if software.data
-                    each softw in software.data
-                      option(value=softw.id selected= datos.softw ? datos.softw == softw.id ? true : false : null)= softw.nombre 
-          .flex.justify-end.mt-4
-            button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
-              |  Agregar
+        form(onsubmit="return validateForm();" class="overflow-y-auto max-h-[calc(75vh-5rem)]")        
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
+            select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+              option(value="") - Seleccione el aula -
+                if aulas.data
+                  each aula in aulas.data
+                    option(value=aula.id selected= datos.aula ? datos.aula == aula.id ? true : false : null)= aula.nombre 
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
+            select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+                option(value="") - Seleccione el estado -   
+                option(value="Actualizado") Actualizado   
+                option(value="Repotenciar") Repotenciar   
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca' class='dark:text-white') Marca
+            input#marca.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='marca' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre la marca' required = '')  
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='responsable' class='dark:text-white') Responsable
+            select#responsable.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'responsable_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
+              option(value="") - Seleccione el responsable -
+                if responsables.data
+                  each responsable in responsables.data
+                    option(value=responsable.id selected= datos.responsable ? datos.responsable == responsable.id ? true : false : null)=`${responsable.nombres} ${responsable.apellidos}` 
+          #hardware-container.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
+          .flex.justify-center.mb-2
+            button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+          #software-container.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
+          .flex.justify-center.mb-2
+            button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+        .flex.justify-end.mt-4
+          button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+            |  Agregar
 
 #edit-equipo-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="equipo" data-action="edit" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
     .fixed.inset-0.bg-gray-600.bg-opacity-50.hidden.z-40#modal-background-edit
@@ -62,26 +62,43 @@
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal
         // Modal body
-        form(onsubmit="return false;")
-          .grid.gap-4.mb-4(class='sm:grid-cols-2')
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
-              select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
-                option(value="") - Seleccione el aula -
-                  if aulas.data
-                    each aula in aulas.data
-                      option(value=aula.id selected= datos.aula ? datos.aula == aula.id ? true : false : null)= aula.nombre 
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
-              select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
-                  option(value="") - Seleccione el estado -   
-                  option(value="1") Completado   
-            div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca' class='dark:text-white') Marca
-              input#marca.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='marca' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre la marca' required='')  
-          .flex.justify-end.mt-4
-            button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="edit" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
-              |  Editar
+        form(onsubmit="return validateForm();" class="overflow-y-auto max-h-[calc(75vh-5rem)]")
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
+            select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+              option(value="") - Seleccione el aula -
+                if aulas.data
+                  each aula in aulas.data
+                    option(value=aula.id selected=datos.aula ? datos.aula == aula.id ? true : false : null)= aula.nombre 
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
+            select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+                option(value="") - Seleccione el estado -   
+                option(value="Actualizado") Actualizado   
+                option(value="Repotenciar") Repotenciar   
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca' class='dark:text-white') Marca
+            input#marca.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='marca' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre la marca' required='')  
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='responsable' class='dark:text-white') Responsable
+            select#responsable.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='responsable_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
+              option(value="") - Seleccione el responsable -
+                if responsables.data
+                  each responsable in responsables.data
+                    option(value=responsable.id selected=datos.responsable ? datos.responsable == responsable.id ? true : false : null)= `${responsable.nombres} ${responsable.apellidos}` 
+          #hardware-container-edit.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
+            // Los selects de hardware se generarán dinámicamente aquí
+          .flex.justify-center.mb-2
+            button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+          #software-container-edit.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
+            // Los selects de software se generarán dinámicamente aquí
+          .flex.justify-center.mb-2
+            button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+        .flex.justify-end.mt-4
+          button#edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="edit" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+            |  Editar
 
 #delete-equipo-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="equipo" data-action="delete" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
     .fixed.inset-0.bg-gray-600.bg-opacity-50.hidden.z-40#modal-background-delete

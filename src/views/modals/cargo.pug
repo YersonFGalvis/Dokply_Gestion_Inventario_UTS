@@ -19,7 +19,7 @@
               input#nombre.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='nombre' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre del cargo' required='')
             div
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='area' class='dark:text-white') Area
-              select#area.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'area_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
+              select#area.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'area_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
                   option(value="") - Seleccione el area -
                   if areas.data
                     each area in areas.data

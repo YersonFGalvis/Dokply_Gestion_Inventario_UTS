@@ -50,7 +50,7 @@ export class UsuarioService extends BaseService<Usuario> {
         const repository = await this.getRepository();
         const newUser = repository.create(body);
         newUser.pass = await bcrypt.hash(newUser.pass, 10);
-        newUser.rol_id = body.rol;
+        newUser.rol_id = body.rol_id;
         return repository.save(newUser);
     }
 

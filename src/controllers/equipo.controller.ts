@@ -31,7 +31,8 @@ export class EquipoController {
             if (pdf) {
                 return data;
             } else {
-                res.render('QR', { equipo: data });
+                // res.render('QR', { equipo: data });
+                return this.httpResponse.OK(data);
             }
         } catch (e: any) {
             console.error(e);
@@ -41,9 +42,16 @@ export class EquipoController {
 
     async createEquipo(req: Request, res: Response) {
         try {
-            console.log(req)
+            console.log({data: req.body});
             const data = await this.equipoService.createEquipo(req.body);
-            console.log(data)
+            
+            // fetch('/ruta-al-servidor', {
+            //     method: 'POST',
+            //     body: formData
+            //   }).then(response => response.json())
+            //     .then(data => console.log(data))
+            //     .catch(error => console.error('Error:', error));
+
             return this.httpResponse.OK(data);
         } catch (error) {
             return this.httpResponse.ServerError( "Internal server error");
