@@ -20,6 +20,7 @@ export class EquipoRouter extends BaseRouter<EquipoController, EquipoMiddleware>
     routes(): void {
         this.router.get(
             '/equipos',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const equipos = await this.controller.getEquipos(req, res)
                 const aulas = await aulaController.getAulas(req, res);

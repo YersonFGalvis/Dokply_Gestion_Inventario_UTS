@@ -12,6 +12,7 @@ export class RolRouter extends BaseRouter<RolController,RolMiddleware>{
     routes(): void {
         this.router.get(
             '/roles', 
+            this.middleware.passAuth('jwt'),
             (req:Request, res:Response) => this.controller.getRols(req, res)
         );
 

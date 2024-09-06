@@ -3,35 +3,35 @@ import passport from "passport";
 import { RoleType } from "../helpers/enums";
 import { Usuario } from "../entity";
 import { HttpResponse } from "../helpers/http";
-import { PayloadToken } from "../interfaces/auth.interface";
+import { UserPayload } from "src/interfaces/auth.interface";
 
 export class HelperMiddleware {
   constructor(public _httpResponse: HttpResponse = new HttpResponse()) {}
   
-
   passAuth(type: string) {
-
     return (req: Request, res: Response, next: NextFunction) => {
       passport.authenticate(type, { session: false }, (err: Error | null, user: Usuario | false, info: any) => {
         if (err) {
           return next(err);
         }
         if (!user) {
-          const message = info?.message || 'Unauthorized';
-          return this._httpResponse.Unauthorized(message);
+          return res.status(401).json({ message: info?.message || 'Unauthorized' }); // Termina la solicitud si no hay usuario
         }
         req.user = user;
-        next();
+        next(); 
       })(req, res, next);
     };
   }
 
-  checkAdminRole(req: Request, res: Response, next: NextFunction) {
-    const payload = req.user as { usuario_id: number, rol: RoleType };
+  checkCoordinadorRole(req: Request, res: Response, next: NextFunction) {
+    const { rol }: UserPayload = req.user as UserPayload;
     
-    if (payload.rol !== RoleType.COORDINADOR) {
-      return this._httpResponse.Unauthorized( "No tienes permiso de COORDINADOR");
+    if (rol === RoleType.COORDINADOR) {
+      return next();
     }
-    return next();
+
+    return res.status(401).json({ message: "No tienes permiso de COORDINADOR" });
   }
+  
+
 }

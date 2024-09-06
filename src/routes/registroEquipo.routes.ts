@@ -12,6 +12,7 @@ export class RegistroEquipoRouter extends BaseRouter<RegistroEquipoController, R
     routes(): void {
         this.router.get(
             '/registroEquipos', 
+            this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => this.controller.getRegistroEquipos(req, res)
         );
 

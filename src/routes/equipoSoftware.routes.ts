@@ -12,6 +12,7 @@ export class EquipoSoftwareRouter extends BaseRouter<EquipoSoftwareController, E
     routes(): void {
         this.router.get(
             '/equiposSoftware',
+            this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => {
                 this.controller.getEquiposSoftware(req, res);
             }

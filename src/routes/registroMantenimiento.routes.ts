@@ -11,6 +11,7 @@ export class RegistroMantenimientoRouter extends BaseRouter<RegistroMantenimient
     routes(): void {
         this.router.get(
             '/registroMantenimientos', 
+            this.middleware.passAuth('jwt'),
             (req:Request, res:Response) => {
                 this.controller.getRegistroMantenimientos(req, res);
             }

@@ -12,6 +12,7 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
     routes(): void {
         this.router.get(
             '/hardware',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const hardware = await this.controller.getHardware(req, res);
                 if (req.query.format === 'json') {

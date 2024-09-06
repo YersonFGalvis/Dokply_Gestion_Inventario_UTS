@@ -16,7 +16,9 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
             res.render('auth/login', { error: req.query.error });
         });
 
-        this.router.get('/logout', (req: Request, res: Response) => {
+        this.router.get('/logout', 
+            this.middleware.passAuth('jwt'),
+            (req: Request, res: Response) => {
             const cookies = req.cookies;
         
             Object.keys(cookies).forEach(cookieName => {
@@ -31,7 +33,9 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
             res.render('auth/registro', { roles, datos: {}, error: req.query.error });
         });
 
-        this.router.get('/settings', async (req: Request, res: Response) => { 
+        this.router.get('/settings', 
+            this.middleware.passAuth('jwt'),
+            async (req: Request, res: Response) => { 
             const userCookie = req.cookies['user']
 
             const userId = await usuarioController.getUserById(req, res, userCookie);
@@ -39,7 +43,9 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
             res.render('admin/settings', { userId, datos: {}, error: req.query.error });
         });
 
-        this.router.get('/dashboard', (req: Request, res: Response) => {
+        this.router.get('/dashboard',
+            this.middleware.passAuth('jwt'),
+            (req: Request, res: Response) => {
             res.render('admin/dashboard', { error: req.query.error });
         });
 

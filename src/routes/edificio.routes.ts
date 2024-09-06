@@ -12,6 +12,7 @@ export class EdificioRouter extends BaseRouter<EdificioController, EdificioMiddl
     routes(): void {
         this.router.get(
             '/edificios',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const edificios = await this.controller.getEdificios(req, res);
                 if (req.query.format === 'json') {

@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { RolService } from "../services/rol.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class RolMiddleware {
+export class RolMiddleware extends HelperMiddleware{
     constructor(
-                    private readonly _httpResponse:HttpResponse = new HttpResponse,
+                    public readonly _httpResponse:HttpResponse = new HttpResponse,
                     private readonly _rolService:RolService = new RolService()
-                ){}
+                ){super();}
     rolValidator(req: Request, res: Response, next: NextFunction){
 
         const valid = new RolDTO()

@@ -4,10 +4,11 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { ResponsableService } from "../services/responsable.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class ResponsableMiddleware {
+export class ResponsableMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),    ) {}
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),    ) {super();}
 
     responsableValidator(req: Request, res: Response, next: NextFunction) {
 

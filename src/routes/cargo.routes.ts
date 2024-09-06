@@ -14,6 +14,7 @@ export class CargoRouter extends BaseRouter<CargoController, CargoMiddleware> {
     routes(): void {
         this.router.get(
             '/cargos',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const cargos = await this.controller.getCargos(req, res);
                 const areas = await areaController.getAreas(req, res);

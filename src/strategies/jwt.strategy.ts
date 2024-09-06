@@ -14,7 +14,7 @@ export class JwtStrategy {
     return PassportUseJwtWithReq(
       "jwt",
       {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        jwtFromRequest: ExtractJwt.fromExtractors([ExtractJwt.fromExtractors([ExtractJwt.fromExtractors([ExtractJwt.fromAuthHeaderAsBearerToken(), req => req.cookies['accessToken']])])]),
         secretOrKey: "MyS3Cr3t",
         passReqToCallback: true 
       },

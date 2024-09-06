@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { HardwareService } from "../services/hardware.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class HardwareMiddleware {
+export class HardwareMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _hardwareService: HardwareService = new HardwareService()
-    ) {}
+    ) {super();}
 
     hardwareValidator(req: Request, res: Response, next: NextFunction) {
 

@@ -12,7 +12,9 @@ export class AreaRouter extends BaseRouter<AreaController, AreaMiddleware> {
 
     routes(): void {
 
-        this.router.get('/areas', async (req: Request, res: Response) => {
+        this.router.get('/areas', 
+            this.middleware.passAuth('jwt'),
+            async (req: Request, res: Response) => {
             try {
                 const areas = await this.controller.getAreas(req, res);
                 if (req.query.format === 'json') {

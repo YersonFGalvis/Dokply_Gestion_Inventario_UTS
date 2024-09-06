@@ -12,6 +12,7 @@ export class SoftwareRouter extends BaseRouter<SoftwareController, SoftwareMiddl
     routes(): void {
         this.router.get(
             '/software',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const software = await this.controller.getSoftware(req, res);
 

@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { SoftwareService } from "../services/software.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class SoftwareMiddleware {
+export class SoftwareMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _softwareService: SoftwareService = new SoftwareService()
-    ) {}
+    ) {super();}
 
     softwareValidator(req: Request, res: Response, next: NextFunction) {
         

@@ -12,6 +12,7 @@ export class EquipoHardwareRouter extends BaseRouter<EquipoHardwareController, E
     routes(): void {
         this.router.get(
             '/equiposHardware',
+            this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => {
                 this.controller.getEquiposHardware(req, res);
             }

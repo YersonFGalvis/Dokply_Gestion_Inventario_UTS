@@ -11,13 +11,14 @@ export class UsuarioRouter extends BaseRouter<UsuarioController, UsuarioMiddlewa
         super(UsuarioController, UsuarioMiddleware);
     }
 
+
     routes(): void {
         this.router.get(
-            '/usuarios',
-            // this.middleware.passAuth("jwt"),
-            // (req: Request, res: Response, next: NextFunction) => {
-            //     this.middleware.checkAdminRole(req, res, next);
-            // },
+            '/usuarios',           
+            this.middleware.passAuth('jwt'),
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.middleware.checkCoordinadorRole(req, res, next);
+            },
             async (req: Request, res: Response) => {
                 const users = await this.controller.getUsers(req, res);
                 const roles = await rolController.getRols(req, res);

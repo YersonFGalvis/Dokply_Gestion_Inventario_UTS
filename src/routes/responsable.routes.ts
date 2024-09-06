@@ -14,6 +14,7 @@ export class ResponsableRouter extends BaseRouter<ResponsableController, Respons
     routes(): void {
         this.router.get(
             '/responsables',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const responsables = await this.controller.getResponsables(req, res);
                 const cargos = await cargoController.getCargos(req, res);

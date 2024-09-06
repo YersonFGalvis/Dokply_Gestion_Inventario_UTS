@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { EdificioService } from "../services/edificio.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class EdificioMiddleware {
+export class EdificioMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _edificioService: EdificioService = new EdificioService()
-    ) {}
+    ) {super();}
 
     edificioValidator(req: Request, res: Response, next: NextFunction) {
         

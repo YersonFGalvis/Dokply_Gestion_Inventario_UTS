@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { RegistroEquipoService } from "../services/registroEquipo.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class RegistroEquipoMiddleware {
+export class RegistroEquipoMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _registroEquipoService: RegistroEquipoService = new RegistroEquipoService()
-    ) {}
+    ) {super();}
 
     registroEquipoValidator(req: Request, res: Response, next: NextFunction) {
         

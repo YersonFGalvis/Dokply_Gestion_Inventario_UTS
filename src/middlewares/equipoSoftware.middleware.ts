@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { EquipoSoftwareService } from "../services/equipoSoftware.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class EquipoSoftwareMiddleware {
+export class EquipoSoftwareMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _equipoSoftwareService: EquipoSoftwareService = new EquipoSoftwareService()
-    ) {}
+    ) {super();}
 
     equipoSoftwareValidator(req: Request, res: Response, next: NextFunction) {
         const valid = new EquipoSoftwareDTO();

@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { CargoService } from "../services/cargo.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class CargoMiddleware {
+export class CargoMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _cargoService: CargoService = new CargoService()
-    ) {}
+    ) {super();}
 
     cargoValidator(req: Request, res: Response, next: NextFunction) {
    

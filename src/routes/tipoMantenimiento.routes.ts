@@ -12,6 +12,7 @@ export class TipoMantenimientoRouter extends BaseRouter<TipoMantenimientoControl
     routes(): void {
         this.router.get(
             '/tipoMantenimientos', 
+            this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => this.controller.getTipoMantenimientos(req, res)
         );
 

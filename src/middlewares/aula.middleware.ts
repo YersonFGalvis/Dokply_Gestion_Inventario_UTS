@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { AulaService } from "../services/aula.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class AulaMiddleware {
+export class AulaMiddleware extends HelperMiddleware{
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _aulaService: AulaService = new AulaService()
-    ) {}
+    ) {super();}
 
     aulaValidator(req: Request, res: Response, next: NextFunction) {
 

@@ -4,12 +4,13 @@ import { validate } from "class-validator";
 import { HttpResponse } from "../helpers/http";
 import { AreaService } from "../services/area.service";
 import { ErrorsType } from "../helpers/enums";
+import { HelperMiddleware } from "./helper.middleware";
 
-export class AreaMiddleware {
+export class AreaMiddleware extends HelperMiddleware {
     constructor(
-        private readonly _httpResponse: HttpResponse = new HttpResponse(),
+        public readonly _httpResponse: HttpResponse = new HttpResponse(),
         private readonly _areaService: AreaService = new AreaService()
-    ) {}
+    ) {super();}
 
     areaValidator(req: Request, res: Response, next: NextFunction) {
         

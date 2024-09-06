@@ -14,6 +14,7 @@ export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
     routes(): void {
         this.router.get(
             '/aulas',
+            this.middleware.passAuth('jwt'),
             async (req: Request, res: Response) => {
                 const aulas = await this.controller.getAulas(req, res);
                 const edificios = await edificioController.getEdificios(req, res);
