@@ -6,12 +6,12 @@ import { RegistroEquipoMiddleware } from '../middlewares/registroEquipo.middlewa
 export class RegistroEquipoRouter extends BaseRouter<RegistroEquipoController, RegistroEquipoMiddleware> {
 
     constructor() {
-        super(RegistroEquipoController, RegistroEquipoMiddleware);       
+        super(RegistroEquipoController, RegistroEquipoMiddleware);
     }
 
     routes(): void {
         this.router.get(
-            '/registroEquipos', 
+            '/registroEquipos',
             (req: Request, res: Response) => this.controller.getRegistroEquipos(req, res)
         );
 
@@ -21,12 +21,13 @@ export class RegistroEquipoRouter extends BaseRouter<RegistroEquipoController, R
                 this.middleware.registroEquipoValidator(req, res, next);
             },
             (req: Request, res: Response) => {
-                this.controller.createRegistroEquipo(req, res);
+                this.controller.createRegistroEquipo(req, res)
+                    .then(registroEquipo => res.json(registroEquipo))
             }
         );
 
         this.router.get(
-            '/registroEquipo/:id', 
+            '/registroEquipo/:id',
             (req: Request, res: Response) => this.controller.getRegistroEquipoById(req, res)
         );
 
@@ -34,7 +35,7 @@ export class RegistroEquipoRouter extends BaseRouter<RegistroEquipoController, R
             '/registroEquipo/:id',
             (req: Request, res: Response) => this.controller.updateRegistroEquipo(req, res)
         );
-    
+
         this.router.delete(
             '/registroEquipo/:id',
             (req: Request, res: Response) => this.controller.deleteRegistroEquipo(req, res)

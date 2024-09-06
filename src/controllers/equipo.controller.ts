@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
 import { HttpResponse } from '../helpers/http';
 import { EquipoService } from '../services/equipo.service';
+import axios from 'axios';
+import moment from 'moment-timezone';
 
 export class EquipoController {
     constructor(private readonly equipoService: EquipoService = new EquipoService(),
-                private readonly httpResponse: HttpResponse = new HttpResponse()){}
+        private readonly httpResponse: HttpResponse = new HttpResponse()) { }
 
     async getEquipos(req: Request, res: Response) {
         try {
             const data = await this.equipoService.findAllEquipos();
 
             if (data.length === 0) {
-                return this.httpResponse.NotFound( "No hay equipos creados en el sistema");
+                return this.httpResponse.NotFound("No hay equipos creados en el sistema");
             }
 
             return this.httpResponse.OK(data);
@@ -20,7 +22,7 @@ export class EquipoController {
         }
     }
 
-    async getEquipoById(req: Request, res: Response){
+    async getEquipoById(req: Request, res: Response) {
         const { id, pdf } = req.params;
         try {
             const data = await this.equipoService.findEquipoById(Number(id));
@@ -42,19 +44,37 @@ export class EquipoController {
 
     async createEquipo(req: Request, res: Response) {
         try {
-            console.log({data: req.body});
             const data = await this.equipoService.createEquipo(req.body);
-            
-            // fetch('/ruta-al-servidor', {
-            //     method: 'POST',
-            //     body: formData
-            //   }).then(response => response.json())
-            //     .then(data => console.log(data))
-            //     .catch(error => console.error('Error:', error));
+            const equipo_id = data.id;
+            const baseURL = `${req.protocol}://${req.get('host')}`;
+
+            const fecha_asignacion = moment().tz("America/Bogota").format("YYYY-MM-DD");
+
+            const hardwareData: number[] = Array.isArray(req.body['equipoHardware[]']) ? req.body['equipoHardware[]'] : [req.body['equipoHardware[]']];
+            const softwareData: number[] = Array.isArray(req.body['equipoSoftware[]']) ? req.body['equipoSoftware[]'] : [req.body['equipoSoftware[]']];
+            const responsable_id = req.body.responsable_id;
+
+            const hardwareRequests = hardwareData.map((hardware_id: number) => {
+                return axios.post(`${baseURL}/crear/equipoHardware`, { equipo_id, hardware_id });
+            });
+
+            const softwareRequests = softwareData.map((software_id: number) => {
+                return axios.post(`${baseURL}/crear/equipoSoftware`, { equipo_id, software_id });
+            });
+
+            let responsableRequests: Promise<any>[] = [];
+            if (responsable_id) {
+                responsableRequests = [
+                    axios.post(`${baseURL}/crear/registroEquipo`, { equipo_id, responsable_id, fecha_asignacion })
+                ];
+            }
+
+            await Promise.all([...hardwareRequests, ...softwareRequests, responsableRequests]);
 
             return this.httpResponse.OK(data);
         } catch (error) {
-            return this.httpResponse.ServerError( "Internal server error");
+            console.error(error);
+            return this.httpResponse.ServerError("Internal server error");
         }
     }
 
