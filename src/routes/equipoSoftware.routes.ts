@@ -22,7 +22,8 @@ export class EquipoSoftwareRouter extends BaseRouter<EquipoSoftwareController, E
             '/crear/equipoSoftware',
             (req: Request, res: Response) => {
                 this.middleware.equipoSoftwareValidator(req, res, () => {
-                    this.controller.createEquipoSoftware(req, res);
+                    this.controller.createEquipoSoftware(req, res)
+                        .then(equipoSotfware => res.json(equipoSotfware))
                 });
             }
         );

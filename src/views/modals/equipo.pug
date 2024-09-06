@@ -39,11 +39,11 @@
           #hardware-container.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
           .flex.justify-center.mb-2
-            button#add-hardware-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+            button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
           #software-container.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
           .flex.justify-center.mb-2
-            button#add-software-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+            button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
         .flex.justify-end.mt-4
           button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
             |  Agregar
@@ -64,7 +64,11 @@
         // Modal body
         form(onsubmit="return false;" class="overflow-y-auto max-h-[calc(75vh-5rem)]")
           .flex.justify-center.mb-2
-            button#qr-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.mr-2(type='button') Generar QR
+            button#qr-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.mr-2(type='button') 
+              svg.w-5.h-5.mr-2.-ml-1(class='currentColor' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24')
+                path(stroke='currentColor' stroke-linejoin='round' stroke-width='2' d='M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z')
+                path(stroke='currentColor' stroke-linejoin='round' stroke-width='2' d='M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z')
+              | Generar QR
             button#exportar-btn.inline-flex.items-center.text-gray-900.bg-whitebg-blue-800.border.border-gray-300.rounded-lg.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button')
               svg.w-5.h-5.mr-2.-ml-1(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
                 path(fill-rule='evenodd' d='M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z' clip-rule='evenodd')
@@ -96,12 +100,12 @@
           #hardware-container-edit.mb-2
             // Los selects de hardware se generarán dinámicamente aquí
           .flex.justify-center.mb-2
-            button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+            button#add-hardware-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
           label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
           #software-container-edit.mb-2
             // Los selects de software se generarán dinámicamente aquí
           .flex.justify-center.mb-2
-            button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+            button#add-software-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
         .flex.justify-end.mt-4
           button#edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="edit" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
             |  Editar

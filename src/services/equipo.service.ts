@@ -30,10 +30,13 @@ export class EquipoService extends BaseService<Equipo> {
             .leftJoinAndSelect('responsable.cargo_id', 'cargo')
             .leftJoinAndSelect('cargo.area_id', 'area')
             .where('equipo.id = :id', { id })
+            .orderBy('registroEquipo.fecha_asignacion', 'DESC')
+            .addOrderBy('registroEquipo.fecha_devolucion', 'DESC')
+            .addOrderBy('registroMantenimiento.fecha', 'DESC')
             .getOne();
     }
-    
-    
+
+
 
     async createEquipo(equipoDTO: EquipoDTO): Promise<Equipo> {
         const { aula_id, estado, marca } = equipoDTO;
@@ -107,7 +110,7 @@ export class EquipoService extends BaseService<Equipo> {
         }
     }
 
-    async verificarProximasRevisiones(fecha: string):Promise<Equipo[]>{
+    async verificarProximasRevisiones(fecha: string): Promise<Equipo[]> {
         return this.entityManager.query(
             'SELECT * FROM verificar_proximas_revisiones($1)',
             [fecha]

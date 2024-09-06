@@ -22,7 +22,8 @@ export class EquipoHardwareRouter extends BaseRouter<EquipoHardwareController, E
             '/crear/equipoHardware',
             (req: Request, res: Response) => {
                 this.middleware.equipoHardwareValidator(req, res, () => {
-                    this.controller.createEquipoHardware(req, res);
+                    this.controller.createEquipoHardware(req, res)
+                        .then(equipoHardware => res.json(equipoHardware))
                 });
             }
         );

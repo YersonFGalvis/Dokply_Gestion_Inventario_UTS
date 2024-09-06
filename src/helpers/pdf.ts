@@ -155,7 +155,7 @@ export async function createPDFDocument(data: any, writeData: (chunk: Buffer) =>
                 re.responsable_id.telefono,
                 re.responsable_id.email,
                 formatDate(re.fecha_asignacion),
-                formatDate(re.fecha_devolucion) || 'N/A'
+                re.fecha_devolucion ? formatDate(re.fecha_devolucion) : 'N/A'
             ]),
         };
 

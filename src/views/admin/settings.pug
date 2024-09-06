@@ -33,16 +33,30 @@ block contenido
   script. 
     document.querySelector('form').addEventListener('submit', function(e) {
       e.preventDefault();
+
       const form = e.target;
       const formData = new FormData(form);
 
-      fetch(form.action, {
-        method: 'PUT',
-        body: new URLSearchParams(formData),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }).then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
+      const password = formData.get('pass');
+      const passwordConfirm = formData.get('confirm-password');
+
+      if (password === passwordConfirm) {
+          fetch(form.action, {
+              method: 'PUT',
+              body: new URLSearchParams(formData),
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+      } else {
+          alert('Las contraseñas deben ser iguales');
+      }
     });

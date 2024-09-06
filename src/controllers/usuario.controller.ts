@@ -71,7 +71,7 @@ export class UsuarioController {
 
       if (pass && confirmPassword) {
         if (pass === confirmPassword) {
-          cleanedBody.pass = pass;  // Añadir contraseña al objeto de actualización
+          cleanedBody.pass = pass;
         } else {
           return this.httpResponse.ServerError("Las contraseñas no coinciden");
         }
