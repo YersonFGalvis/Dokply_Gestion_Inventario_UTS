@@ -19,7 +19,7 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
 
     async findAllRegistroMantenimiento(): Promise<RegistroMantenimiento[]> {
         const repository = await this.getRepository();
-        return repository.find();
+        return repository.find({ relations: ['aula_id', 'edificio_id', 'equipo_id', 'tipo_mantenimiento_id'] });
     }
 
     async findRegistroMantenimientoById(id: number): Promise<RegistroMantenimiento | null> {

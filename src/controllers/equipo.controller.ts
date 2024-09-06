@@ -33,7 +33,6 @@ export class EquipoController {
             if (pdf) {
                 return data;
             } else {
-                // res.render('QR', { equipo: data });
                 return this.httpResponse.OK(data);
             }
         } catch (e: any) {

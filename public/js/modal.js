@@ -106,7 +106,7 @@ const handleModalActions = async (action, entity, id) => {
 
     toggleModal(modal, modalBackground, 'open');
 
-    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'password_confirm', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]'];
+    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm-password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]'];
 
     if (action === 'edit') {
         if (!id) {
@@ -135,50 +135,54 @@ const handleModalActions = async (action, entity, id) => {
             updateHSSelect('hardware', data.data.equipoHardware, 'equipoHardware[]');
             updateHSSelect('software', data.data.equipoSoftware, 'equipoSoftware[]');
 
-            document.getElementById('qr-btn').onclick = () => {
-                const baseURL = window.location.origin;
-                const url = `${baseURL}/generar-pdf/pdf/${data.data.id}`;
+            const qrBtn = document.getElementById('qr-btn');
+            const exportarBtn = document.getElementById('exportar-btn');
 
-                // Configurar el src de la imagen QR para mostrar el código QR
-                const qrUrl = `/generarQR?url=${encodeURIComponent(url)}`;
+            if (qrBtn) {
+                qrBtn.onclick = () => {
+                    const baseURL = window.location.origin;
+                    const url = `${baseURL}/generar-pdf/pdf/${data.data.id}`;
 
-                // Configurar el enlace de descarga con el nombre del archivo
-                const fileName = `EQUIPO_${data.data.id}_AULA_${data.data.aula_id.nombre}_EDIFICIO_${data.data.aula_id.edificio_id.nombre}.png`;
+                    const qrUrl = `/generarQR?url=${encodeURIComponent(url)}`;
 
-                // También puedes hacer una solicitud fetch si necesitas procesar la respuesta
-                fetch(qrUrl, { method: 'GET' })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        const url = URL.createObjectURL(blob);
-                        const tempLink = document.createElement('a');
-                        tempLink.href = url;
-                        tempLink.download = fileName;
-                        document.body.appendChild(tempLink);
-                        tempLink.click();
-                        document.body.removeChild(tempLink);
-                        URL.revokeObjectURL(url);
-                    })
-                    .catch(error => console.error('Error:', error));
-            };
+                    const fileName = `EQUIPO_${data.data.id}_AULA_${data.data.aula_id.nombre}_EDIFICIO_${data.data.aula_id.edificio_id.nombre}.png`;
 
-            document.getElementById('exportar-btn').onclick = () => {
-                const baseURL = window.location.origin;
-                const url = `${baseURL}/generar-pdf/pdf/${data.data.id}`;
+                    fetch(qrUrl, { method: 'GET' })
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const url = URL.createObjectURL(blob);
+                            const tempLink = document.createElement('a');
+                            tempLink.href = url;
+                            tempLink.download = fileName;
+                            document.body.appendChild(tempLink);
+                            tempLink.click();
+                            document.body.removeChild(tempLink);
+                            URL.revokeObjectURL(url);
+                        })
+                        .catch(error => console.error('Error:', error));
+                };
+            }
 
-                fetch(url, {
-                    method: 'GET',
-                }).then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.blob();
-                }).then(blob => {
-                    const link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = `Equipo_${data.data.id}.pdf`; // Nombre del archivo PDF
-                    link.click();
-                }).catch(error => console.error('Error:', error));
-            };
+            if (exportarBtn) {
+                exportarBtn.onclick = () => {
+                    const baseURL = window.location.origin;
+                    const url = `${baseURL}/generar-pdf/pdf/${data.data.id}`;
+
+                    fetch(url, {
+                        method: 'GET',
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.blob();
+                    }).then(blob => {
+                        const link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = `Equipo_${data.data.id}.pdf`; // Nombre del archivo PDF
+                        link.click();
+                    }).catch(error => console.error('Error:', error));
+                };
+            }
 
             modal.querySelector('#edit').onclick = async (e) => {
                 e.preventDefault();
@@ -189,14 +193,17 @@ const handleModalActions = async (action, entity, id) => {
                         return obj;
                     }, {});
 
-                    await fetch(`/${entity}/${id}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(body)
-                    });
-                    await updateData(entity);
-                    toggleModal(modal, modalBackground, 'close');
-
+                    if (body.pass === body.password_confirm) {
+                        await fetch(`/${entity}/${id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(body)
+                        });
+                        await updateData(entity);
+                        toggleModal(modal, modalBackground, 'close');
+                    } else {
+                        alert('Las contraseñas deben ser iguales');
+                    }
                 } catch (error) {
                     console.error('Error updating data:', error);
                 }
@@ -402,8 +409,9 @@ function initializeDefaultFields() {
     }
 }
 
-function addField(type) {
-    const container = document.getElementById(`${type}-container`);
+function addField(type, edit) {
+    let container = '';
+    edit ? container = document.getElementById(`${type}-container${edit}`) : container = document.getElementById(`${type}-container`);
     if (!container) return;
 
     const newField = document.createElement('div');
@@ -446,10 +454,26 @@ function addField(type) {
     container.appendChild(newField);
 }
 
-document.getElementById('add-hardware-btn').onclick = () => addField('hardware');
-document.getElementById('add-software-btn').onclick = () => addField('software');
+const addHardwareBtn = document.getElementById('add-hardware-btn');
+const addSoftwareBtn = document.getElementById('add-software-btn');
+const addHardwareBtnEdit = document.getElementById('add-hardware-btn-edit');
+const addSoftwareBtnEdit = document.getElementById('add-software-btn-edit');
 
-// document.getElementById('add-hardware-btn-edit').onclick = () => addField('hardware', '-edit');
-// document.getElementById('add-software-btn-edit').onclick = () => addField('software', '-edit');
+if (addHardwareBtn) {
+    addHardwareBtn.onclick = () => addField('hardware');
+}
+
+if (addSoftwareBtn) {
+    addSoftwareBtn.onclick = () => addField('software');
+}
+
+if (addHardwareBtnEdit) {
+    addHardwareBtnEdit.onclick = () => addField('hardware', '-edit');
+}
+
+if (addSoftwareBtnEdit) {
+    addSoftwareBtnEdit.onclick = () => addField('software', '-edit');
+}
+
 
 document.addEventListener('DOMContentLoaded', loadData);

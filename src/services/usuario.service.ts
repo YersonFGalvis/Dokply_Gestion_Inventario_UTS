@@ -61,7 +61,9 @@ export class UsuarioService extends BaseService<Usuario> {
 
     async updateUser(id: number, infoUpdate: UsuarioDTO): Promise<UpdateResult> {
         const repository = await this.getRepository();
-        infoUpdate.pass =  await bcrypt.hash(infoUpdate.pass, 10);
+        if (infoUpdate.pass) { 
+            infoUpdate.pass = await bcrypt.hash(infoUpdate.pass, 10); 
+        }
         return repository.update(id, infoUpdate);
     }
 

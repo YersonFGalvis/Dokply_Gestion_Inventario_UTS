@@ -1,0 +1,49 @@
+#add-mantenimiento-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="mantenimiento" data-action="add" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
+    .fixed.inset-0.bg-gray-600.bg-opacity-50.hidden.z-40#modal-background-add
+    .relative.p-4.w-full.max-w-2xl.h-full.z-50(class='md:h-auto')
+      // Modal content
+      .relative.p-4.bg-white.rounded-lg.shadow(class='dark:bg-gray-800 sm:p-5')
+        // Modal header
+        .flex.justify-between.items-center.pb-4.mb-4.rounded-t.border-b(class='sm:mb-5 dark:border-gray-600')
+          h3.text-lg.font-semibold.text-gray-900(class='dark:text-white')
+            | Agregar Mantenimiento
+          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
+            svg.w-5.h-5(aria-hidden='true' fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+              path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
+            span.sr-only Cerrar modal
+        // Modal body
+        form(onsubmit="return false;" class="overflow-y-auto max-h-[calc(75vh-5rem)]")        
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='edificio' class='dark:text-white') Edificio
+            select#edificio.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'edificio_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+              option(value="") - Seleccione el edificio -
+                if edificios.data
+                  each edificio in edificios.data
+                    option(value=edificio.id selected= datos.edificio ? datos.edificio == edificio.id ? true : false : null)= edificio.nombre 
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
+            select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+              option(value="") - Seleccione el aula -
+                if aulas.data
+                  each aula in aulas.data
+                    option(value=aula.id selected= datos.aula ? datos.aula == aula.id ? true : false : null)= aula.nombre 
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Equipo
+            select#equipo.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'equipo_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+              option(value="") - Seleccione el equipo -
+                if equipos.data
+                  each equipo in equipos.data
+                    option(value=equipo.id selected= datos.equipo ? datos.equipo == equipo.id ? true : false : null)= equipo.marca 
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Tipo de mantenimiento
+            select#tipomantenimiento.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'tipo_mantenimiento_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
+              option(value="") - Seleccione el tipo de mantenimiento -
+                if tipomantenimientos.data
+                  each tipomantenimiento in tipomantenimientos.data
+                    option(value=tipomantenimiento.id selected= datos.tipomantenimiento ? datos.tipomantenimiento == tipomantenimiento.id ? true : false : null)= tipomantenimiento.nombre 
+          div.mb-2
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca' class='dark:text-white') Detalle
+            textarea#detalle.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='detalle' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' required = '')    
+        .flex.justify-end.mt-4
+          button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="mantenimiento" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+            |  Agregar
