@@ -41,7 +41,7 @@ export class UsuarioController {
 
   async createUser(req: Request, res: Response) {
     try {
-      const { '_method': _, 'confirm-password': confirmPassword, ...cleanedBody } = req.body;
+      const { '_method': _, 'confirm_password': confirmPassword, ...cleanedBody } = req.body;
       const data = await this.userService.createUser(cleanedBody);
 
       return this.httpResponse.OK(data);
@@ -67,7 +67,7 @@ export class UsuarioController {
   async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const { '_method': _, 'confirm-password': confirmPassword, pass, ...cleanedBody } = req.body;
+      const { '_method': _, 'confirm_password': confirmPassword, pass, ...cleanedBody } = req.body;
 
       if (pass && confirmPassword) {
         if (pass === confirmPassword) {

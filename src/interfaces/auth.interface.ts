@@ -5,7 +5,3 @@ export interface PayloadToken {
     id: number;
 }
 
-export interface UserPayload {
-    usuario_id: number;
-    rol: RoleType;
-  }

@@ -106,7 +106,7 @@ const handleModalActions = async (action, entity, id) => {
 
     toggleModal(modal, modalBackground, 'open');
 
-    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm-password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]'];
+    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]'];
 
     if (action === 'edit') {
         if (!id) {
@@ -193,7 +193,7 @@ const handleModalActions = async (action, entity, id) => {
                         return obj;
                     }, {});
 
-                    if (body.pass === body.password_confirm) {
+                    if (body.pass === body.confirm_password) {
                         await fetch(`/${entity}/${id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },

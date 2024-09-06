@@ -3,7 +3,7 @@ import passport from "passport";
 import { RoleType } from "../helpers/enums";
 import { Usuario } from "../entity";
 import { HttpResponse } from "../helpers/http";
-import { UserPayload } from "src/interfaces/auth.interface";
+import { PayloadToken } from "src/interfaces/auth.interface";
 
 export class HelperMiddleware {
   constructor(public _httpResponse: HttpResponse = new HttpResponse()) {}
@@ -24,9 +24,9 @@ export class HelperMiddleware {
   }
 
   checkCoordinadorRole(req: Request, res: Response, next: NextFunction) {
-    const { rol }: UserPayload = req.user as UserPayload;
-    
-    if (rol === RoleType.COORDINADOR) {
+    const { rol_id } = req.user as PayloadToken;
+        
+    if (rol_id === RoleType.COORDINADOR) {
       return next();
     }
 
