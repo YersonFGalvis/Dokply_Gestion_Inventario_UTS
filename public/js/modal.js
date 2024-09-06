@@ -47,7 +47,7 @@ const updateHSSelect = (containerId, data, selectType) => {
         console.error(`No se encontró el contenedor con ID ${containerId}`);
         return;
     }
-    // container.innerHTML = '';
+    container.innerHTML = '';
     data.forEach(item => {
         const newField = document.createElement('div');
         newField.classList.add('flex', 'items-center', 'space-x-2', 'mb-2');
@@ -134,6 +134,51 @@ const handleModalActions = async (action, entity, id) => {
             });
             updateHSSelect('hardware', data.data.equipoHardware, 'equipoHardware[]');
             updateHSSelect('software', data.data.equipoSoftware, 'equipoSoftware[]');
+
+            document.getElementById('qr-btn').onclick = () => {
+                const baseURL = window.location.origin;
+                const url = `${baseURL}/generar-pdf/pdf/${data.data.id}`;
+
+                // Configurar el src de la imagen QR para mostrar el código QR
+                const qrUrl = `/generarQR?url=${encodeURIComponent(url)}`;
+
+                // Configurar el enlace de descarga con el nombre del archivo
+                const fileName = `EQUIPO_${data.data.id}_AULA_${data.data.aula_id.nombre}_EDIFICIO_${data.data.aula_id.edificio_id.nombre}.png`;
+
+                // También puedes hacer una solicitud fetch si necesitas procesar la respuesta
+                fetch(qrUrl, { method: 'GET' })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const tempLink = document.createElement('a');
+                        tempLink.href = url;
+                        tempLink.download = fileName;
+                        document.body.appendChild(tempLink);
+                        tempLink.click();
+                        document.body.removeChild(tempLink);
+                        URL.revokeObjectURL(url);
+                    })
+                    .catch(error => console.error('Error:', error));
+            };
+
+            document.getElementById('exportar-btn').onclick = () => {
+                const baseURL = window.location.origin;
+                const url = `${baseURL}/generar-pdf/pdf/${data.data.id}`;
+
+                fetch(url, {
+                    method: 'GET',
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.blob();
+                }).then(blob => {
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `Equipo_${data.data.id}.pdf`; // Nombre del archivo PDF
+                    link.click();
+                }).catch(error => console.error('Error:', error));
+            };
 
             modal.querySelector('#edit').onclick = async (e) => {
                 e.preventDefault();
@@ -403,5 +448,8 @@ function addField(type) {
 
 document.getElementById('add-hardware-btn').onclick = () => addField('hardware');
 document.getElementById('add-software-btn').onclick = () => addField('software');
+
+// document.getElementById('add-hardware-btn-edit').onclick = () => addField('hardware', '-edit');
+// document.getElementById('add-software-btn-edit').onclick = () => addField('software', '-edit');
 
 document.addEventListener('DOMContentLoaded', loadData);

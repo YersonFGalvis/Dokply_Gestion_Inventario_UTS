@@ -12,7 +12,7 @@
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal
         // Modal body
-        form(onsubmit="return validateForm();" class="overflow-y-auto max-h-[calc(75vh-5rem)]")        
+        form(onsubmit="return false;" class="overflow-y-auto max-h-[calc(75vh-5rem)]")        
           div.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
             select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
@@ -39,11 +39,11 @@
           #hardware-container.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
           .flex.justify-center.mb-2
-            button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+            button#add-hardware-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
           #software-container.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
           .flex.justify-center.mb-2
-            button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+            button#add-software-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
         .flex.justify-end.mt-4
           button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
             |  Agregar
@@ -62,7 +62,13 @@
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal
         // Modal body
-        form(onsubmit="return validateForm();" class="overflow-y-auto max-h-[calc(75vh-5rem)]")
+        form(onsubmit="return false;" class="overflow-y-auto max-h-[calc(75vh-5rem)]")
+          .flex.justify-center.mb-2
+            button#qr-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.mr-2(type='button') Generar QR
+            button#exportar-btn.inline-flex.items-center.text-gray-900.bg-whitebg-blue-800.border.border-gray-300.rounded-lg.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button')
+              svg.w-5.h-5.mr-2.-ml-1(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd' d='M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z' clip-rule='evenodd')
+              | Exportar
           div.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
             select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
@@ -86,13 +92,13 @@
                 if responsables.data
                   each responsable in responsables.data
                     option(value=responsable.id selected=datos.responsable ? datos.responsable == responsable.id ? true : false : null)= `${responsable.nombres} ${responsable.apellidos}` 
+          label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
           #hardware-container-edit.mb-2
-            label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
             // Los selects de hardware se generarán dinámicamente aquí
           .flex.justify-center.mb-2
             button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+          label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
           #software-container-edit.mb-2
-            label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
             // Los selects de software se generarán dinámicamente aquí
           .flex.justify-center.mb-2
             button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
