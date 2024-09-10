@@ -31,17 +31,25 @@ export class TipoMantenimientoRouter extends BaseRouter<TipoMantenimientoControl
 
         this.router.get(
             '/tipoMantenimiento/:id', 
-            (req: Request, res: Response) => this.controller.getTipoMantenimientoById(req, res)
-        );
+            (req: Request, res: Response) => {
+                this.controller.getTipoMantenimientoById(req, res)
+                .then(tipoMantenimiento => res.json(tipoMantenimiento))      
+            });
 
         this.router.put(
             '/tipoMantenimiento/:id',
-            (req: Request, res: Response) => this.controller.updateTipoMantenimiento(req, res)
+            (req: Request, res: Response) => {
+                this.controller.updateTipoMantenimiento(req, res)
+                .then(tipoMantenimiento => res.json(tipoMantenimiento))      
+            }
         );
     
         this.router.delete(
             '/tipoMantenimiento/:id',
-            (req: Request, res: Response) => this.controller.deleteTipoMantenimiento(req, res)
+            (req: Request, res: Response) => {
+                this.controller.deleteTipoMantenimiento(req, res)
+                .then(tipoMantenimiento => res.json(tipoMantenimiento))      
+            }
         );
     }
 }

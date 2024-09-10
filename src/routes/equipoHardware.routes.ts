@@ -14,7 +14,8 @@ export class EquipoHardwareRouter extends BaseRouter<EquipoHardwareController, E
             '/equiposHardware',
             this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => {
-                this.controller.getEquiposHardware(req, res);
+                this.controller.getEquiposHardware(req, res)
+                    .then(equiposHardware => res.json(equiposHardware))
             }
         );
 
@@ -30,17 +31,29 @@ export class EquipoHardwareRouter extends BaseRouter<EquipoHardwareController, E
 
         this.router.get(
             '/equipoHardware/:id',
-            (req: Request, res: Response) => this.controller.getEquipoHardwareById(req, res)
+            (req: Request, res: Response) => {
+                this.controller.getEquipoHardwareById(req, res)
+                    .then(equipoHardware => res.json(equipoHardware));
+            }
         );
+        
 
         this.router.put(
             '/equipoHardware/:id',
-            (req: Request, res: Response) => this.controller.updateEquipoHardware(req, res)
+            (req: Request, res: Response) => {
+                this.controller.updateEquipoHardware(req, res)
+                    .then(updatedEquipoHardware => res.json(updatedEquipoHardware));
+            }
         );
+        
 
         this.router.delete(
             '/equipoHardware/:id',
-            (req: Request, res: Response) => this.controller.deleteEquipoHardware(req, res)
+            (req: Request, res: Response) => {
+                this.controller.deleteEquipoHardware(req, res)
+                .then(equipoHardware => res.json(equipoHardware))
+            }
         );
+        
     }
 }

@@ -57,7 +57,6 @@ export class EquipoSoftwareController {
         const { id } = req.params;
         try {
             await this.equipoSoftwareService.deleteEquipoSoftware(Number(id));
-            return this.httpResponse.OK("Registro de EquipoSoftware eliminado correctamente");
         } catch (error) {
             return this.httpResponse.ServerError("Error interno del servidor");
         }

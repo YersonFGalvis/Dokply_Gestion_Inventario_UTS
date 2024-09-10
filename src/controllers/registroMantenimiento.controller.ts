@@ -23,6 +23,18 @@ export class RegistroMantenimientoController{
     }
     }
 
+    async getRegistroMantenimientosInicio(req: Request, res: Response){
+        try {
+            const data =  await this.registroMantenimientoService.getRegistroMantenimientosInicio()
+            if (!data) {
+                return this.httpResponse.NotFound( "No existen registros de mantenimientos en el sistema");
+            }
+            return this.httpResponse.OK(data);
+        } catch (error) {
+            return this.httpResponse.ServerError(error)
+        }
+    } 
+
     async getRegistroMantenimientoById(req: Request, res: Response) {
         const { id } = req.params;
         try {

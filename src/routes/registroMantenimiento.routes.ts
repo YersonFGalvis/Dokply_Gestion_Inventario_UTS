@@ -36,26 +36,42 @@ export class RegistroMantenimientoRouter extends BaseRouter<RegistroMantenimient
         this.router.post(
             '/crear/registroMantenimiento',
             (req: Request, res: Response) => {
-                this.controller.createRegistroMantenimiento(req, res);
+                this.controller.createRegistroMantenimiento(req, res)
+                .then(registroMantenimiento => res.json(registroMantenimiento))
             }
         );
 
         this.router.get(
             '/registroMantenimiento/:id', 
-            (req: Request, res: Response) => this.controller.getRegistroMantenimientoById(req, res)
+            (req: Request, res: Response) => {
+                this.controller.getRegistroMantenimientoById(req, res)
+                .then(registroMantenimiento => res.json(registroMantenimiento))
+            }
         );
 
         this.router.put(
             '/registroMantenimiento/:id',
-            (req: Request, res: Response) => this.controller.updateRegistroMantenimiento(req, res)
+            (req: Request, res: Response) => {
+                this.controller.updateRegistroMantenimiento(req, res)
+                .then(registroMantenimiento => res.json(registroMantenimiento))
+            }
         );
     
         this.router.delete(
             '/registroMantenimiento/:id',
-            (req: Request, res: Response) => this.controller.deleteRegistroMantenimiento(req, res)
+            (req: Request, res: Response) => {
+                this.controller.deleteRegistroMantenimiento(req, res)
+                .then(registroMantenimiento => res.json(registroMantenimiento))
+            }
         );
 
-
+        this.router.get(
+            '/registroMantenimientoInicio', 
+            async (req: Request, res: Response) => {               
+                this.controller.getRegistroMantenimientosInicio(req, res)
+                .then(registroMantenimientoInicio => res.json(registroMantenimientoInicio))
+            } 
+        );
     }
 
 }

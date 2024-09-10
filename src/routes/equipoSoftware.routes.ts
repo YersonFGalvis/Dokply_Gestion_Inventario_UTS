@@ -14,9 +14,11 @@ export class EquipoSoftwareRouter extends BaseRouter<EquipoSoftwareController, E
             '/equiposSoftware',
             this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => {
-                this.controller.getEquiposSoftware(req, res);
+                this.controller.getEquiposSoftware(req, res)
+                    .then(equiposSoftware => res.json(equiposSoftware));
             }
         );
+        
 
         this.router.post(
             '/crear/equipoSoftware',
@@ -30,17 +32,28 @@ export class EquipoSoftwareRouter extends BaseRouter<EquipoSoftwareController, E
 
         this.router.get(
             '/equipoSoftware/:id',
-            (req: Request, res: Response) => this.controller.getEquipoSoftwareById(req, res)
+            (req: Request, res: Response) => {
+                this.controller.getEquipoSoftwareById(req, res)
+                    .then(equipoSoftware => res.json(equipoSoftware));
+            }
         );
+        
 
         this.router.put(
             '/equipoSoftware/:id',
-            (req: Request, res: Response) => this.controller.updateEquipoSoftware(req, res)
+            (req: Request, res: Response) => {
+                this.controller.updateEquipoSoftware(req, res)
+                    .then(updatedEquipoSoftware => res.json(updatedEquipoSoftware));
+            }
         );
+        
 
         this.router.delete(
             '/equipoSoftware/:id',
-            (req: Request, res: Response) => this.controller.deleteEquipoSoftware(req, res)
+            (req: Request, res: Response) => {
+                this.controller.deleteEquipoSoftware(req, res)
+                .then(equipoSoftware => res.json(equipoSoftware))
+            }
         );
     }
 }

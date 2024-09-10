@@ -29,17 +29,26 @@ export class RegistroEquipoRouter extends BaseRouter<RegistroEquipoController, R
 
         this.router.get(
             '/registroEquipo/:id',
-            (req: Request, res: Response) => this.controller.getRegistroEquipoById(req, res)
+            (req: Request, res: Response) => {
+                this.controller.getRegistroEquipoById(req, res)
+                .then(registroEquipo => res.json(registroEquipo))
+            }
         );
 
         this.router.put(
             '/registroEquipo/:id',
-            (req: Request, res: Response) => this.controller.updateRegistroEquipo(req, res)
+            (req: Request, res: Response) => {
+                this.controller.updateRegistroEquipo(req, res)
+                .then(registroEquipo => res.json(registroEquipo))
+            }
         );
 
         this.router.delete(
             '/registroEquipo/:id',
-            (req: Request, res: Response) => this.controller.deleteRegistroEquipo(req, res)
+            (req: Request, res: Response) => {
+                this.controller.deleteRegistroEquipo(req, res)
+                .then(registroEquipo => res.json(registroEquipo))
+            }
         );
     }
 }

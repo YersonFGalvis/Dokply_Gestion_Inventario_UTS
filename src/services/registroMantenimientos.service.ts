@@ -1,12 +1,14 @@
-import { Repository } from "typeorm";
+import { Between, Repository } from "typeorm";
 import { BaseService } from "../config/serviceConfiguration";
 import { Equipo, RegistroMantenimiento, Usuario } from "../entity";
 import { RegistroMantenimientoDTO } from "../dto/registroMantenimiento.dto";
-import { IsNotEmpty, IsDate, IsOptional } from 'class-validator';
 import { EquipoService } from "./equipo.service";
 import { TipoMantenimientoService } from "./tipoMantenimiento.service";
 import { TipoMantenimiento } from '../entity/TipoMantenimiento';
 import { UsuarioService } from './usuario.service';
+import { IDashboardMantenimiento } from "src/interfaces/dashboard.interface";
+import { startOfMonth, endOfMonth, subMonths, startOfDay, endOfDay } from 'date-fns';
+
 
 export class RegistroMantenimientoService extends BaseService<RegistroMantenimiento> {
     constructor(
@@ -118,4 +120,53 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
             throw error;
         }
     }
+
+    async getRegistroMantenimientosInicio(): Promise<IDashboardMantenimiento> {
+        try {
+
+        const repository = await this.getRepository();
+        const currentDate = new Date();
+        const startOfCurrentMonth = startOfMonth(currentDate);
+        const endOfCurrentMonth = endOfMonth(currentDate);
+
+
+        const startOfLastMonth = startOfMonth(subMonths(currentDate, 1));
+        const endOfLastMonth = endOfMonth(subMonths(currentDate, 1));
+    
+            // Total de equipos a los que se les ha hecho mantenimiento
+            const totalEquiposMantenidos = await repository
+                .createQueryBuilder('mantenimiento')
+                .select('COUNT(DISTINCT mantenimiento.equipo_id)', 'total')
+                .getRawOne();
+        
+            // Mantenimientos en el mes actual
+            const mantenimientosMesActual = await repository
+                .createQueryBuilder('mantenimiento')
+                .where('mantenimiento.fecha BETWEEN :startOfCurrentMonth AND :endOfCurrentMonth', {
+                    startOfCurrentMonth: startOfCurrentMonth.toISOString(),
+                    endOfCurrentMonth: endOfCurrentMonth.toISOString(),
+                })
+                .getCount();
+    
+            // Mantenimientos en el mes pasado
+            const mantenimientosMesPasado = await repository
+                .createQueryBuilder('mantenimiento')
+                .where('mantenimiento.fecha BETWEEN :startOfLastMonth AND :endOfLastMonth', {
+                    startOfLastMonth: startOfLastMonth.toISOString(),
+                    endOfLastMonth: endOfLastMonth.toISOString(),
+                })
+                .getCount();
+    
+            return {
+                totalEquiposMantenidos,
+                mantenimientosMesActual,
+                mantenimientosMesPasado
+            };
+        } catch (error) {
+            console.error('Error al traer los datos del dashboard:', error);
+            throw error;
+        }
+    }
+    
+    
 }

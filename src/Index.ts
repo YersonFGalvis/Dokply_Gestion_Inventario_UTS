@@ -5,7 +5,6 @@ import { LoginStrategy } from "./strategies/login.strategy";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { CronMandarEmail } from "./helpers/cron";
 
-
 class Server extends DatabaseConfiguration {
     public app: expressConfiguration = new expressConfiguration();
 

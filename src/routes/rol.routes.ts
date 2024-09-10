@@ -13,7 +13,11 @@ export class RolRouter extends BaseRouter<RolController,RolMiddleware>{
         this.router.get(
             '/roles', 
             this.middleware.passAuth('jwt'),
-            (req:Request, res:Response) => this.controller.getRols(req, res)
+            (req:Request, res:Response) => {
+                this.controller.getRols(req, res)
+                .then(roles => res.json(roles));
+
+            }
         );
 
         this.router.post(
@@ -25,23 +29,33 @@ export class RolRouter extends BaseRouter<RolController,RolMiddleware>{
                 this.middleware.rolDuplicateValidator(req, res, next);
             },
             (req: Request, res: Response) => {
-                this.controller.createRol(req, res);
+                this.controller.createRol(req, res)
+                .then(roles => res.json(roles));
             }
         );
 
         this.router.get(
             '/rol/:id', 
-            (req:Request, res:Response) => this.controller.getRolById(req, res)
+            (req:Request, res:Response) => {
+                this.controller.getRolById(req, res)
+                .then(roles => res.json(roles));
+            }
         );
 
         this.router.put(
             '/rol/:id',
-            (req: Request, res: Response) => this.controller.updateRol(req, res)
+            (req: Request, res: Response) => {
+                this.controller.updateRol(req, res)
+                .then(roles => res.json(roles));
+            }
         );
     
         this.router.delete(
             '/rol/:id',
-            (req: Request, res: Response) => this.controller.deleteRol(req, res)
+            (req: Request, res: Response) => {
+                this.controller.deleteRol(req, res)
+                .then(roles => res.json(roles));
+            }
         );
     }
 }
