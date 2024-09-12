@@ -14,7 +14,7 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
 
         this.router.get('/login', (req: Request, res: Response) => {
             res.render('auth/login', { error: req.query.error });
-        });
+        });      
 
         this.router.get('/logout', 
             this.middleware.passAuth('jwt'),

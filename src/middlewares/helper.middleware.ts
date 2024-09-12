@@ -15,7 +15,9 @@ export class HelperMiddleware {
           return next(err);
         }
         if (!user) {
-          return res.status(401).json({ message: info?.message || 'Unauthorized' }); // Termina la solicitud si no hay usuario
+        // Redirige al login con un mensaje explicativo en la URL
+        const message = encodeURIComponent('Se cerró la sesión, iniciela nuevamente');
+        return res.redirect(`/login?error=${message}`);
         }
         req.user = user;
         next(); 

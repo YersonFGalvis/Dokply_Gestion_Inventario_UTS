@@ -2,8 +2,10 @@ extends ../layouts/index
 block contenido 
   section.relative.flex.flex-wrap(class='lg:h-screen lg:items-center')
     .w-full.px-4.py-12(class='sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24')
-      .mx-auto.max-w-lg.text-center
+      .mx-auto.max-w-lg.text-center     
+
         h1.text-2xl.font-bold(class='sm:text-3xl') Bienvenido al Sistema de Gestion de Inventarios
+
       form.mx-auto.mb-0.mt-8.max-w-md.space-y-4(method='POST' action='/login')
         div
           label.sr-only(for='email') Email
@@ -21,6 +23,11 @@ block contenido
                 path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z')
                 path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z')
         .flex.items-center.justify-between
+               
+        if error
+          .bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded-md.shadow-md
+            p.text-sm= error
+
           button.inline-block.w-full.rounded-lg.bg-blue-800.text-white.px-5.py-3.text-sm.font-medium(type='submit')
             | Ingresar
     .relative.h-64.w-full(class='sm:h-96 lg:h-4/5 lg:w-1/2')
