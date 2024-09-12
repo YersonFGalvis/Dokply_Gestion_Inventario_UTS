@@ -34,6 +34,20 @@ export class AulaController {
         }
     }
 
+    async getAulasByEdificio(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            const data = await this.aulaService.findAulasByEdificio(Number(id));
+            if (!data) {
+                return this.httpResponse.NotFound( "No existen aulas");
+            }
+            return this.httpResponse.OK(data);
+        } catch (e: any) {
+            console.error(e);
+            return this.httpResponse.ServerError( e);
+        }
+    }
+
     async createAula(req: Request, res: Response) {
         try {
             const data = await this.aulaService.createAula(req.body);

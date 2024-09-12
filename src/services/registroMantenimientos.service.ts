@@ -21,12 +21,27 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
 
     async findAllRegistroMantenimiento(): Promise<RegistroMantenimiento[]> {
         const repository = await this.getRepository();
-        return repository.find({ relations: ['aula_id', 'edificio_id', 'equipo_id', 'tipo_mantenimiento_id'] });
+        return repository
+            .createQueryBuilder('registromantenimiento')
+            .leftJoinAndSelect('registromantenimiento.usuario_id', 'usuario')
+            .leftJoinAndSelect('registromantenimiento.tipo_mantenimiento_id', 'tipo_mantenimiento')
+            .leftJoinAndSelect('registromantenimiento.equipo_id', 'equipo')
+            .leftJoinAndSelect('equipo.aula_id', 'aula')
+            .leftJoinAndSelect('aula.edificio_id', 'edificio')
+            .getMany();
     }
 
     async findRegistroMantenimientoById(id: number): Promise<RegistroMantenimiento | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        return repository
+            .createQueryBuilder('registromantenimiento')
+            .leftJoinAndSelect('registromantenimiento.usuario_id', 'usuario')
+            .leftJoinAndSelect('registromantenimiento.tipo_mantenimiento_id', 'tipo_mantenimiento')
+            .leftJoinAndSelect('registromantenimiento.equipo_id', 'equipo')
+            .leftJoinAndSelect('equipo.aula_id', 'aula')
+            .leftJoinAndSelect('aula.edificio_id', 'edificio')
+            .where('registromantenimiento.id = :id', { id })
+            .getOne();
     }
 
     async createRegistroMantenimiento(registroMantenimientoDTO: RegistroMantenimientoDTO): Promise<RegistroMantenimiento> {
@@ -90,10 +105,7 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
         }
 
         repository.merge(registroMantenimientoToUpdate, {
-            equipo_id: equipo,
             tipo_mantenimiento_id: tipoMantenimiento,
-            usuario_id:usuario,
-            fecha: new Date(registroMantenimientoDTO.fecha),
             detalle: registroMantenimientoDTO.detalle
         });
 
@@ -124,21 +136,21 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
     async getRegistroMantenimientosInicio(): Promise<IDashboardMantenimiento> {
         try {
 
-        const repository = await this.getRepository();
-        const currentDate = new Date();
-        const startOfCurrentMonth = startOfMonth(currentDate);
-        const endOfCurrentMonth = endOfMonth(currentDate);
+            const repository = await this.getRepository();
+            const currentDate = new Date();
+            const startOfCurrentMonth = startOfMonth(currentDate);
+            const endOfCurrentMonth = endOfMonth(currentDate);
 
 
-        const startOfLastMonth = startOfMonth(subMonths(currentDate, 1));
-        const endOfLastMonth = endOfMonth(subMonths(currentDate, 1));
-    
+            const startOfLastMonth = startOfMonth(subMonths(currentDate, 1));
+            const endOfLastMonth = endOfMonth(subMonths(currentDate, 1));
+
             // Total de equipos a los que se les ha hecho mantenimiento
             const totalEquiposMantenidos = await repository
                 .createQueryBuilder('mantenimiento')
                 .select('COUNT(DISTINCT mantenimiento.equipo_id)', 'total')
                 .getRawOne();
-        
+
             // Mantenimientos en el mes actual
             const mantenimientosMesActual = await repository
                 .createQueryBuilder('mantenimiento')
@@ -147,7 +159,7 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
                     endOfCurrentMonth: endOfCurrentMonth.toISOString(),
                 })
                 .getCount();
-    
+
             // Mantenimientos en el mes pasado
             const mantenimientosMesPasado = await repository
                 .createQueryBuilder('mantenimiento')
@@ -156,7 +168,7 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
                     endOfLastMonth: endOfLastMonth.toISOString(),
                 })
                 .getCount();
-    
+
             return {
                 totalEquiposMantenidos,
                 mantenimientosMesActual,
@@ -167,6 +179,6 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
             throw error;
         }
     }
-    
-    
+
+
 }

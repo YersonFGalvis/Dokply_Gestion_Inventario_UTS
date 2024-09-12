@@ -36,7 +36,10 @@ export class EquipoService extends BaseService<Equipo> {
             .getOne();
     }
 
-
+    async findEquiposByAula(id: number): Promise<Equipo[]> {
+        const repository = await this.getRepository();
+        return repository.find({ where: {id} });
+    }
 
     async createEquipo(equipoDTO: EquipoDTO): Promise<Equipo> {
         const { aula_id, estado, marca } = equipoDTO;

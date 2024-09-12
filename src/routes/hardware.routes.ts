@@ -16,7 +16,6 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
             async (req: Request, res: Response) => {
                 const hardware = await this.controller.getHardware(req, res);
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json(hardware);
                 } else {
                     res.render('admin/hardware', { hardware, datos: {}, error: req.query.error });

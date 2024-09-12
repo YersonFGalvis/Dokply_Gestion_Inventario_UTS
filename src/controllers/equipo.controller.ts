@@ -41,6 +41,23 @@ export class EquipoController {
         }
     }
 
+    async getEquiposByAula(req: Request, res: Response) {
+        const { id, pdf } = req.params;
+        try {
+            const data = await this.equipoService.findEquiposByAula(Number(id));
+
+            if (!data) {
+                return this.httpResponse.NotFound("No existen Equipos");
+            }
+            else {
+                return this.httpResponse.OK(data);
+            }
+        } catch (e: any) {
+            console.error(e);
+            return this.httpResponse.ServerError(e);
+        }
+    }
+
     async createEquipo(req: Request, res: Response) {
         try {
             const data = await this.equipoService.createEquipo(req.body);

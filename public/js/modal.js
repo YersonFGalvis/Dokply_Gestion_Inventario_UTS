@@ -106,7 +106,7 @@ const handleModalActions = async (action, entity, id) => {
 
     toggleModal(modal, modalBackground, 'open');
 
-    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]'];
+    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'equipo_id', 'equipo_id.aula_id', 'equipo_id.aula_id.edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]', 'tipo_mantenimiento_id', 'detalle'];
 
     if (action === 'edit') {
         if (!id) {
@@ -118,9 +118,17 @@ const handleModalActions = async (action, entity, id) => {
             const data = await fetchData(`/${entity}/${id}`);
 
             fields.forEach(field => {
-                const input = modal.querySelector(`input[name="${field}"], select[name="${field}"]`);
+                const input = modal.querySelector(`input[name="${field}"], select[name="${field}"], textarea[name="${field}"]`);
                 if (input) {
-                    const value = data?.data[field];
+                    let value;
+
+                    if (field.includes('.')) {
+                        const keys = field.split('.');
+                        value = keys.reduce((acc, key) => acc && acc[key], data?.data);
+                    } else {
+                        value = data?.data[field];
+                    }
+
                     if (input.tagName === 'SELECT') {
                         if (field === 'responsable_id') {
                             updateResponsableSelect(input, data.data.responsableEquipos || []);
@@ -132,6 +140,7 @@ const handleModalActions = async (action, entity, id) => {
                     }
                 }
             });
+
             updateHSSelect('hardware', data.data.equipoHardware, 'equipoHardware[]');
             updateHSSelect('software', data.data.equipoSoftware, 'equipoSoftware[]');
 
@@ -188,7 +197,7 @@ const handleModalActions = async (action, entity, id) => {
                 e.preventDefault();
                 try {
                     const body = fields.reduce((obj, field) => {
-                        const input = modal.querySelector(`input[name="${field}"], select[name="${field}"]`);
+                        const input = modal.querySelector(`input[name="${field}"], select[name="${field}"], textarea[name="${field}"]`);
                         if (input) obj[field] = input.value;
                         return obj;
                     }, {});
@@ -227,10 +236,9 @@ const handleModalActions = async (action, entity, id) => {
         };
     } else if (action === 'add') {
         modal.querySelector('#add').onclick = async () => {
-
             try {
                 const body = fields.reduce((obj, field) => {
-                    const inputs = modal.querySelectorAll(`input[name="${field}"], select[name="${field}"]`);
+                    const inputs = modal.querySelectorAll(`input[name="${field}"], select[name="${field}"], textarea[name="${field}"]`);
 
                     if (inputs.length > 1) {
                         obj[field] = Array.from(inputs).map(input => input.value);
@@ -475,5 +483,56 @@ if (addSoftwareBtnEdit) {
     addSoftwareBtnEdit.onclick = () => addField('software', '-edit');
 }
 
+document.getElementById('edificio').addEventListener('change', function () {
+    const edificioId = this.value;
+    const aulaSelect = document.getElementById('aula');
+    const equipoSelect = document.getElementById('equipo');
+
+    aulaSelect.innerHTML = '<option value="">- Seleccione el aula -</option>';
+    equipoSelect.innerHTML = '<option value="">- Seleccione el equipo -</option>';
+
+    if (edificioId) {
+        fetch(`/edificio/${edificioId}/aulas`)
+            .then(response => response.json())
+            .then(aulas => {
+                if (aulas.data && Array.isArray(aulas.data)) {
+                    aulas.data.forEach(aula => {
+                        const option = document.createElement('option');
+                        option.value = aula.id;
+                        option.text = aula.nombre;
+                        aulaSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('La respuesta no contiene un arreglo de aulas');
+                }
+            })
+            .catch(error => console.error('Error al obtener las aulas:', error));
+    }
+});
+
+document.getElementById('aula').addEventListener('change', function () {
+    const aulaId = this.value;
+    const equipoSelect = document.getElementById('equipo');
+
+    equipoSelect.innerHTML = '<option value="">- Seleccione el equipo -</option>';
+
+    if (aulaId) {
+        fetch(`/aula/${aulaId}/equipos`)
+            .then(response => response.json())
+            .then(equipos => {
+                if (equipos.data && Array.isArray(equipos.data)) {
+                    equipos.data.forEach(equipo => {
+                        const option = document.createElement('option');
+                        option.value = equipo.id;
+                        option.text = `${equipo.marca} - ${equipo.id}`;
+                        equipoSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('La respuesta no contiene un arreglo de equipos');
+                }
+            })
+            .catch(error => console.error('Error al obtener los equipos:', error));
+    }
+});
 
 document.addEventListener('DOMContentLoaded', loadData);

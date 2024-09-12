@@ -18,7 +18,6 @@ export class AreaRouter extends BaseRouter<AreaController, AreaMiddleware> {
             try {
                 const areas = await this.controller.getAreas(req, res);
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json(areas);
                 } else {
                     // Renderiza la vista con datos iniciales

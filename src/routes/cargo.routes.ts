@@ -20,7 +20,6 @@ export class CargoRouter extends BaseRouter<CargoController, CargoMiddleware> {
                 const areas = await areaController.getAreas(req, res);
 
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json({ cargos, areas });
                 } else {
                     res.render('admin/cargos', { cargos, statusCode: cargos.status, areas, datos: {}, error: req.query.error });

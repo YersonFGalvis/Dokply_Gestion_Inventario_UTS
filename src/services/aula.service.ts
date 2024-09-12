@@ -17,6 +17,13 @@ export class AulaService extends BaseService<Aula> {
         });
     }
 
+    async findAulasByEdificio(id: number): Promise<Aula[]> {
+        const repository = await this.getRepository();
+        return repository.find({
+            where: { id }
+        });
+    }
+
     async createAula(aulaDTO: AulaDTO): Promise<Aula> {
         const { edificio_id, nombre } = aulaDTO;
 

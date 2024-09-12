@@ -29,7 +29,6 @@ export class EquipoRouter extends BaseRouter<EquipoController, EquipoMiddleware>
                 const software = await softwareController.getSoftware(req, res);
 
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json({ equipos, aulas, responsables, hardware, software });
                 } else {
                     res.render('admin/system', { equipos, statusCode: equipos.status, aulas, responsables, hardware, software, datos: {}, error: req.query.error });

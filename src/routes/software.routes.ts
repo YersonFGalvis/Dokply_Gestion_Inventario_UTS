@@ -17,7 +17,6 @@ export class SoftwareRouter extends BaseRouter<SoftwareController, SoftwareMiddl
                 const software = await this.controller.getSoftware(req, res);
 
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json(software);
                 } else {
                     res.render('admin/software', { software, datos: {}, error: req.query.error });

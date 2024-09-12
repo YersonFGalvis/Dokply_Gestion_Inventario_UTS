@@ -1,9 +1,10 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { BaseRouter } from '../config/routerConfiguration';
-import { AulaController, EdificioController } from '../controllers/index.controller';
+import { AulaController, EdificioController, EquipoController } from '../controllers/index.controller';
 import { AulaMiddleware } from '../middlewares/aula.middleware';
 
 const edificioController = new EdificioController();
+const equipoController = new EquipoController();
 
 export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
 
@@ -19,7 +20,6 @@ export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
                 const aulas = await this.controller.getAulas(req, res);
                 const edificios = await edificioController.getEdificios(req, res);
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json({ aulas, edificios });
                 } else {
                     res.render('admin/aulas', { aulas, statusCode: aulas.status, edificios, datos: {}, error: req.query.error });
@@ -45,6 +45,15 @@ export class AulaRouter extends BaseRouter<AulaController, AulaMiddleware> {
             '/aula/:id',
             (req: Request, res: Response) => this.controller.getAulaById(req, res)
                 .then(aulas => res.json(aulas))
+        );
+
+        this.router.get(
+            '/aula/:id/equipos',
+            async (req: Request, res: Response) => {
+                const { id } = req.params;
+                const equipos = await equipoController.getEquiposByAula(req, res);
+                res.json(equipos);
+            }
         );
 
         this.router.put(

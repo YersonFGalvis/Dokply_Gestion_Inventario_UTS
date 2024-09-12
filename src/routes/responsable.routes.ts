@@ -19,7 +19,6 @@ export class ResponsableRouter extends BaseRouter<ResponsableController, Respons
                 const responsables = await this.controller.getResponsables(req, res);
                 const cargos = await cargoController.getCargos(req, res);
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json(responsables);
                 } else {
                     res.render('admin/responsables', { responsables, statusCode: responsables.status, cargos, datos: {}, error: req.query.error });

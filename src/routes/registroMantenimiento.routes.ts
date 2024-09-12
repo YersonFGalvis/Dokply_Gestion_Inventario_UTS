@@ -25,7 +25,6 @@ export class RegistroMantenimientoRouter extends BaseRouter<RegistroMantenimient
                 const tipomantenimientos = await tipomantenimientoController.getTipoMantenimientos(req, res);
 
                 if (req.query.format === 'json') {
-                    // Devuelve solo JSON si el parámetro de consulta 'format' es 'json'
                     res.json({ mantenimientos, edificios, aulas, equipos, tipomantenimientos });
                 } else {
                     res.render('admin/mantenimientos', { mantenimientos, edificios, aulas, equipos, tipomantenimientos, datos: {}, error: req.query.error });
