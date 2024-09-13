@@ -96,7 +96,29 @@ export class EquipoController {
 
     async updateEquipo(req: Request, res: Response) {
         const { id } = req.params;
+        const { responsable_id: nuevoResponsableId } = req.body;
+        const baseURL = `${req.protocol}://${req.get('host')}`;
+
         try {
+            const response = await fetch(`${baseURL}/registroEquipo/${id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) {
+                return this.httpResponse.ServerError("No se pudo obtener el registro del equipo");
+            }
+
+            const registroEquipoUltimo = await response.json();
+
+            if (registroEquipoUltimo.data.responsable_id.id != nuevoResponsableId) {
+                const fechaDevolucion = new Date(new Date().setHours(0, 0, 0, 0));
+                axios.put(`${baseURL}/registroEquipo/${registroEquipoUltimo.data.id}`, { fecha_devolucion: fechaDevolucion });
+
+                const nuevaFechaAsignacion = new Date(new Date().setHours(0, 0, 0, 0));
+                axios.post(`${baseURL}/crear/registroEquipo`, { responsable_id: nuevoResponsableId, equipo_id: id, fecha_asignacion: nuevaFechaAsignacion });
+            }
+
             const data = await this.equipoService.updateEquipo(Number(id), req.body);
             return this.httpResponse.OK(data);
         } catch (error) {

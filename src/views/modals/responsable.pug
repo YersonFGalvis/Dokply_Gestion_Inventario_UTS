@@ -60,25 +60,25 @@
         form(onsubmit="return false;")
           .grid.gap-4.mb-4(class='sm:grid-cols-2')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='numeroidentificacion' class='dark:text-white') Identificacion
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='numeroidentificacion-edit' class='dark:text-white') Identificacion
               input#numeroidentificacion.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type="number" name="numeroidentificacion" class="appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número de identificación" required)
             div
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='name' class='dark:text-white') Nombres
               input#nombres.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='nombres' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombres del responsable' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='apellidos' class='dark:text-white') Apellidos
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='apellidos-edit' class='dark:text-white') Apellidos
               input#apellidos.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='apellidos' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Apellidos del responsable' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='genero' class='dark:text-white') Genero
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='genero-edit' class='dark:text-white') Genero
               input#Genero.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='genero' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Genero' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='email' class='dark:text-white') Email
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='email-edit' class='dark:text-white') Email
               input#email.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='email' name='email' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Ingrese el email' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='telefono' class='dark:text-white') Telefono
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='telefono-edit' class='dark:text-white') Telefono
               input#telefono.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='number' name='telefono' class='appearance-none no-spinner focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Ingrese el telefono' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='cargo' class='dark:text-white') Cargo
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='cargo-edit' class='dark:text-white') Cargo
               select#cargo.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'cargo_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
                   option(value="") - Seleccione el cargo -
                   if cargos.data

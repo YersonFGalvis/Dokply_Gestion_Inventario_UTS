@@ -57,16 +57,16 @@
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='name' class='dark:text-white') Nombre
               input#nombre.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='nombre' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='email' class='dark:text-white') Email
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='email-edit' class='dark:text-white') Email
               input#email.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='email' name='email' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Ingrese el email' required='')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='password' class='dark:text-white') Contraseña
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='password-edit' class='dark:text-white') Contraseña
               input#pass.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='password' name='pass' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Cambiar contraseña')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='password' class='dark:text-white') Confirme la contraseña
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='password-edit' class='dark:text-white') Confirme la contraseña
               input#confirm_password.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='password' name='confirm_password' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Confirmar contraseña')
             div
-              label.block.mb-2.text-sm.font-medium.text-gray-900(for='rol' class='dark:text-white') Rol
+              label.block.mb-2.text-sm.font-medium.text-gray-900(for='rol-edit' class='dark:text-white') Rol
               select#rol.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name = 'rol_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
                   option(value="") - Seleccione el rol -
                   if roles.data

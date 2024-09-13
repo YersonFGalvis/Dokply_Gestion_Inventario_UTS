@@ -15,7 +15,13 @@ export class RegistroEquipoService extends BaseService<RegistroEquipo> {
 
     async findRegistroEquipoById(id: number): Promise<RegistroEquipo | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        return repository
+            .createQueryBuilder('registroEquipo')
+            .leftJoinAndSelect('registroEquipo.responsable_id', 'responsable')
+            .where('registroEquipo.equipo_id = :id', { id })
+            .orderBy('registroEquipo.fecha_asignacion', 'DESC')
+            .addOrderBy('registroEquipo.id', 'DESC')
+            .getOne();
     }
 
     async createRegistroEquipo(registroEquipoDTO: RegistroEquipoDTO): Promise<RegistroEquipo> {
@@ -54,26 +60,23 @@ export class RegistroEquipoService extends BaseService<RegistroEquipo> {
     async updateRegistroEquipo(id: number, registroEquipoDTO: RegistroEquipoDTO): Promise<RegistroEquipo | null> {
         const repository = await this.getRepository();
         const registroEquipoToUpdate = await repository.findOneBy({ id });
-
+        
         if (!registroEquipoToUpdate) {
             throw new Error(`RegistroEquipo con id ${id} no encontrado`);
         }
 
-        const equipo: Equipo | null = await this._equipoService.findEquipoById(registroEquipoDTO.equipo_id);
-        const responsable: Responsable | null = await this._responsableService.findResponsableById(registroEquipoDTO.responsable_id);
+        // const equipo: Equipo | null = await this._equipoService.findEquipoById(registroEquipoDTO.equipo_id);
+        // const responsable: Responsable | null = await this._responsableService.findResponsableById(registroEquipoDTO.responsable_id);
 
-        if (!equipo) {
-            throw new Error(`Equipo con id ${registroEquipoDTO.equipo_id} no encontrado`);
-        }
-        if (!responsable) {
-            throw new Error(`Responsable con id ${registroEquipoDTO.responsable_id} no encontrado`);
-        }
+        // if (!equipo) {
+        //     throw new Error(`Equipo con id ${registroEquipoDTO.equipo_id} no encontrado`);
+        // }
+        // if (!responsable) {
+        //     throw new Error(`Responsable con id ${registroEquipoDTO.responsable_id} no encontrado`);
+        // }
 
         repository.merge(registroEquipoToUpdate, {
-            equipo_id: equipo,
-            responsable_id: responsable,
-            fecha_asignacion: new Date(registroEquipoDTO.fecha_asignacion),
-            fecha_devolucion: registroEquipoDTO.fecha_devolucion ? new Date(registroEquipoDTO.fecha_devolucion) : null
+            fecha_devolucion: new Date(new Date().setHours(0, 0, 0, 0))
         });
 
         try {

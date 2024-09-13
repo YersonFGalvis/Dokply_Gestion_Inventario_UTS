@@ -38,7 +38,23 @@ const updateResponsableSelect = (selectElement, responsables) => {
 
     const responsableSeleccionado = responsables.find(responsable => responsable.fecha_devolucion === null);
     selectElement.value = responsableSeleccionado ? responsableSeleccionado.responsable_id.id : "";
+
+    const boton = document.querySelector('#responsable-btn-edit');
+    if (boton) {
+        if (selectElement.value && selectElement.value !== "") {
+            boton.classList.remove('hidden');
+        } else {
+            boton.classList.add('hidden');
+        }
+
+        boton.addEventListener('click', () => {
+            selectElement.value = "";
+            
+            boton.classList.add('hidden');
+        });
+    }
 };
+
 
 const updateHSSelect = (containerId, data, selectType) => {
     const container = document.getElementById(`${containerId}-container-edit`);

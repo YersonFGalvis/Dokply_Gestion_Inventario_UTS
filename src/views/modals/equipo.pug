@@ -74,34 +74,36 @@
                 path(fill-rule='evenodd' d='M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z' clip-rule='evenodd')
               | Exportar
           div.mb-2
-            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula' class='dark:text-white') Aula
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='aula-edit' class='dark:text-white') Aula
             select#aula.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='aula_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
               option(value="") - Seleccione el aula -
                 if aulas.data
                   each aula in aulas.data
                     option(value=aula.id selected=datos.aula ? datos.aula == aula.id ? true : false : null)= aula.nombre 
           div.mb-2
-            label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado' class='dark:text-white') Estado
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='estado-edit' class='dark:text-white') Estado
             select#estado.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='estado' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' required)
                 option(value="") - Seleccione el estado -   
                 option(value="Actualizado") Actualizado   
                 option(value="Repotenciar") Repotenciar   
           div.mb-2
-            label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca' class='dark:text-white') Marca
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='marca-edit' class='dark:text-white') Marca
             input#marca.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='marca' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Nombre la marca' required='')  
           div.mb-2
-            label.block.mb-2.text-sm.font-medium.text-gray-900(for='responsable' class='dark:text-white') Responsable
+            label.block.mb-2.text-sm.font-medium.text-gray-900(for='responsable-edit' class='dark:text-white') Responsable
             select#responsable.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name='responsable_id' class='focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500')
               option(value="") - Seleccione el responsable -
                 if responsables.data
                   each responsable in responsables.data
                     option(value=responsable.id selected=datos.responsable ? datos.responsable == responsable.id ? true : false : null)= `${responsable.nombres} ${responsable.apellidos}` 
-          label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
+          .flex.justify-center.mb-2
+            button#responsable-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.hidden(type='button') Entregar equipo
+          label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware-edit' class='dark:text-white') Hardware
           #hardware-container-edit.mb-2
             // Los selects de hardware se generarán dinámicamente aquí
           .flex.justify-center.mb-2
             button#add-hardware-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
-          label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
+          label.block.mb-2.text-sm.font-medium.text-gray-900(for='software-edit' class='dark:text-white') Software        
           #software-container-edit.mb-2
             // Los selects de software se generarán dinámicamente aquí
           .flex.justify-center.mb-2
