@@ -49,7 +49,6 @@ const updateResponsableSelect = (selectElement, responsables) => {
 
         boton.addEventListener('click', () => {
             selectElement.value = "";
-            
             boton.classList.add('hidden');
         });
     }
@@ -499,55 +498,60 @@ if (addSoftwareBtnEdit) {
     addSoftwareBtnEdit.onclick = () => addField('software', '-edit');
 }
 
-document.getElementById('edificio').addEventListener('change', function () {
-    const edificioId = this.value;
+document.addEventListener('DOMContentLoaded', () => {
+    const edificioSelect = document.getElementById('edificio');
     const aulaSelect = document.getElementById('aula');
     const equipoSelect = document.getElementById('equipo');
 
-    aulaSelect.innerHTML = '<option value="">- Seleccione el aula -</option>';
-    equipoSelect.innerHTML = '<option value="">- Seleccione el equipo -</option>';
+    if (edificioSelect) {
+        edificioSelect.addEventListener('change', function () {
+            const edificioId = this.value;
+            aulaSelect.innerHTML = '<option value="">- Seleccione el aula -</option>';
+            equipoSelect.innerHTML = '<option value="">- Seleccione el equipo -</option>';
 
-    if (edificioId) {
-        fetch(`/edificio/${edificioId}/aulas`)
-            .then(response => response.json())
-            .then(aulas => {
-                if (aulas.data && Array.isArray(aulas.data)) {
-                    aulas.data.forEach(aula => {
-                        const option = document.createElement('option');
-                        option.value = aula.id;
-                        option.text = aula.nombre;
-                        aulaSelect.appendChild(option);
-                    });
-                } else {
-                    console.error('La respuesta no contiene un arreglo de aulas');
-                }
-            })
-            .catch(error => console.error('Error al obtener las aulas:', error));
+            if (edificioId) {
+                fetch(`/edificio/${edificioId}/aulas`)
+                    .then(response => response.json())
+                    .then(aulas => {
+                        if (aulas.data && Array.isArray(aulas.data)) {
+                            aulas.data.forEach(aula => {
+                                const option = document.createElement('option');
+                                option.value = aula.id;
+                                option.text = aula.nombre;
+                                aulaSelect.appendChild(option);
+                            });
+                        } else {
+                            console.error('La respuesta no contiene un arreglo de aulas');
+                        }
+                    })
+                    .catch(error => console.error('Error al obtener las aulas:', error));
+            }
+        });
     }
-});
 
-document.getElementById('aula').addEventListener('change', function () {
-    const aulaId = this.value;
-    const equipoSelect = document.getElementById('equipo');
+    if (aulaSelect) {
+        aulaSelect.addEventListener('change', function () {
+            const aulaId = this.value;
+            equipoSelect.innerHTML = '<option value="">- Seleccione el equipo -</option>';
 
-    equipoSelect.innerHTML = '<option value="">- Seleccione el equipo -</option>';
-
-    if (aulaId) {
-        fetch(`/aula/${aulaId}/equipos`)
-            .then(response => response.json())
-            .then(equipos => {
-                if (equipos.data && Array.isArray(equipos.data)) {
-                    equipos.data.forEach(equipo => {
-                        const option = document.createElement('option');
-                        option.value = equipo.id;
-                        option.text = `${equipo.marca} - ${equipo.id}`;
-                        equipoSelect.appendChild(option);
-                    });
-                } else {
-                    console.error('La respuesta no contiene un arreglo de equipos');
-                }
-            })
-            .catch(error => console.error('Error al obtener los equipos:', error));
+            if (aulaId) {
+                fetch(`/aula/${aulaId}/equipos`)
+                    .then(response => response.json())
+                    .then(equipos => {
+                        if (equipos.data && Array.isArray(equipos.data)) {
+                            equipos.data.forEach(equipo => {
+                                const option = document.createElement('option');
+                                option.value = equipo.id;
+                                option.text = `${equipo.marca} - ${equipo.id}`;
+                                equipoSelect.appendChild(option);
+                            });
+                        } else {
+                            console.error('La respuesta no contiene un arreglo de equipos');
+                        }
+                    })
+                    .catch(error => console.error('Error al obtener los equipos:', error));
+            }
+        });
     }
 });
 
