@@ -60,7 +60,7 @@ export class RegistroEquipoService extends BaseService<RegistroEquipo> {
     async updateRegistroEquipo(id: number, registroEquipoDTO: RegistroEquipoDTO): Promise<RegistroEquipo | null> {
         const repository = await this.getRepository();
         const registroEquipoToUpdate = await repository.findOneBy({ id });
-        
+
         if (!registroEquipoToUpdate) {
             throw new Error(`RegistroEquipo con id ${id} no encontrado`);
         }
@@ -87,16 +87,24 @@ export class RegistroEquipoService extends BaseService<RegistroEquipo> {
         }
     }
 
-    async deleteRegistroEquipo(id: number): Promise<void> {
+    async deleteRegistroEquipo(id: number): Promise<RegistroEquipo[]> {
         const repository = await this.getRepository();
-        const registroEquipoToDelete = await repository.findOneBy({ id });
+        const registroEquipoToDelete = await repository.createQueryBuilder('re')
+            .where('re.equipo_id = :id', { id })
+            .getMany();
 
         if (!registroEquipoToDelete) {
             throw new Error(`RegistroEquipo con id ${id} no encontrado`);
         }
 
         try {
-            await repository.remove(registroEquipoToDelete);
+            await repository.createQueryBuilder()
+            .delete()
+            .from(RegistroEquipo)
+            .where('equipo_id = :id', { id })
+            .execute();
+
+        return registroEquipoToDelete;
         } catch (error) {
             console.error('Error al eliminar el registro de equipo:', error);
             throw error;

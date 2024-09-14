@@ -117,18 +117,26 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
         }
     }
 
-    async deleteRegistroMantenimiento(id: number): Promise<void> {
+    async deleteRegistroMantenimiento(id: number): Promise<RegistroMantenimiento[]> {
         const repository = await this.getRepository();
-        const registroMantenimientoToDelete = await repository.findOneBy({ id });
+        const registroMantenimientoToDelete = await repository.createQueryBuilder('rm')
+            .where('rm.equipo_id = :id', { id })
+            .getMany();
 
-        if (!registroMantenimientoToDelete) {
-            throw new Error(`RegistroMantenimiento con id ${id} no encontrado`);
+        if (registroMantenimientoToDelete.length === 0) {
+            throw new Error(`registroMantenimiento con id ${id} no encontrado`);
         }
 
         try {
-            await repository.remove(registroMantenimientoToDelete);
+            await repository.createQueryBuilder()
+                .delete()
+                .from(RegistroMantenimiento)
+                .where('equipo_id = :id', { id })
+                .execute();
+
+            return registroMantenimientoToDelete;
         } catch (error) {
-            console.error('Error al eliminar el registro de mantenimiento:', error);
+            console.error('Error al eliminar el registroMantenimiento:', error);
             throw error;
         }
     }
@@ -179,6 +187,4 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
             throw error;
         }
     }
-
-
 }

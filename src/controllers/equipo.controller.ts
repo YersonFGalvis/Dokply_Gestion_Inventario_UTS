@@ -180,7 +180,14 @@ export class EquipoController {
 
     async deleteEquipo(req: Request, res: Response) {
         const { id } = req.params;
+        const baseURL = `${req.protocol}://${req.get('host')}`;
+
         try {
+            await axios.delete(`${baseURL}/equipoHardware/${id}`);
+            await axios.delete(`${baseURL}/equipoSoftware/${id}`);
+            await axios.delete(`${baseURL}/registroMantenimiento/${id}`);
+            await axios.delete(`${baseURL}/registroEquipo/${id}`);
+
             await this.equipoService.deleteEquipo(Number(id));
             return this.httpResponse.OK("Equipo eliminado correctamente");
         } catch (error) {
