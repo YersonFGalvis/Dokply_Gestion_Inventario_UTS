@@ -20,9 +20,15 @@ export class EquipoHardwareService extends BaseService<EquipoHardware> {
         return repository.find();
     }
 
-    async findEquipoHardwareById(id: number): Promise<EquipoHardware | null> {
+    async findEquipoHardwareById(id: number): Promise<number | null> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        const result = await repository
+            .createQueryBuilder('equipohardware')
+            .select('equipohardware.equipo_id')
+            .where('equipohardware.equipo_id = :id', { id })
+            .getRawOne();
+    
+        return result ? result.equipo_id : null;
     }
 
     async createEquipoHardware(equipoHardwareDTO: EquipoHardwareDTO): Promise<EquipoHardware> {
@@ -83,16 +89,24 @@ export class EquipoHardwareService extends BaseService<EquipoHardware> {
         }
     }
 
-    async deleteEquipoHardware(id: number): Promise<void> {
+    async deleteEquipoHardware(id: number): Promise<EquipoHardware[]> {
         const repository = await this.getRepository();
-        const equipoHardwareToDelete = await repository.findOneBy({ id });
+        const equipoHardwareToDelete = await repository.createQueryBuilder('eh')
+            .where('eh.equipo_id = :id', { id })
+            .getMany();
 
-        if (!equipoHardwareToDelete) {
-            throw new Error(`EquipoHardware con id ${id} no encontrado`);
+        if (equipoHardwareToDelete.length === 0) {
+            throw new Error(`equipoHardwareToDelete con id ${id} no encontrado`);
         }
 
         try {
-            await repository.remove(equipoHardwareToDelete);
+            await repository.createQueryBuilder()
+                .delete()
+                .from(EquipoHardware)
+                .where('equipo_id = :id', { id })
+                .execute();
+
+            return equipoHardwareToDelete;
         } catch (error) {
             console.error('Error al eliminar el equipo hardware:', error);
             throw error;

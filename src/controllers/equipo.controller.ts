@@ -96,6 +96,7 @@ export class EquipoController {
 
     async updateEquipo(req: Request, res: Response) {
         const { id } = req.params;
+        const equipo_id = id;
         const { responsable_id: nuevoResponsableId } = req.body;
         const baseURL = `${req.protocol}://${req.get('host')}`;
 
@@ -106,7 +107,7 @@ export class EquipoController {
             });
 
             const registroEquipoUltimo = await response.json();
-            
+
             if (!response.ok || !registroEquipoUltimo || registroEquipoUltimo.length === 0 || registroEquipoUltimo.error) {
                 const nuevaFechaAsignacion = new Date(new Date().setHours(0, 0, 0, 0));
                 await axios.post(`${baseURL}/crear/registroEquipo`, { responsable_id: nuevoResponsableId, equipo_id: id, fecha_asignacion: nuevaFechaAsignacion });
@@ -119,6 +120,56 @@ export class EquipoController {
                 const nuevaFechaAsignacion = new Date(new Date().setHours(0, 0, 0, 0));
                 await axios.post(`${baseURL}/crear/registroEquipo`, { responsable_id: nuevoResponsableId, equipo_id: id, fecha_asignacion: nuevaFechaAsignacion });
             }
+
+            const responseEquipoHardware = await fetch(`${baseURL}/equipoHardware/${id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const registroEquipoHardware = await responseEquipoHardware.json();
+            console.log({ registroEquipoHardware });
+
+            await axios.delete(`${baseURL}/equipoHardware/${id}`);
+
+            const responseEquipoSoftware = await fetch(`${baseURL}/equipoSoftware/${id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const registroEquipoSoftware = await responseEquipoSoftware.json();
+            console.log({ registroEquipoSoftware });
+
+            await axios.delete(`${baseURL}/equipoSoftware/${id}`);
+
+            const hardwareData: number[] = Array.isArray(req.body['equipoHardware[]'])
+                ? req.body['equipoHardware[]'].map(Number)
+                : [Number(req.body['equipoHardware[]'])];
+
+            const softwareData: number[] = Array.isArray(req.body['equipoSoftware[]'])
+                ? req.body['equipoSoftware[]'].map(Number)
+                : [Number(req.body['equipoSoftware[]'])];
+
+            const hardwareRequests = hardwareData.map((hardware_id: number) => {
+                return axios.post(`${baseURL}/crear/equipoHardware`, { equipo_id, hardware_id })
+                    .then(response => {
+                        return response.data;
+                    })
+                    .catch(error => {
+                        console.error(`Error al crear el hardware ID ${hardware_id}:`, error.message);
+                        return null;
+                    });
+            });
+
+            const softwareRequests = softwareData.map((software_id: number) => {
+                return axios.post(`${baseURL}/crear/equipoSoftware`, { equipo_id, software_id })
+                    .then(response => {
+                        return response.data;
+                    })
+                    .catch(error => {
+                        console.error(`Error al crear el software ID ${software_id}:`, error.message);
+                        return null;
+                    });
+            });
 
             const data = await this.equipoService.updateEquipo(Number(id), req.body);
             return this.httpResponse.OK(data);

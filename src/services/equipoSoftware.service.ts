@@ -20,9 +20,15 @@ export class EquipoSoftwareService extends BaseService<EquipoSoftware> {
         return repository.find();
     }
 
-    async findEquipoSoftwareById(id: number): Promise<EquipoSoftware | null> {
+    async findEquipoSoftwareById(id: number): Promise<number[]> {
         const repository = await this.getRepository();
-        return repository.findOneBy({ id });
+        const result = await repository
+            .createQueryBuilder('equiposoftware')
+            .select('equiposoftware.equipo_id')
+            .where('equiposoftware.equipo_id = :id', { id })
+            .getRawOne();
+
+        return result ? result.equipo_id : null;
     }
 
     async createEquipoSoftware(equipoSoftwareDTO: EquipoSoftwareDTO): Promise<EquipoSoftware> {
@@ -83,18 +89,26 @@ export class EquipoSoftwareService extends BaseService<EquipoSoftware> {
         }
     }
 
-    async deleteEquipoSoftware(id: number): Promise<void> {
+    async deleteEquipoSoftware(id: number): Promise<EquipoSoftware[]> {
         const repository = await this.getRepository();
-        const equipoSoftwareToDelete = await repository.findOneBy({ id });
+        const equipoHardwareToDelete = await repository.createQueryBuilder('es')
+            .where('es.equipo_id = :id', { id })
+            .getMany();
 
-        if (!equipoSoftwareToDelete) {
-            throw new Error(`EquipoSoftware con id ${id} no encontrado`);
+        if (equipoHardwareToDelete.length === 0) {
+            throw new Error(`equipoHardwareToDelete con id ${id} no encontrado`);
         }
 
         try {
-            await repository.remove(equipoSoftwareToDelete);
+            await repository.createQueryBuilder()
+                .delete()
+                .from(EquipoSoftware)
+                .where('equipo_id = :id', { id })
+                .execute();
+
+            return equipoHardwareToDelete;
         } catch (error) {
-            console.error('Error al eliminar el equipo software:', error);
+            console.error('Error al eliminar el equipo hardware:', error);
             throw error;
         }
     }

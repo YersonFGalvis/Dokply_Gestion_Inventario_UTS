@@ -72,7 +72,7 @@ const updateHSSelect = (containerId, data, selectType) => {
         newSelect.classList.add('bg-gray-50', 'border', 'border-gray-300', 'text-gray-900', 'text-sm', 'rounded-lg', 'block', 'w-full', 'p-2.5', 'dark:bg-gray-700', 'dark:border-gray-600', 'dark:placeholder-gray-400', 'dark:text-white', 'dark:focus:ring-primary-500', 'dark:focus:border-primary-500');
 
         const defaultOption = document.createElement('option');
-        defaultOption.value = item.id;
+        defaultOption.value =  containerId === 'hardware' ? item.hardware_id.id : item.software_id.id;
         defaultOption.text = containerId === 'hardware' ? item.hardware_id.nombre : item.software_id.nombre;
         newSelect.appendChild(defaultOption);
 
@@ -212,8 +212,14 @@ const handleModalActions = async (action, entity, id) => {
                 e.preventDefault();
                 try {
                     const body = fields.reduce((obj, field) => {
-                        const input = modal.querySelector(`input[name="${field}"], select[name="${field}"], textarea[name="${field}"]`);
-                        if (input) obj[field] = input.value;
+                        const input = modal.querySelectorAll(`input[name="${field}"], select[name="${field}"], textarea[name="${field}"]`);
+
+                        if (input.length > 1) {
+                            obj[field] = Array.from(input).map(input => input.value);
+                        } else if (input.length === 1) {
+                            obj[field] = input[0].value;
+                        }
+
                         return obj;
                     }, {});
 
@@ -444,7 +450,6 @@ function addField(type, edit) {
     newSelect.name = `equipo${type.charAt(0).toUpperCase() + type.slice(1)}[]`;
     newSelect.classList.add('bg-gray-50', 'border', 'border-gray-300', 'text-gray-900', 'text-sm', 'rounded-lg', 'block', 'w-full', 'p-2.5', 'dark:bg-gray-700', 'dark:border-gray-600', 'dark:placeholder-gray-400', 'dark:text-white', 'dark:focus:ring-primary-500', 'dark:focus:border-primary-500');
 
-    // Añadir la opción por defecto
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
     defaultOption.text = type === 'hardware' ? '- Seleccione el hardware -' : '- Seleccione el software -';
