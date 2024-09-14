@@ -1,10 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { BaseRouter } from '../config/routerConfiguration';
-import { AuthController, RolController, UsuarioController } from '../controllers/index.controller';
+import { AuthController, RolController, UsuarioController, RegistroMantenimientoController } from '../controllers/index.controller';
 import { HelperMiddleware } from '../middlewares/helper.middleware';
 
 const rolController = new RolController();
 const usuarioController = new UsuarioController();
+const registroMantenimientoController = new RegistroMantenimientoController();
 export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
     constructor() {
         super(AuthController, HelperMiddleware);
@@ -45,8 +46,9 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
 
         this.router.get('/dashboard',
             this.middleware.passAuth('jwt'),
-            (req: Request, res: Response) => {
-            res.render('admin/dashboard', { error: req.query.error });
+            async (req: Request, res: Response) => {
+            const estadisticas = await registroMantenimientoController.getRegistroMantenimientosInicio(req, res);
+            res.render('admin/dashboard', { estadisticas, error: req.query.error });
         });
 
         this.router.post(
