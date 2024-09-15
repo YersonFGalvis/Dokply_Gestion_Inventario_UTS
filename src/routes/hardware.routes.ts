@@ -28,9 +28,6 @@ export class HardwareRouter extends BaseRouter<HardwareController, HardwareMiddl
             (req: Request, res: Response, next: NextFunction) => {
                 this.middleware.hardwareValidator(req, res, next);
             },
-            (req: Request, res: Response, next: NextFunction) => {
-                this.middleware.hardwareDuplicateValidator(req, res, next);
-            },
             async (req: Request, res: Response) => {
                 await this.controller.createHardware(req, res)
                 res.redirect('/hardware')

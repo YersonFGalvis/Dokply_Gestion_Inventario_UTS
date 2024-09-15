@@ -1,6 +1,7 @@
 extends ../layouts/index
 block contenido
   h1.text-xl.font-semibold.text-gray-900.text-center(class='sm:text-2xl dark:text-white') Usuarios
+  .hidden.text-green-700.border-green-700.bg-green-800.ring-green-300.border-green-500.text-green-500.bg-green-600.ring-green-900.green-100
   .flex.items-center.ml-auto.space-x-2.p-4(class='sm:space-x-3 justify-end')
     button#modal_add.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-blue-600(data-entity="usuario" data-action="add" type='button'  class='w-1/2 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
       svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
@@ -10,5 +11,5 @@ block contenido
         .inline-block.min-w-full.align-middle
           .overflow-hidden.shadow(class='sm:rounded-lg')
             .flex.items-center.justify-between.mb-4
-              div#table(data-columnas=['Nombre', 'Email', 'Rol', 'Acciones'] data-filas=['data.nombre', 'data.email', 'data.rol_id.nombre'] data-entity="usuario"  data-datos=users.data)
+              div#table(data-columnas=['Nombre', 'Email', 'Rol', 'Acciones'] data-filas=['data.nombre', 'data.email', 'data.rol_id.nombre', 'data.activo'] data-entity="usuario"  data-datos=users.data)
   include ../modals/usuarios   

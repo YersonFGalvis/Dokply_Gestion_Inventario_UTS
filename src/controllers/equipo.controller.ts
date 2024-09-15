@@ -64,7 +64,7 @@ export class EquipoController {
             const equipo_id = data.id;
             const baseURL = `${req.protocol}://${req.get('host')}`;
 
-            const fecha_asignacion = moment().tz("America/Bogota").format("YYYY-MM-DD");
+            const fecha_asignacion = new Date(new Date().setHours(0, 0, 0, 0));
 
             const hardwareData: number[] = Array.isArray(req.body['equipoHardware[]']) ? req.body['equipoHardware[]'] : [req.body['equipoHardware[]']];
             const softwareData: number[] = Array.isArray(req.body['equipoSoftware[]']) ? req.body['equipoSoftware[]'] : [req.body['equipoSoftware[]']];
@@ -127,7 +127,6 @@ export class EquipoController {
             });
 
             const registroEquipoHardware = await responseEquipoHardware.json();
-            console.log({ registroEquipoHardware });
 
             await axios.delete(`${baseURL}/equipoHardware/${id}`);
 
@@ -137,7 +136,6 @@ export class EquipoController {
             });
 
             const registroEquipoSoftware = await responseEquipoSoftware.json();
-            console.log({ registroEquipoSoftware });
 
             await axios.delete(`${baseURL}/equipoSoftware/${id}`);
 

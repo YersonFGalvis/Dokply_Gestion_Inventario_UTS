@@ -27,8 +27,8 @@ export class CargoMiddleware extends HelperMiddleware{
     }
 
     async cargoDuplicateValidator(req: Request, res: Response, next: NextFunction) {
-        const { nombre } = req.body;
-        const cargoDB = await this._cargoService.findCargoByNombre(nombre);
+        const { nombre, area_id } = req.body;
+        const cargoDB = await this._cargoService.findCargoByNombre(nombre, area_id);
 
         if (cargoDB?.nombre === nombre) {
             return this._httpResponse.BadRequest("Ya existe el Cargo en el sistema", ErrorsType.Duplicidad);

@@ -39,9 +39,12 @@ export class CargoService extends BaseService<Cargo> {
         }
     }
 
-    async findCargoByNombre(nombre: string): Promise<Cargo | null> {
+    async findCargoByNombre(nombre: string, area_id: number): Promise<Cargo | null> {
         const repository = await this.getRepository();
-        return repository.findOne({ where: { nombre } });
+        return repository.createQueryBuilder('cargo')
+            .where('cargo.nombre = :nombre', { nombre })
+            .andWhere('cargo.area_id = :area_id', { area_id })
+            .getOne();
     }
 
     async findAllCargos(): Promise<Cargo[]> {

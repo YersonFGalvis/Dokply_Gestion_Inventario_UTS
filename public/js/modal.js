@@ -73,21 +73,21 @@ const updateHSSelect = (containerId, data, selectType) => {
 
         const defaultOption = document.createElement('option');
         defaultOption.value =  containerId === 'hardware' ? item.hardware_id.id : item.software_id.id;
-        defaultOption.text = containerId === 'hardware' ? item.hardware_id.nombre : item.software_id.nombre;
+        defaultOption.text = containerId === 'hardware' ? `${item.hardware_id.nombre} - ${item.hardware_id.estado}` : `${item.software_id.nombre} - ${item.software_id.licencia}`;
         newSelect.appendChild(defaultOption);
 
         if (containerId == 'hardware') {
             hardwareData.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.id;
-                option.text = item.nombre;
+                option.text = `${item.nombre} - ${item.estado}`;
                 newSelect.appendChild(option);
             });
         } else {
             softwareData.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.id;
-                option.text = item.nombre;
+                option.text = `${item.nombre} - ${item.licencia}`;
                 newSelect.appendChild(option);
             });
         }
@@ -270,7 +270,7 @@ const handleModalActions = async (action, entity, id) => {
                     return obj;
                 }, {});
 
-                if (body.pass === body.password_confirm) {
+                if (body.pass === body.confirm_password) {
                     await fetch(`/crear/${entity}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -374,7 +374,7 @@ function initializeDefaultFields() {
         hardwareData.forEach(item => {
             const option = document.createElement('option');
             option.value = item.id;
-            option.text = item.nombre;
+            option.text = `${item.nombre} - ${item.estado}`;
             defaultHardwareSelect.appendChild(option);
         });
 
@@ -414,7 +414,7 @@ function initializeDefaultFields() {
         softwareData.forEach(item => {
             const option = document.createElement('option');
             option.value = item.id;
-            option.text = item.nombre;  // Ajusta esto según la estructura de tu objeto software
+            option.text = `${item.nombre} - ${item.licencia}`;
             defaultSoftwareSelect.appendChild(option);
         });
 
@@ -459,7 +459,7 @@ function addField(type, edit) {
     defaultOptions.forEach(item => {
         const option = document.createElement('option');
         option.value = item.id;
-        option.text = item.nombre;
+        option.text = type === 'hardware' ? `${item.nombre} - ${item.estado}` : `${item.nombre} - ${item.licencia}`;
         newSelect.appendChild(option);
     });
 

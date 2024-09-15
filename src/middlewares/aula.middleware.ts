@@ -27,8 +27,8 @@ export class AulaMiddleware extends HelperMiddleware{
     }
 
     async aulaDuplicateValidator(req: Request, res: Response, next: NextFunction) {
-        const { nombre } = req.body;
-        const aulaDB = await this._aulaService.findAulaByNombre(nombre);
+        const { nombre, edificio_id } = req.body;
+        const aulaDB = await this._aulaService.findAulaByNombre(nombre, edificio_id);
 
         if (aulaDB?.nombre === nombre) {
             return this._httpResponse.BadRequest("Ya existe el Aula en el sistema", ErrorsType.Duplicidad);

@@ -16,12 +16,19 @@ export class RegistroMantenimientoController {
                 return this.httpResponse.NotFound("No hay mantenimientos creados en el sistema");
             }
 
-            return this.httpResponse.OK(data)
+            const formattedData = data.map(registro => {
+                return {
+                    ...registro,
+                    fecha: new Date(registro.fecha).toISOString().split('T')[0]
+                };
+            });
 
+            return this.httpResponse.OK(formattedData);
         } catch (error) {
-            return this.httpResponse.ServerError(error)
+            return this.httpResponse.ServerError(error);
         }
     }
+
 
     async getRegistroMantenimientosInicio(req: Request, res: Response) {
         try {
@@ -61,7 +68,7 @@ export class RegistroMantenimientoController {
             const data = await this.registroMantenimientoService.createRegistroMantenimiento(bodyWithCookie);
             return this.httpResponse.OK(data);
         } catch (error) {
-            return this.httpResponse.ServerError( "Internal server error");
+            return this.httpResponse.ServerError("Internal server error");
         }
     }
 

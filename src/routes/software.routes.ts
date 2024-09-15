@@ -29,9 +29,6 @@ export class SoftwareRouter extends BaseRouter<SoftwareController, SoftwareMiddl
             (req: Request, res: Response, next: NextFunction) => {
                 this.middleware.softwareValidator(req, res, next);
             },
-            (req: Request, res: Response, next: NextFunction) => {
-                this.middleware.softwareDuplicateValidator(req, res, next);
-            },
             async (req: Request, res: Response) => {
                 await this.controller.createSoftware(req, res);
                 res.redirect('/software')

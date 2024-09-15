@@ -27,4 +27,7 @@ export class Usuario extends BaseEntity{
   @OneToMany(() => RegistroMantenimiento, (registroMantenimiento) => registroMantenimiento.usuario_id)
   registroMantenimientos: RegistroMantenimiento[]
 
+  @Column()
+  activo: boolean;
+
 }
