@@ -2,42 +2,40 @@ extends ../layouts/index
 
 block contenido
     .px-4.pt-5(class='2xl:px-0')
-        .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm(class='dark:border-gray-700 sm:p-6 dark:bg-gray-800')
-            // Card header
+        .p-4.shadow-sm(class='bg-[#f1f1f1] dark:border-gray-700 sm:p-6 dark:bg-gray-800')
             .items-center.justify-center(class='lg:flex')
                 .mb-4(class='lg:mb-0')
-                    h3.mb-2.text-xl.font-bold.text-gray-900.text-center(class='dark:text-white') Inicio  
+                    h3.mb-2.text-xl.font-bold.text-gray-900.text-center(class='dark:text-white') Estadisticas  
 
-        // Contenedor Grid responsivo para las estadísticas
         .grid.grid-cols-1.gap-4.pt-2(class="lg:grid-cols-3 sm:gap-6")
             // Estadística del mes actual
-            .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm(class='dark:border-gray-700 sm:p-6 dark:bg-gray-800 overflow-hidden')
+            .p-4.border.border-gray-200.rounded-lg.shadow-sm(class='bg-[#34531F] dark:border-gray-700 sm:p-6 dark:bg-gray-800 overflow-hidden text-[#F8E9D4]')
                 .flex.flex-wrap.items-center.justify-between.mb-4
                     .flex-shrink-0
-                        span.text-xl.font-bold.leading-none.text-gray-900(class='sm:text-2xl dark:text-white truncate')= estadisticas.data.mantenimientosMesActual
-                        h3.text-base.font-light.text-gray-500(class='dark:text-gray-400 truncate') Mantenimientos realizados del mes actual
-                    .flex.items-center.justify-end.flex-1.text-base.font-medium.text-green-500(class='dark:text-green-400')
-                        svg.w-6.h-6.text-gray-800(class='dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewbox='0 0 24 24')
+                        span.text-xl.font-bold.leading-none(class='sm:text-2xl dark:text-white truncate')= estadisticas.data.mantenimientosMesActual
+                        h3.text-base.font-light(class='dark:text-gray-400 truncate') Mantenimientos realizados del mes actual
+                    .flex.items-center.justify-end.flex-1.text-base.font-medium(class='dark:text-green-400')
+                        svg.w-6.h-6(class='dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewbox='0 0 24 24')
                             path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207')
 
             // Estadística del último mes
-            .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm(class='dark:border-gray-700 sm:p-6 dark:bg-gray-800 overflow-hidden')
+            .p-4.border.border-gray-200.rounded-lg.shadow-sm(class='bg-[#F8E9D4] text-[#34531F] dark:border-gray-700 sm:p-6 dark:bg-gray-800 overflow-hidden')
                 .flex.flex-wrap.items-center.justify-between.mb-4
                     .flex-shrink-0
-                        span.text-xl.font-bold.leading-none.text-gray-900(class='sm:text-2xl dark:text-white truncate')= estadisticas.data.mantenimientosMesPasado
-                        h3.text-base.font-light.text-gray-500(class='dark:text-gray-400 truncate') Mantenimientos realizados del último mes
-                    .flex.items-center.justify-end.flex-1.text-base.font-medium.text-green-500(class='dark:text-green-400')
-                        svg.w-6.h-6.text-gray-800(class='dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewbox='0 0 24 24')
+                        span.text-xl.font-bold.leading-none(class='sm:text-2xl dark:text-white truncate')= estadisticas.data.mantenimientosMesPasado
+                        h3.text-base.font-light(class='dark:text-gray-400 truncate') Mantenimientos realizados del último mes
+                    .flex.items-center.justify-end.flex-1.text-base.font-medium(class='dark:text-green-400')
+                        svg.w-6.h-6(class='dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewbox='0 0 24 24')
                             path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207')
 
             // Total de equipos en mantenimiento
-            .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm(class='dark:border-gray-700 sm:p-6 dark:bg-gray-800 overflow-hidden')
+            .p-4.border.border-gray-200.rounded-lg.shadow-sm(class='bg-[#6D100A] dark:border-gray-700 sm:p-6 dark:bg-gray-800 overflow-hidden text-[#F8E9D4]')
                 .flex.flex-wrap.items-center.justify-between.mb-4
                     .flex-shrink-0
-                        span.text-xl.font-bold.leading-none.text-gray-900(class='sm:text-2xl dark:text-white truncate')= estadisticas.data.totalEquiposMantenidos.total
-                        h3.text-base.font-light.text-gray-500(class='dark:text-gray-400 truncate') Total de mantenimientos realizados
-                    .flex.items-center.justify-end.flex-1.text-base.font-medium.text-green-500(class='dark:text-green-400')
-                        svg.w-6.h-6.text-gray-800(class='dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewbox='0 0 24 24')
+                        span.text-xl.font-bold.leading-none(class='sm:text-2xl dark:text-white truncate')= estadisticas.data.totalEquiposMantenidos.total
+                        h3.text-base.font-light(class='dark:text-gray-400 truncate') Total de mantenimientos realizados
+                    .flex.items-center.justify-end.flex-1.text-base.font-medium(class='dark:text-green-400')
+                        svg.w-6.h-6(class='dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewbox='0 0 24 24')
                             path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207')
 
         // Image section

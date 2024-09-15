@@ -8,6 +8,9 @@ module.exports = {
         'xl': '1280px',
         '2xl': '1536px',
       },
+      colors: {
+        'custom-yellow': 'rgb(191, 215, 48)'
+      }
     },
   },
   plugins: [

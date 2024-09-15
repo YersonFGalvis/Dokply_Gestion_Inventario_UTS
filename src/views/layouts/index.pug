@@ -6,13 +6,12 @@ html(lang="en")
         title Document
         link(rel="stylesheet", href="/css/app.css")
         link(href='https://unpkg.com/gridjs/dist/theme/mermaid.min.css' rel='stylesheet')
-    body(class="flex flex-col min-h-screen")
+    body(class="flex flex-col min-h-screen bg-[#f1f1f1]")
         header
-            //- include navbar                                
             include sideBar                            
         main(class="flex-grow mx-8")
             block contenido
-        footer(class="bg-gray-50")
+        footer(class="bg-[#132F20] text-[#F8E9D4]")
             include footer 
     script(src="/js/modal.js")
     script(src='https://unpkg.com/gridjs/dist/gridjs.umd.js')

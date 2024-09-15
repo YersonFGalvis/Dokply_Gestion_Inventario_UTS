@@ -1,14 +1,18 @@
 extends ../layouts/index
 block contenido 
-  h1.text-xl.font-semibold.text-gray-900.text-center(class='sm:text-2xl dark:text-white') Responsables
-  .flex.items-center.ml-auto.space-x-2.p-4(class='sm:space-x-3 justify-end')
-    button#modal_add.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-blue-600(data-entity="responsable" data-action="add" type='button'  class='w-1/2 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
-      svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
-        path(fill-rule='evenodd' d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z' clip-rule='evenodd')
-  .flex.flex-col
-      .overflow-x-auto.rounded-lg
-        .inline-block.min-w-full.align-middle
-          .overflow-hidden.shadow(class='sm:rounded-lg')
-            .flex.items-center.justify-between.mb-4
-              div#table(data-columnas=['Cedula', 'Nombre', 'Apellido', 'Email', 'Telefono', 'Cargo', 'Genero', 'Acciones'] data-filas=['data.numeroidentificacion', 'data.nombres', 'data.apellidos', 'data.email', 'data.telefono', 'data.cargo_id.nombre', 'data.genero'] data-entity="responsable"  data-datos=responsables.data)
+  .px-4.pt-5(class='2xl:px-0')
+    .p-4.shadow-sm(class='bg-[#f1f1f1] dark:border-gray-700 sm:p-6 dark:bg-gray-800')
+      .items-center.justify-center(class='lg:flex')
+        .mb-4(class='lg:mb-0')
+          h3.mb-2.text-xl.font-bold.text-gray-900.text-center(class='dark:text-white') Responsables  
+    .flex.items-center.ml-auto.space-x-2.p-4(class='sm:space-x-3 justify-end')
+      button#modal_add.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg(data-entity="responsable" data-action="add" type='button'  class='w-1/2 bg-[#34531F] hover:bg-[#132F20] hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
+        svg.w-5.h-5(fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
+          path(fill-rule='evenodd' d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z' clip-rule='evenodd')
+    .flex.flex-col
+        .overflow-x-auto.rounded-lg
+          .inline-block.min-w-full.align-middle
+            .overflow-hidden.shadow(class='sm:rounded-lg')
+              .flex.items-center.justify-between.mb-4
+                div#table(data-columnas=['Cedula', 'Nombre', 'Apellido', 'Email', 'Telefono', 'Cargo', 'Genero', 'Acciones'] data-filas=['data.numeroidentificacion', 'data.nombres', 'data.apellidos', 'data.email', 'data.telefono', 'data.cargo_id.nombre', 'data.genero'] data-entity="responsable"  data-datos=responsables.data)
   include ../modals/responsable    

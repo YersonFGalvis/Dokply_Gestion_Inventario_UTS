@@ -69,7 +69,7 @@ export class UsuarioRouter extends BaseRouter<UsuarioController, UsuarioMiddlewa
         );
 
         this.router.put(
-            '/usuario/activo/:id',
+            '/usuario/active/:id',
             (req: Request, res: Response) => this.controller.updateUserEstado(req, res)
                 .then(users => res.json(users))
         );

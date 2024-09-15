@@ -24,7 +24,7 @@
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='licencia' class='dark:text-white') Licencia
               input#licencia.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='licencia' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Licencia' required='')      
           .flex.justify-end.mt-4
-            button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="software" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+            button#add.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="software" data-action="add" type='submit' class='bg-[#34531F] hover:bg-[#132F20] focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
               |  Agregar
 
 #edit-software-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="software" data-action="edit" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
@@ -53,7 +53,7 @@
               label.block.mb-2.text-sm.font-medium.text-gray-900(for='licencia-edit' class='dark:text-white') Licencia
               input#licencia.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(type='text' name='licencia' class='focus:ring-blue-600 focus:border-blue-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Licencia' required='')      
           .flex.justify-end.mt-4
-            button#edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="software" data-action="edit" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+            button#edit.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="software" data-action="edit" type='submit' class='bg-[#34531F] hover:bg-[#132F20] focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
               |  Editar
 
 #delete-software-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="software" data-action="delete" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
@@ -75,5 +75,5 @@
             div
               | Estás seguro de que deseas eliminar este software?
           .flex.justify-end.mt-4
-            button#delete.text-white.inline-flex.items-center.bg-red-700.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="software" data-action="delete" type='submit' class='text-red-700 border border-red-700 font-medium rounded-lg text-sm px-5 text-center me-2 mb-2 hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 py-2.5 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 confirm-delete-btn')
+            button#delete.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="software" data-action="delete" type='submit' class='bg-[#6D100A] border-[#6D100A] font-medium rounded-lg text-sm px-5 text-center me-2 mb-2 hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 py-2.5 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 confirm-delete-btn')
               |  Eliminar

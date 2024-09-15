@@ -72,7 +72,7 @@ const updateHSSelect = (containerId, data, selectType) => {
         newSelect.classList.add('bg-gray-50', 'border', 'border-gray-300', 'text-gray-900', 'text-sm', 'rounded-lg', 'block', 'w-full', 'p-2.5', 'dark:bg-gray-700', 'dark:border-gray-600', 'dark:placeholder-gray-400', 'dark:text-white', 'dark:focus:ring-primary-500', 'dark:focus:border-primary-500');
 
         const defaultOption = document.createElement('option');
-        defaultOption.value =  containerId === 'hardware' ? item.hardware_id.id : item.software_id.id;
+        defaultOption.value = containerId === 'hardware' ? item.hardware_id.id : item.software_id.id;
         defaultOption.text = containerId === 'hardware' ? `${item.hardware_id.nombre} - ${item.hardware_id.estado}` : `${item.software_id.nombre} - ${item.software_id.licencia}`;
         newSelect.appendChild(defaultOption);
 
@@ -117,17 +117,16 @@ const handleModalActions = async (action, entity, id) => {
     const modal = document.querySelector(modalSelector);
     const modalBackground = document.querySelector(`#modal-background-${action}`);
 
-    if (!modal || !modalBackground) return;
+    if (!modal || !modalBackground) {
+        console.error('Modal or modalBackground not found');
+        return;
+    }
 
     toggleModal(modal, modalBackground, 'open');
 
-    const fields = ['numeroidentificacion', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'equipo_id', 'equipo_id.aula_id', 'equipo_id.aula_id.edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]', 'tipo_mantenimiento_id', 'detalle'];
+    const fields = ['numeroidentificacion', 'active', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'equipo_id', 'equipo_id.aula_id', 'equipo_id.aula_id.edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]', 'tipo_mantenimiento_id', 'detalle'];
 
     if (action === 'edit') {
-        if (!id) {
-            console.error('ID is missing for edit action');
-            return;
-        }
 
         try {
             const data = await fetchData(`/${entity}/${id}`);
@@ -243,6 +242,7 @@ const handleModalActions = async (action, entity, id) => {
         }
     } else if (action === 'delete') {
         modal.querySelector('#delete').onclick = async () => {
+            e.preventDefault();
             if (!id) {
                 console.error('ID is missing for delete action');
                 return;
@@ -256,6 +256,7 @@ const handleModalActions = async (action, entity, id) => {
             }
         };
     } else if (action === 'add') {
+        e.preventDefault();
         modal.querySelector('#add').onclick = async () => {
             try {
                 const body = fields.reduce((obj, field) => {
@@ -285,6 +286,48 @@ const handleModalActions = async (action, entity, id) => {
                 console.error('Error adding data:', error);
             }
         };
+    } 
+    else if (action === 'active') {
+        const data = await fetchData(`/${entity}/${id}`);
+        const checkbox = modal.querySelector('input[name="activo"]');
+        const button = modal.querySelector('#active');
+
+        function updateButtonText() {
+            if (checkbox.checked) {
+                button.textContent = 'Desactivar';
+                msg.textContent = '¿Estás seguro de que deseas desactivar este usuario?';
+            } else {
+                button.textContent = 'Activar';
+                msg.textContent = '¿Estás seguro de que deseas activar este usuario?';
+            }
+        }
+
+        checkbox.checked = data.data.activo;
+
+        updateButtonText();
+
+        button.onclick = async () => {
+            if (!id) {
+                console.error('ID is missing for active action');
+                return;
+            }
+            try {
+                const newStatus = !checkbox.checked;
+                checkbox.checked = newStatus;
+                updateButtonText();
+
+                await fetch(`/${entity}/active/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ activo: newStatus })
+                });
+
+                await updateData(entity);
+                toggleModal(modal, modalBackground, 'close');
+            } catch (error) {
+                console.error('Error updating data:', error);
+            }
+        };
     }
 };
 
@@ -305,7 +348,9 @@ document.addEventListener('click', (event) => {
     const target = event.target.closest('[id^="modal-background"]');
     if (target) {
         const visibleModal = document.querySelector('.modal.flex');
-        if (visibleModal) toggleModal(visibleModal, target, 'close');
+        if (visibleModal) {
+            toggleModal(visibleModal, target, 'close');
+        }
     }
 });
 

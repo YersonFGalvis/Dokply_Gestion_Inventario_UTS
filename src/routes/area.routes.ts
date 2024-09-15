@@ -20,7 +20,6 @@ export class AreaRouter extends BaseRouter<AreaController, AreaMiddleware> {
                 if (req.query.format === 'json') {
                     res.json(areas);
                 } else {
-                    // Renderiza la vista con datos iniciales
                     res.render('admin/areas', {
                         areas,
                         statusCode: areas.status,

@@ -38,7 +38,11 @@ export class HelperMiddleware {
       return next();
     }
 
-    return res.status(401).json({ message: "No tienes permiso de COORDINADOR" });
+    return res.status(401).render('auth/errores', {
+      error_code: 401,
+      error_title: 'Acceso Denegado',
+      error_message: 'No tienes permiso de COORDINADOR'
+    });
   }
 
   

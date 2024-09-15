@@ -28,6 +28,20 @@ export class expressConfiguration {
       this.app.use("/", this.routers());
       this.app.set('view engine', 'pug');
       this.app.set('views', './src/views');
+      this.app.use((req, res, next) => {
+        res.status(404).render('auth/errores', {
+          error_code: 404,
+          error_title: 'Página No Encontrada',
+          error_message: 'Lo sentimos, la página que buscas no existe.'
+        });
+      });
+      this.app.use((req, res, next) => {
+        res.status(500).render('auth/errores', {
+          error_code: 500,
+          error_title: 'Ocurrio un error',
+          error_message: 'Contacte con el administrador.'
+        });
+      });
     }
 
     routers(): Array<express.Router> {

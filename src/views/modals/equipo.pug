@@ -39,13 +39,13 @@
           #hardware-container.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware' class='dark:text-white') Hardware
           .flex.justify-center.mb-2
-            button#add-hardware-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+            button#add-hardware-btn.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button' class='bg-[#34531F] hover:bg-[#132F20]') Añadir Hardware
           #software-container.mb-2
             label.block.mb-2.text-sm.font-medium.text-gray-900(for='software' class='dark:text-white') Software        
           .flex.justify-center.mb-2
-            button#add-software-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+            button#add-software-btn.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button' class='bg-[#34531F] hover:bg-[#132F20]') Añadir Software
         .flex.justify-end.mt-4
-          button#add.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="add" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+          button#add.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="add" type='submit' class='bg-[#34531F] hover:bg-[#132F20] focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
             |  Agregar
 
 #edit-equipo-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="equipo" data-action="edit" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
@@ -64,7 +64,7 @@
         // Modal body
         form(onsubmit="return false;" class="overflow-y-auto max-h-[calc(75vh-5rem)]")
           .flex.justify-center.mb-2
-            button#qr-btn.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.mr-2(type='button') 
+            button#qr-btn.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.mr-2(type='button' class='bg-[#34531F] hover:bg-[#132F20]') 
               svg.w-5.h-5.mr-2.-ml-1(class='currentColor' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24')
                 path(stroke='currentColor' stroke-linejoin='round' stroke-width='2' d='M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z')
                 path(stroke='currentColor' stroke-linejoin='round' stroke-width='2' d='M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z')
@@ -97,19 +97,19 @@
                   each responsable in responsables.data
                     option(value=responsable.id selected=datos.responsable ? datos.responsable == responsable.id ? true : false : null)= `${responsable.nombres} ${responsable.apellidos}` 
           .flex.justify-center.mb-2
-            button#responsable-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.hidden(type='button') Entregar equipo
+            button#responsable-btn-edit.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center.p-2.hidden(type='button' class='bg-[#34531F] hover:bg-[#132F20]') Entregar equipo
           label.block.mb-2.text-sm.font-medium.text-gray-900(for='hardware-edit' class='dark:text-white') Hardware
           #hardware-container-edit.mb-2
             // Los selects de hardware se generarán dinámicamente aquí
           .flex.justify-center.mb-2
-            button#add-hardware-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Hardware
+            button#add-hardware-btn-edit.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button' class='bg-[#34531F] hover:bg-[#132F20]') Añadir Hardware
           label.block.mb-2.text-sm.font-medium.text-gray-900(for='software-edit' class='dark:text-white') Software        
           #software-container-edit.mb-2
             // Los selects de software se generarán dinámicamente aquí
           .flex.justify-center.mb-2
-            button#add-software-btn-edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button') Añadir Software
+            button#add-software-btn-edit.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center.p-2(type='button' class='bg-[#34531F] hover:bg-[#132F20]') Añadir Software
         .flex.justify-end.mt-4
-          button#edit.text-white.inline-flex.items-center.bg-blue-800.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="edit" type='submit' class='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
+          button#edit.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="edit" type='submit' class='bg-[#34531F] hover:bg-[#132F20] focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
             |  Editar
 
 #delete-equipo-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="equipo" data-action="delete" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
@@ -131,5 +131,5 @@
             div
               | Estás seguro de que deseas eliminar este equipo?
           .flex.justify-end.mt-4
-            button#delete.text-white.inline-flex.items-center.bg-red-700.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="delete" type='submit' class='text-red-700 border border-red-700 font-medium rounded-lg text-sm px-5 text-center me-2 mb-2 hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 py-2.5 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 confirm-delete-btn')
+            button#delete.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="equipo" data-action="delete" type='submit' class='bg-[#6D100A] border-[#6D100A] font-medium rounded-lg text-sm px-5 text-center me-2 mb-2 hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 py-2.5 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 confirm-delete-btn')
               |  Eliminar
