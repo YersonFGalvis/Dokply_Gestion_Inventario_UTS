@@ -7,7 +7,7 @@ import { HelperMiddleware } from "./helper.middleware";
 
 
 export class UsuarioMiddleware extends HelperMiddleware{
-    constructor(private readonly _usuarioService:UsuarioService = new UsuarioService())
+    constructor(public readonly _usuarioService:UsuarioService = new UsuarioService())
     { super();}
     usuarioValidator(req: Request, res: Response, next: NextFunction){
 

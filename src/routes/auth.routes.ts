@@ -17,6 +17,21 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
             res.render('auth/login', { error: req.query.error });
         });      
 
+        
+        this.router.post(
+            '/login',
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.middleware.usuarioActivoValidator(req, res, next);
+            },
+            async (req: Request, res: Response, next: NextFunction) => {
+                await this.middleware.usuarioValidoValidator(req, res, next);
+            },
+            this.middleware.passAuth("login"),
+            (req: Request, res: Response) => {
+                this.controller.login(req, res);
+            }
+        );
+
         this.router.get('/logout', 
             this.middleware.passAuth('jwt'),
             (req: Request, res: Response) => {
@@ -51,13 +66,6 @@ export class AuthRouter extends BaseRouter<AuthController, HelperMiddleware> {
             res.render('admin/dashboard', { estadisticas, error: req.query.error });
         });
 
-        this.router.post(
-            '/login',
-            this.middleware.passAuth("login"),
-            (req: Request, res: Response) => {
-                this.controller.login(req, res);
-            }
-        );
 
     }
 }

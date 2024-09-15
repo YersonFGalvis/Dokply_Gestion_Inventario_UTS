@@ -34,8 +34,10 @@ export class UsuarioService extends BaseService<Usuario> {
             .createQueryBuilder("usuario")
             .addSelect("usuario.pass")
             .where("usuario.email = :email", { email })
+            .andWhere("usuario.activo = true")
             .getOne();
     }
+    
 
     async findPasswordByUsername(nombre: string): Promise<Usuario | null> {
         const repository = await this.getRepository();
@@ -43,8 +45,20 @@ export class UsuarioService extends BaseService<Usuario> {
             .createQueryBuilder("usuario")
             .addSelect("usuario.pass")
             .where("usuario.nombre = :nombre", { nombre })
+            .andWhere("usuario.activo = true")
             .getOne();
     }
+
+    async findActivoByEmail(email: string): Promise<Usuario | null> {
+        const repository = await this.getRepository();
+        return repository
+            .createQueryBuilder("usuario")
+            .addSelect("usuario.activo")
+            .where("usuario.email = :email", { email })
+            .andWhere("usuario.activo = true")
+            .getOne();
+    }
+    
 
     async createUser(body: UsuarioDTO): Promise<Usuario> {
         const repository = await this.getRepository();
@@ -58,6 +72,12 @@ export class UsuarioService extends BaseService<Usuario> {
         const repository = await this.getRepository();
         return repository.delete(id);
     }
+
+    async updateUserEstado(id: number, activo: boolean): Promise<UpdateResult> { 
+        const repository = await this.getRepository();
+        return repository.update({ id }, { activo });
+    }
+    
 
     async updateUser(id: number, infoUpdate: UsuarioDTO): Promise<UpdateResult> {
         const repository = await this.getRepository();

@@ -97,5 +97,21 @@ export class UsuarioController {
       return this.httpResponse.ServerError("Error interno del servidor");
     }
   }
+
+  async updateUserEstado(req: Request, res: Response) {
+    const { id} = req.params;
+    const { activo } = req.body;
+
+    try {
+      const result = await this.userService.updateUserEstado(Number(id),Boolean(activo));
+      if (result.affected === 0) {
+        return this.httpResponse.NotFound("Usuario no encontrado");
+      }
+      return this.httpResponse.OK("Usuario actualizado correctamente");
+    } catch (error) {
+      return this.httpResponse.ServerError("Error interno del servidor");
+    }
+
+  }
 }
 
