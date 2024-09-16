@@ -1,4 +1,4 @@
-#add-hardware-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="hardware" data-action="add" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
+#add-hardware-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
     .fixed.inset-0.bg-gray-600.bg-opacity-50.hidden.z-40#modal-background-add
     .relative.p-4.w-full.max-w-2xl.h-full.z-50(class='md:h-auto')
       // Modal content
@@ -7,7 +7,7 @@
         .flex.justify-between.items-center.pb-4.mb-4.rounded-t.border-b(class='sm:mb-5 dark:border-gray-600')
           h3.text-lg.font-semibold.text-gray-900(class='dark:text-white')
             | Agregar Hardware
-          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
+          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' data-action="add" class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
             svg.w-5.h-5(aria-hidden='true' fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal
@@ -31,7 +31,7 @@
             button#add.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="hardware" data-action="add" type='submit' class='bg-[#34531F] hover:bg-[#132F20] focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
               |  Agregar
 
-#edit-hardware-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="hardware" data-action="edit" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
+#edit-hardware-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
     .fixed.inset-0.bg-gray-600.bg-opacity-50.hidden.z-40#modal-background-edit
     .relative.p-4.w-full.max-w-2xl.h-full.z-50(class='md:h-auto')
       // Modal content
@@ -40,7 +40,7 @@
         .flex.justify-between.items-center.pb-4.mb-4.rounded-t.border-b(class='sm:mb-5 dark:border-gray-600')
           h3.text-lg.font-semibold.text-gray-900(class='dark:text-white')
             | Editar Hardware
-          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
+          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' data-action="edit" class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
             svg.w-5.h-5(aria-hidden='true' fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal
@@ -64,7 +64,7 @@
             button#edit.text-white.inline-flex.items-center.font-medium.rounded-lg.text-sm.px-5.text-center(data-entity="hardware" data-action="edit" type='submit' class='bg-[#34531F] hover:bg-[#132F20] focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800')
               |  Editar
 
-#delete-hardware-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(data-entity="hardware" data-action="delete" tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
+#delete-hardware-modal.modal.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.h-modal(tabindex='-1' aria-hidden='true' class='md:inset-0 md:h-full')
     .fixed.inset-0.bg-gray-600.bg-opacity-50.hidden.z-40#modal-background-delete
     .relative.p-4.w-full.max-w-2xl.h-full.z-50(class='md:h-auto')
       // Modal content
@@ -73,7 +73,7 @@
         .flex.justify-between.items-center.pb-4.mb-4.rounded-t.border-b(class='sm:mb-5 dark:border-gray-600')
           h3.text-lg.font-semibold.text-gray-900(class='dark:text-white')
             | Eliminar Hardware
-          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
+          button.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button' data-action="delete" class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-600 dark:hover:text-white close-modal-btn')
             svg.w-5.h-5(aria-hidden='true' fill='currentColor' viewbox='0 0 20 20' xmlns='http://www.w3.org/2000/svg')
               path(fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd')
             span.sr-only Cerrar modal

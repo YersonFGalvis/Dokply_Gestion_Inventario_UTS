@@ -124,7 +124,7 @@ const handleModalActions = async (action, entity, id) => {
 
     toggleModal(modal, modalBackground, 'open');
 
-    const fields = ['numeroidentificacion', 'active', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'equipo_id', 'equipo_id.aula_id', 'equipo_id.aula_id.edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]', 'tipo_mantenimiento_id', 'detalle'];
+    const fields = ['numeroidentificacion', 'activo', 'genero', 'telefono', 'email', 'nombre', 'nombres', 'apellidos', 'letra', 'estado', 'marca', 'version', 'licencia', 'descripcion', 'edificio_id', 'equipo_id', 'equipo_id.aula_id', 'equipo_id.aula_id.edificio_id', 'area_id', 'aula_id', 'cargo_id', 'rol_id', 'pass', 'confirm_password', 'responsable_id', 'equipoHardware[]', 'equipoSoftware[]', 'tipo_mantenimiento_id', 'detalle'];
 
     if (action === 'edit') {
 
@@ -242,7 +242,6 @@ const handleModalActions = async (action, entity, id) => {
         }
     } else if (action === 'delete') {
         modal.querySelector('#delete').onclick = async () => {
-            e.preventDefault();
             if (!id) {
                 console.error('ID is missing for delete action');
                 return;
@@ -256,7 +255,6 @@ const handleModalActions = async (action, entity, id) => {
             }
         };
     } else if (action === 'add') {
-        e.preventDefault();
         modal.querySelector('#add').onclick = async () => {
             try {
                 const body = fields.reduce((obj, field) => {
@@ -286,8 +284,7 @@ const handleModalActions = async (action, entity, id) => {
                 console.error('Error adding data:', error);
             }
         };
-    } 
-    else if (action === 'active') {
+    } else if (action === 'active') {
         const data = await fetchData(`/${entity}/${id}`);
         const checkbox = modal.querySelector('input[name="activo"]');
         const button = modal.querySelector('#active');
@@ -335,12 +332,32 @@ document.addEventListener('click', async (event) => {
     const target = event.target.closest('[data-action]');
     if (!target) return;
 
+    const getModalSelectors = (modulo) => [
+        document.querySelector(`#edit-${modulo}-modal`),
+        document.querySelector(`#active-${modulo}-modal`),
+        document.querySelector(`#delete-${modulo}-modal`)
+    ];
+
+    const modulos = ['area', 'cargo', 'responsable', 'edificio', 'aula', 'hardware', 'software', 'equipo', 'registroMantenimiento', 'usuario'];
+    const isModal = modulos.some(modulo => {
+        const [editModal, activeModal, deleteModal] = getModalSelectors(modulo);
+        return [editModal, activeModal, deleteModal].includes(target);
+    });
+
+    if (isModal) {
+        return;
+    }
+
     const action = target.getAttribute('data-action');
     const entity = target.getAttribute('data-entity');
     const id = target.getAttribute('data-id');
 
     if (entity && action) {
-        await handleModalActions(action, entity, id);
+        try {
+            await handleModalActions(action, entity, id);
+        } catch (error) {
+            console.error('Error en la petición:', error);
+        }
     }
 });
 
@@ -356,9 +373,13 @@ document.addEventListener('click', (event) => {
 
 document.addEventListener('click', (event) => {
     const target = event.target.closest('.close-modal-btn');
+
+    if (!target) return;
+
+    const action = target.getAttribute('data-action');
     if (target) {
         const modal = target.closest('.modal');
-        const modalBackground = document.querySelector(`#modal-background-${modal?.getAttribute('data-action')}`);
+        const modalBackground = document.querySelector(`#modal-background-${action}`);
         if (modal && modalBackground) {
             toggleModal(modal, modalBackground, 'close');
         }
