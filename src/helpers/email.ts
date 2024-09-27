@@ -1,4 +1,5 @@
 import { IEmailService, IMantenimientos } from "src/interfaces/email.interface";
+import { Equipo } from '../entity/Equipo';
 const brevo = require('@getbrevo/brevo');
 
 export class BrevoEmailService implements IEmailService {
@@ -40,7 +41,7 @@ export class BrevoEmailService implements IEmailService {
     }
 
 
-    private generarTemplateCompleto(equipo:IMantenimientos): string {
+    private generarTemplateCompleto(nombre:string): string {
 
         let Html:string = `
         <!DOCTYPE html>
@@ -48,7 +49,7 @@ export class BrevoEmailService implements IEmailService {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Correo para ${equipo.nombreusuario}</title>
+            <title>Correo para ${nombre}</title>
             <style>
             body {
                 font-family: Arial, sans-serif;
@@ -122,7 +123,7 @@ export class BrevoEmailService implements IEmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>Hola ${equipo.nombreusuario}</h1>
+                    <h1>Hola ${nombre}</h1>
                 </div>
                 <div class="content">
                     <h2>Resumen del estado de los equipos registrados en el sistema hasta la fecha</h2>   
@@ -160,8 +161,8 @@ export class BrevoEmailService implements IEmailService {
                 <strong>Edificio:</strong> ${equipo.edificio}<br>
                 <strong>Responsable:</strong> ${equipo.nombreresponsable}<br>
                 <strong>Email:</strong> ${equipo.emailresponsable}<br>
-                <strong>Tipo de Mantenimiento:</strong> ${equipo.tipo_mantenimiento}<br>
-                <strong>Requiere Mantenimiento:</strong> ${equipo.mantenimiento_requiere}
+                <strong>Tipo de Mantenimiento:</strong> ${equipo.tipomantenimiento}<br>
+                <strong>Requiere Mantenimiento:</strong> ${equipo.mantenimientorequiere}
             </td>
         </tr>
         `).join('');
@@ -170,32 +171,38 @@ export class BrevoEmailService implements IEmailService {
     sendEmail() {
         let apiKey = this.ApiInstance.authentications['apiKey'];
         apiKey.apiKey = this.Apikey;
-
-        let DominiosUsados: string[] = [];
-
+    
         this.generarEquiposTemplate();
+    
+        let ResponsablesUnicos: string[] = [];
+    
+        this.Mantenimientos.forEach((equipo) => {
+            let responsables = equipo.correostodoslosusuarios.split(',');
+            responsables.forEach(responsable => {
+                if (!ResponsablesUnicos.includes(responsable.trim())) {
+                    ResponsablesUnicos.push(responsable.trim());
+                }
+            });
+        });
+    
+        // Ahora solo procesamos una vez cada responsable
+        const emailPromises = ResponsablesUnicos.map(responsable => {
+            const [nombre, email] = responsable.split(' ');
 
-        // Enviar correos electrónicos personalizados
-        const emailPromises = this.Mantenimientos.map((equipo) => {
+                let Html = this.generarTemplateCompleto(nombre);
 
-            if(!DominiosUsados.includes(equipo.emailusuario)) { 
-                let Html = this.generarTemplateCompleto(equipo);
                 this.ApiSmtpConfigurations.subject = this.subject;
                 this.ApiSmtpConfigurations.htmlContent = Html;
                 this.ApiSmtpConfigurations.sender = { name: this.senderName, email: this.senderEmail };
-                this.ApiSmtpConfigurations.to = [{ email: equipo.emailusuario, name: equipo.nombreusuario}];
+                this.ApiSmtpConfigurations.to = [{ email: email, name: nombre}];
                 this.ApiSmtpConfigurations.replyTo = { email: this.replyToEmail, name: this.replyToName };
                 this.ApiSmtpConfigurations.headers = this.headers;
                 this.ApiSmtpConfigurations.params = this.params;
-
-                DominiosUsados.push(equipo.emailusuario);
-            }else{
-                return;
-            }
-            return this.ApiInstance.sendTransacEmail(this.ApiSmtpConfigurations);
-        });
-
-        // Enviar todos los correos electrónicos en paralelo
+    
+                //Retornar la promesa de envío de correo  
+                return this.ApiInstance.sendTransacEmail(this.ApiSmtpConfigurations);        
+        })  
+    
         Promise.all(emailPromises).then(
             (results: any) => {
                 results.forEach((data: any) => {
@@ -206,5 +213,5 @@ export class BrevoEmailService implements IEmailService {
                 console.error(errors);
             }
         );
-    }
+    }  
 }

@@ -16,7 +16,8 @@ export interface IMantenimientos {
   nombreusuario:string;
   emailusuario: string;
   emailresponsable: string;
-  tipo_mantenimiento: string;
-  mantenimiento_requiere: string;
+  tipomantenimiento: string;
+  mantenimientorequiere: string;
+  correostodoslosusuarios: string;
 }
   
