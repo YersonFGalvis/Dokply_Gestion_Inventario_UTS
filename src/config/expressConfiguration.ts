@@ -18,7 +18,7 @@ import { EquipoSoftwareRouter } from '../routes/equipoSoftware.routes';
 
 export class expressConfiguration {
     public app: express.Application = express();
-    private port: number = Number('3000');
+    private port: number = Number('3001');
 
     constructor() {
       this.app.use(express.json());
