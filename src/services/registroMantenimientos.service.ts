@@ -156,7 +156,7 @@ export class RegistroMantenimientoService extends BaseService<RegistroMantenimie
             // Total de equipos a los que se les ha hecho mantenimiento
             const totalEquiposMantenidos = await repository
                 .createQueryBuilder('mantenimiento')
-                .select('COUNT(DISTINCT mantenimiento.equipo_id)', 'total')
+                .select('COUNT(mantenimiento.equipo_id)', 'total')
                 .getRawOne();
 
             // Mantenimientos en el mes actual
